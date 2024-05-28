@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,xcode,swift,cocoapods
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,swift,cocoapods
 
+.jpg
+.jpeg
+.heic
+
 ### macOS ###
 # General
 .DS_Store
