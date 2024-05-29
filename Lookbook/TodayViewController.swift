@@ -7,11 +7,12 @@ final class TodayViewController: ViewController {
     // MARK: - Properties
     
     var requestWeatherUseCase: RequestWeatherUseCaseProtocol?
-    var locationManager: LocationManager?
+    var locationManager: LocationManagerProtocol?
     
     // UI
     
     private let rootView = TodayRootView()
+    
     private lazy var hostingController = UIHostingController(rootView: rootView)
     
     // MARK: - Method
@@ -24,6 +25,21 @@ final class TodayViewController: ViewController {
         return viewController
     }
     
+    private func requestCurrentLocation() {
+        switch locationManager?.authorizationStatus {
+        case .notDetermined:
+            locationManager?.requestAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        case nil:
+            defaultLogger.debug("Location manager is nil")
+        @unknown default:
+            break
+        }
+    }
+       
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +50,22 @@ final class TodayViewController: ViewController {
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
         
-        let _ = locationManager?.$location.sink { [weak self] location in
-            guard let useCase = self?.requestWeatherUseCase else {
-                self?.defaultLogger.debug("Request Weather Use Case is nil")
-                return
-            }
-            if let location {
-                Task {
-                    let weather = try await useCase.execute(with: location)
-                    self?.rootView.weather = weather
-                }
-            }
+        switch locationManager?.authorizationStatus {
+        case .notDetermined:
+            locationManager?.requestAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        case nil:
+            defaultLogger.debug("Location manager is nil")
+        @unknown default:
+            break
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        locationManager?.requestCurrentLocation()
+//        locationManager?.requestCurrentLocation()
     }
 }
