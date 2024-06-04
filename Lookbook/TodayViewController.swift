@@ -7,6 +7,7 @@ final class TodayViewController: ViewController {
     // MARK: - Properties
     
     var requestWeatherUseCase: RequestWeatherUseCaseProtocol?
+    var photosUseCase: PhotosUseCaseProtocol?
     var locationManager: LocationManagerProtocol?
     
     // UI
@@ -17,13 +18,17 @@ final class TodayViewController: ViewController {
     
     // MARK: - Method
     
-    static func buildToday(requestWeatherUseCase: RequestWeatherUseCaseProtocol, locationManager: LocationManager) -> TodayViewController {
-        let viewController = TodayViewController()
-        viewController.requestWeatherUseCase = requestWeatherUseCase
-        viewController.locationManager = locationManager
-        
-        return viewController
-    }
+    static func buildToday(
+        requestWeatherUseCase: RequestWeatherUseCaseProtocol,
+        photosUseCase: PhotosUseCaseProtocol,
+        locationManager: LocationManager) -> TodayViewController {
+            let viewController = TodayViewController()
+            viewController.requestWeatherUseCase = requestWeatherUseCase
+            viewController.locationManager = locationManager
+            viewController.photosUseCase = photosUseCase
+            
+            return viewController
+        }
     
     private func requestCurrentLocation() {
         switch locationManager?.authorizationStatus {
@@ -61,6 +66,12 @@ final class TodayViewController: ViewController {
             defaultLogger.debug("Location manager is nil")
         @unknown default:
             break
+        }
+        
+        // Photos Auth
+        Task {
+            let photosAuthStatus = await photosUseCase?.execute()
+            debugPrint(photosAuthStatus)
         }
     }
     

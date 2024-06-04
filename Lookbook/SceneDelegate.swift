@@ -12,7 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     var weatherRepository = WeatherRepository()
+    
+    var photosService = PhotosService()
+    lazy var photosRepository = PhotosRepository(photosService: photosService)
+    
     lazy var requestWeatherUseCase = RequestWeatherUseCase(repository: weatherRepository)
+    lazy var photosUseCase = PhotosUseCase(repository:photosRepository)
     let locationManger = LocationManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,8 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = TodayViewController
             .buildToday(
                 requestWeatherUseCase: requestWeatherUseCase,
+                photosUseCase: photosUseCase,
                 locationManager: locationManger)
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

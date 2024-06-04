@@ -6,22 +6,21 @@ protocol PhotosRepositoryProtocol {
     var authorizationStatus: PHAuthorizationStatus? { get async throws }
 }
 
-@Observable
 final class PhotosRepository: PhotosRepositoryProtocol {
     
     // Public
-    init(photosService: PhotosServiceProtocol? = nil) {
+    init(photosService: PhotosServiceProtocol) {
         self.photosService = photosService
     }
     
     var authorizationStatus: PHAuthorizationStatus? {
         get async throws {
-            return try await photosService?.getAuthorizationStatus()
+            return try await photosService.getAuthorizationStatus()
         }
     }
     
     // Private
-    private var photosService: PhotosServiceProtocol?
+    private var photosService: PhotosServiceProtocol
 }
 
 extension PhotosRepository {
