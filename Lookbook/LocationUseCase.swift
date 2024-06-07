@@ -1,4 +1,5 @@
 import Foundation
+import os
 import CoreLocation
 
 protocol LocationUseCaseProtocol {
@@ -14,10 +15,12 @@ final class LocationUseCase: LocationUseCaseProtocol {
     }
     
     func executeRequestAuthorization() {
+        logger.log("Execute request location authorization")
         repository.requestAuthorization()
     }
     
     // Private
     
     private var repository: LocationRepositoryProtocol
+    private var logger = Logger(subsystem: "io.doyoung.Lookbook.LocationUseCase", category: "Use Case")
 }

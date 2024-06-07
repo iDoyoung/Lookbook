@@ -43,6 +43,11 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     }
     
     func requestAuthorization() {
+        guard manager.authorizationStatus != .authorizedWhenInUse else {
+            logger.log("Current location status is authorized")
+            return
+        }
+        logger.log("Request when in use authorization")
         manager.requestWhenInUseAuthorization()
     }
    

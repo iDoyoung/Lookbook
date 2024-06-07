@@ -28,6 +28,7 @@ final class TodayViewController: ViewController {
     }
     
     func requestLocationAuthorization() {
+        defaultLogger.log("Try to execute request authorization")
         locationUseCase?.executeRequestAuthorization()
     }
     

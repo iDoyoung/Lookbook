@@ -2,8 +2,12 @@ import SwiftUI
 
 struct TodayRootView: View {
     
+    @State var locationAuthorizationStatus: LocationAuthorizationStatus = .unauthorized
+    
+    @State var city: String = ""
     @State var weather = TheDayWeather()
     @State var image: UIImage? = nil
+    var tapLocationWaringLabel: () -> Void
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -18,17 +22,19 @@ struct TodayRootView: View {
             
             // 오늘 날씨 정보
             VStack(alignment: .leading) {
+               
+                ZStack(alignment: .center) {
+                    Circle()
+                        .foregroundStyle(.black)
+                        .frame(
+                            width: 15,
+                            height: 15,
+                            alignment: .center)
+                }
+                .frame(maxWidth: .infinity)
                 
-                Text("Today")
-                    .padding(.bottom, 6)
-                
-                Text("\(Date())")
-                    .font(
-                        .system(
-                            size: 10,
-                            weight: .light,
-                            design: .monospaced))
-                
+                locationLabel
+               
                 Text(weather.temp ?? "--")
                     .font(
                         .system(
@@ -72,16 +78,8 @@ struct TodayRootView: View {
                 
                 Spacer()
                 
-                HStack {
-                    Text(Image(systemName: "location.fill"))
-                    
-                    Text("현재 위치")
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .light,
-                                design: .monospaced))
-                }
+                locationWarningLabel
+                    .background(.black)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -97,12 +95,21 @@ struct TodayRootView: View {
                         }
                     }
                 }
+                
+                Text("\(Date())")
+                    .font(
+                        .system(
+                            size: 10,
+                            weight: .light,
+                            design: .monospaced))
+                
             }
             .frame(
                 width: 240,
                 alignment: .leading)
             .padding()
             .background(.thinMaterial)
+            .padding()
         }
     }
     
@@ -115,14 +122,51 @@ struct TodayRootView: View {
             Text("Hello, world!")
         }
     }
+    
+    @ViewBuilder
+    var locationLabel: some View {
+        HStack {
+            Text("My Location")
+                .font(
+                    .system(
+                        size: 20,
+                        weight: .medium))
+                .padding(.vertical, 6)
+            
+            if locationAuthorizationStatus == .unauthorized {
+                Text("(알 수 없음)")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var locationWarningLabel: some View {
+        if locationAuthorizationStatus == .unauthorized {
+            Text("⚠️ 위치 접근 권한에 대해 거절 상태입니다. 정확한 현재 위치를 알 수 없어서, 현재 위치에 날씨 정보를 얻기 위해서는 탭해주세요.")
+                .foregroundStyle(.white)
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .light))
+                .padding()
+                .onTapGesture {
+                    // Show Alert
+                    tapLocationWaringLabel()
+                }
+        }
+    }
 }
 
 #Preview {
-    var location = "수원"
-    
+    var city = "수원"
     var image = UIImage(named: "sample_image.JPG")
     
     return TodayRootView(
-        image: image
+        locationAuthorizationStatus: .unauthorized,
+        city: city,
+        image: image, 
+        tapLocationWaringLabel: {
+            print("Tap")
+        }
     )
 }
