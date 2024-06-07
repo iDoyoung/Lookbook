@@ -2,14 +2,19 @@ import Foundation
 import CoreLocation
 import os
 
-protocol LocationManagerProtocol {
+protocol CoreLocationServiceProtocol {
     var location: CLLocation? { get }
     var authorizationStatus: CLAuthorizationStatus { get }
+    
+    func getAuthorizationStatus() -> CLAuthorizationStatus
+    func startUpdatingLocation()
+    func stopUpdatingLocation()
+    
     func requestAuthorization()
     func requestCurrentLocation()
 }
 
-final class LocationManager: NSObject, LocationManagerProtocol {
+final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
     private let logger = Logger(subsystem: "io.doyoung.Lookbook.LocationManager", category: "Location Manager")
     private var manager = CLLocationManager()
@@ -25,6 +30,18 @@ final class LocationManager: NSObject, LocationManagerProtocol {
         return manager.authorizationStatus
     }
     
+    func getAuthorizationStatus() -> CLAuthorizationStatus {
+        return manager.authorizationStatus
+    }
+    
+    func startUpdatingLocation() {
+        manager.startUpdatingLocation()
+    }
+    
+    func stopUpdatingLocation() {
+        manager.startUpdatingLocation()
+    }
+    
     func requestAuthorization() {
         manager.requestWhenInUseAuthorization()
     }
@@ -35,7 +52,7 @@ final class LocationManager: NSObject, LocationManagerProtocol {
     }
 }
 
-extension LocationManager: CLLocationManagerDelegate {
+extension CoreLocationService: CLLocationManagerDelegate {
     
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
