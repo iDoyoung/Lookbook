@@ -3,80 +3,95 @@ import Combine
 import SwiftUI
 
 final class TodayViewController: ViewController {
-
+    
     // MARK: - Properties
     
     var requestWeatherUseCase: RequestWeatherUseCaseProtocol?
     var photosUseCase: PhotosUseCaseProtocol?
-    var locationManager: LocationManagerProtocol?
+    var locationUseCase: LocationUseCaseProtocol?
     
     // UI
     
-    private let rootView = TodayRootView()
-    
-    private lazy var hostingController = UIHostingController(rootView: rootView)
+    private var rootView: TodayRootView?
+    private var hostingController: UIHostingController<TodayRootView>?
     
     // MARK: - Method
+    private func buildHostingController() {
+        rootView = TodayRootView(tapLocationWaringLabel: { [weak self] in
+            self?.requestLocationAuthorization()
+        })
+        if let rootView {
+            hostingController = UIHostingController(rootView: rootView)
+        } else {
+            fatalError()
+        }
+    }
+    
+    func requestLocationAuthorization() {
+        locationUseCase?.executeRequestAuthorization()
+    }
     
     static func buildToday(
         requestWeatherUseCase: RequestWeatherUseCaseProtocol,
         photosUseCase: PhotosUseCaseProtocol,
-        locationManager: LocationManager) -> TodayViewController {
+        locationUseCase: LocationUseCaseProtocol) -> TodayViewController {
             let viewController = TodayViewController()
             viewController.requestWeatherUseCase = requestWeatherUseCase
-            viewController.locationManager = locationManager
+            viewController.locationUseCase = locationUseCase
             viewController.photosUseCase = photosUseCase
             
             return viewController
         }
     
-    private func requestCurrentLocation() {
-        switch locationManager?.authorizationStatus {
-        case .notDetermined:
-            locationManager?.requestAuthorization()
-        case .restricted, .denied:
-            break
-        case .authorizedAlways, .authorizedWhenInUse:
-            break
-        case nil:
-            defaultLogger.debug("Location manager is nil")
-        @unknown default:
-            break
-        }
-    }
+//    private func requestCurrentLocation() {
+//        switch locationManager?.authorizationStatus {
+//        case .notDetermined:
+//            locationManager?.requestAuthorization()
+//        case .restricted, .denied:
+//            break
+//        case .authorizedAlways, .authorizedWhenInUse:
+//            break
+//        case nil:
+//            defaultLogger.debug("Location manager is nil")
+//        @unknown default:
+//            break
+//        }
+//    }
        
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        buildHostingController()
         // - setup hosting controller
+        
+        guard let hostingController else { fatalError() }
         
         addChild(hostingController)
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
         
-        switch locationManager?.authorizationStatus {
-        case .notDetermined:
-            locationManager?.requestAuthorization()
-        case .restricted, .denied:
-            break
-        case .authorizedAlways, .authorizedWhenInUse:
-            break
-        case nil:
-            defaultLogger.debug("Location manager is nil")
-        @unknown default:
-            break
-        }
+//        switch locationService?.authorizationStatus {
+//        case .notDetermined:
+//            locationManager?.requestAuthorization()
+//        case .restricted, .denied:
+//            break
+//        case .authorizedAlways, .authorizedWhenInUse:
+//            break
+//        case nil:
+//            defaultLogger.debug("Location manager is nil")
+//        @unknown default:
+//            break
+//        }
         
         // Photos Auth
         Task {
             let photosAuthStatus = await photosUseCase?.execute()
-            debugPrint(photosAuthStatus)
+            debugPrint(photosAuthStatus ?? "nil")
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        locationManager?.requestCurrentLocation()
     }
 }

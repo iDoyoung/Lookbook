@@ -13,12 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var weatherRepository = WeatherRepository()
     
-    var photosService = PhotosService()
+    let photosService = PhotosService()
+    let coreLocationService = CoreLocationService()
+    
     lazy var photosRepository = PhotosRepository(photosService: photosService)
+    lazy var locationRepository = LocationRepository(service: coreLocationService)
     
     lazy var requestWeatherUseCase = RequestWeatherUseCase(repository: weatherRepository)
     lazy var photosUseCase = PhotosUseCase(repository:photosRepository)
-    let locationManger = LocationManager()
+    lazy var locationUseCase = LocationUseCase(repository: locationRepository)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -29,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .buildToday(
                 requestWeatherUseCase: requestWeatherUseCase,
                 photosUseCase: photosUseCase,
-                locationManager: locationManger)
+                locationUseCase: locationUseCase)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

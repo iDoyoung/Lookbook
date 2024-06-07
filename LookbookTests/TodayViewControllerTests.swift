@@ -10,37 +10,27 @@ final class TodayViewControllerTests: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        locationManagerSpy = LocationManagerSpy()
+        
+        locationUseCaseSpy = LocationUseCaseSpy()
         photosUseCaseSpy = PhotosUseCaseSpy()
         
         sut = TodayViewController()
-        sut.locationManager = locationManagerSpy
+        sut.locationUseCase = locationUseCaseSpy
         sut.photosUseCase = photosUseCaseSpy
     }
 
     override func tearDownWithError() throws {
         photosUseCaseSpy = nil
-        locationManagerSpy = nil
+        locationUseCaseSpy = nil
         sut = nil
         try super.tearDownWithError()
     }
     
     // Test doubles
-    var locationManagerSpy: LocationManagerSpy!
+    var locationUseCaseSpy: LocationUseCaseSpy!
     var photosUseCaseSpy: PhotosUseCaseSpy!
     
     //MARK: - Tests
-    func test_whenViewDidloadAndLocationAuthorizationStatusIsNotDetermined_mustCallRequestAuthorization() {
-        
-        // given
-        locationManagerSpy?.authorizationStatus = .init(rawValue: 0)!
-        
-        // when
-        sut.viewDidLoad()
-        
-        // then
-        XCTAssertTrue(locationManagerSpy.requestAuthorizationIsCalled)
-    }
     
     /// 뷰 Did Load 시 Photos Use Case 호출
     func test_whenViewDidLoad_shouldCallUseCase() async {
@@ -57,5 +47,16 @@ final class TodayViewControllerTests: XCTestCase {
         
         // then
         XCTAssertTrue(photosUseCaseSpy.calledUseCase, "Photos Use Case 호출 성공")
+    }
+    
+    /// Location 권한 요청
+    func test_whenRequestLocationAuthorization_shouldCallLocationUseCase() {
+        // given
+        
+        // when
+        sut.requestLocationAuthorization()
+        
+        // then
+        XCTAssert(locationUseCaseSpy.calledExecuteRequestAuthorization, "Location Use Case 호출 성공")
     }
 }
