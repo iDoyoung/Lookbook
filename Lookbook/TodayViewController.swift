@@ -17,7 +17,9 @@ final class TodayViewController: ViewController {
     
     // MARK: - Method
     private func buildHostingController() {
-        rootView = TodayRootView(tapLocationWaringLabel: { [weak self] in
+        rootView = TodayRootView(
+            model: TodayModel(),
+            tapLocationWaringLabel: { [weak self] in
             self?.requestLocationAuthorization()
         })
         if let rootView {
@@ -72,27 +74,16 @@ final class TodayViewController: ViewController {
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
         
-//        switch locationService?.authorizationStatus {
-//        case .notDetermined:
-//            locationManager?.requestAuthorization()
-//        case .restricted, .denied:
-//            break
-//        case .authorizedAlways, .authorizedWhenInUse:
-//            break
-//        case nil:
-//            defaultLogger.debug("Location manager is nil")
-//        @unknown default:
-//            break
-//        }
+        guard let rootView,
+              let photosUseCase else { return }
         
-        // Photos Auth
         Task {
-            let photosAuthStatus = await photosUseCase?.execute()
-            debugPrint(photosAuthStatus ?? "nil")
+            rootView.model.photosAuthorizationStatus = await photosUseCase.execute()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
 }

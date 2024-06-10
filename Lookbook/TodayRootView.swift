@@ -3,6 +3,7 @@ import SwiftUI
 struct TodayRootView: View {
     
     @State var locationAuthorizationStatus: LocationAuthorizationStatus = .unauthorized
+    @State var model: TodayModel
     
     @State var city: String = ""
     @State var weather = TheDayWeather()
@@ -78,6 +79,9 @@ struct TodayRootView: View {
                 
                 Spacer()
                 
+                photosWarningLabel
+                    .background(.white)
+                
                 locationWarningLabel
                     .background(.black)
                 
@@ -125,17 +129,21 @@ struct TodayRootView: View {
     
     @ViewBuilder
     var locationLabel: some View {
-        HStack {
-            Text("My Location")
-                .font(
-                    .system(
-                        size: 20,
-                        weight: .medium))
-                .padding(.vertical, 6)
-            
-            if locationAuthorizationStatus == .unauthorized {
-                Text("(알 수 없음)")
+        VStack(alignment: .leading) {
+            HStack {
+                Text("My Location")
+                    .font(
+                        .system(
+                            size: 20,
+                            weight: .medium))
+                    .padding(.vertical, 6)
+                
+                if locationAuthorizationStatus == .unauthorized {
+                    Text("(알 수 없음)")
+                }
             }
+            
+            Text(city)
         }
     }
     
@@ -155,6 +163,27 @@ struct TodayRootView: View {
                 }
         }
     }
+    
+    @ViewBuilder
+    var photosWarningLabel: some View {
+        if model.photosAuthorizationStatus == .restrictedOrDenied {
+            Text("You've given Lookbook access to a select number of photos.")
+                .font(
+                .system(
+                    size: 12,
+                    weight: .light))
+                .foregroundStyle(.black)
+                .padding()
+        } else if model.photosAuthorizationStatus == .restrictedOrDenied {
+            Text("Please allow access to your photos")
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .light))
+                .foregroundStyle(.black)
+                .padding()
+        }
+    }
 }
 
 #Preview {
@@ -162,7 +191,7 @@ struct TodayRootView: View {
     var image = UIImage(named: "sample_image.JPG")
     
     return TodayRootView(
-        locationAuthorizationStatus: .unauthorized,
+        model: .init(),
         city: city,
         image: image, 
         tapLocationWaringLabel: {
