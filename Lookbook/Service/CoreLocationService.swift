@@ -1,10 +1,13 @@
 import Foundation
 import CoreLocation
+import Combine
 import os
 
 protocol CoreLocationServiceProtocol {
-    var location: CLLocation? { get }
-    var authorizationStatus: CLAuthorizationStatus { get }
+   
+    var locationSubject: CurrentValueSubject<CLLocation?, Never> { get }
+    var authorizationStatusSubject: CurrentValueSubject<CLAuthorizationStatus, Never> { get }
+  
     
     func getAuthorizationStatus() -> CLAuthorizationStatus
     func startUpdatingLocation()
@@ -16,20 +19,9 @@ protocol CoreLocationServiceProtocol {
 
 final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
-    private let logger = Logger(subsystem: "io.doyoung.Lookbook.LocationManager", category: "Location Manager")
-    private var manager = CLLocationManager()
-    
-    @Published var location: CLLocation? = nil
-    
-    override init() {
-        super.init()
-        manager.delegate = self
-    }
-    
-    var authorizationStatus: CLAuthorizationStatus {
-        return manager.authorizationStatus
-    }
-    
+    var locationSubject: CurrentValueSubject<CLLocation?, Never>
+    var authorizationStatusSubject: CurrentValueSubject<CLAuthorizationStatus, Never>
+  
     func getAuthorizationStatus() -> CLAuthorizationStatus {
         return manager.authorizationStatus
     }
@@ -50,20 +42,36 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
         logger.log("Request when in use authorization")
         manager.requestWhenInUseAuthorization()
     }
-   
+    
     func requestCurrentLocation() {
         logger.log("Expression requestLocation()")
         manager.startUpdatingLocation()
     }
+    
+    override init() {
+        manager = CLLocationManager()
+        locationSubject = CurrentValueSubject(nil)
+        authorizationStatusSubject = CurrentValueSubject(manager.authorizationStatus)
+        super.init()
+        manager.delegate = self
+    }
+    
+    // Private
+    private var manager: CLLocationManager
+    private let logger = Logger(subsystem: "io.doyoung.Lookbook.LocationManager", category: "Location Manager")
 }
 
 extension CoreLocationService: CLLocationManagerDelegate {
     
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        logger.log("Change Location Authorization")
+        authorizationStatusSubject.send(manager.authorizationStatus)
+    }
+    
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            manager.stopUpdatingLocation()
             logger.log("Read location by Core Location: \(location)")
-            self.location = location
+            locationSubject.send(location)
         }
     }
     
