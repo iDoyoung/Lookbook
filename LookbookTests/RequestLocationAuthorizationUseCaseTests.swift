@@ -1,15 +1,15 @@
 import XCTest
 @testable import Lookbook
 
-final class LocationUseCaseTests: XCTestCase {
+final class RequestLocationAuthorizationUseCaseTests: XCTestCase {
     
     // MARK: - System under test
-    var sut: LocationUseCase!
+    var sut: RequestLocationAuthorizationLocationUseCase!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         locationRepositorySpy = LocationRepositorySpy()
-        sut = LocationUseCase(repository: locationRepositorySpy)
+        sut = RequestLocationAuthorizationLocationUseCase(repository: locationRepositorySpy)
     }
 
     override func tearDownWithError() throws {
@@ -20,15 +20,15 @@ final class LocationUseCaseTests: XCTestCase {
     
     // MARK: - Tests
     
-    ///권한 요청 실행
+    ///Location 접근 권한 요청 실행 테스트
     func test_whenExecuteRequest_shouldCallRequestAuthorization() {
         // given
         
         // when
-        sut.executeRequestAuthorization()
+        sut.execute()
         
         // then
-        XCTAssertTrue(locationRepositorySpy.calledRequestAuthorization, "Location Repository 호출 성공")
+        XCTAssertTrue(locationRepositorySpy.calledRequestAuthorization, "Location Repository 호출")
     }
     
     // MARK: - Test doubles
