@@ -4,18 +4,14 @@ import CoreLocation
 
 protocol LocationRepositoryProtocol {
     
-    var authorizationStatus: CLAuthorizationStatus { get }
+    var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never> { get }
     
     func requestAuthorization()
 }
 
 final class LocationRepository: LocationRepositoryProtocol {
     
-    @Published var currentLocation: CLLocation?
-    
-    var authorizationStatus: CLAuthorizationStatus {
-        service.getAuthorizationStatus()
-    }
+    var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never>
     
     func requestAuthorization() {
         service.requestAuthorization()
@@ -31,8 +27,15 @@ final class LocationRepository: LocationRepositoryProtocol {
     
     init(service: CoreLocationServiceProtocol) {
         self.service = service
+        self.authorizationStatus = CurrentValueSubject(service.authorizationStatusSubject.value)
+        
+        service.authorizationStatusSubject.sink { [weak self] status in
+            self?.authorizationStatus.send(status)
+        }
+        .store(in: &cancellableBag)
     }
     
     // Private
     private var service: CoreLocationServiceProtocol
+    private var cancellableBag = Set<AnyCancellable>()
 }

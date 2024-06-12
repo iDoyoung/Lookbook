@@ -1,14 +1,12 @@
 import Foundation
 import CoreLocation
+import Combine
+
 @testable import Lookbook
 
 final class CoreLocationServiceSpy: CoreLocationServiceProtocol {
-    
-    
-    
-    var location: CLLocation? = nil
-    
-    var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    var locationSubject: CurrentValueSubject<CLLocation?, Never> = CurrentValueSubject(nil)
+    var authorizationStatusSubject: CurrentValueSubject<CLAuthorizationStatus, Never> = CurrentValueSubject(.notDetermined)
     
     var calledRequestAuthorization = false
     var requestCurrentLocationIsCalled = false
@@ -26,7 +24,7 @@ final class CoreLocationServiceSpy: CoreLocationServiceProtocol {
     
     func getAuthorizationStatus() -> CLAuthorizationStatus {
         calledGetAuthorizationStatus = true
-        return authorizationStatus
+        return authorizationStatusSubject.value
     }
     
     func startUpdatingLocation() {
