@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var requestWeatherUseCase = RequestWeatherUseCase(repository: weatherRepository)
     lazy var photosUseCase = PhotosUseCase(repository:photosRepository)
-    lazy var locationUseCase = LocationUseCase(repository: locationRepository)
+    lazy var getLocationAuthorizationLocationUseCase = GetLocationAuthorizationStatusUseCase(repository: locationRepository)
+    lazy var requestLocationAuthorizationUseCase = RequestLocationAuthorizationLocationUseCase(repository: locationRepository)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -31,8 +32,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = TodayViewController
             .buildToday(
                 requestWeatherUseCase: requestWeatherUseCase,
-                photosUseCase: photosUseCase,
-                locationUseCase: locationUseCase)
+                photosUseCase: photosUseCase, 
+                getLocationAuthorizationLocationUseCase: getLocationAuthorizationLocationUseCase,
+                requestLocationAuthorizationUseCase: requestLocationAuthorizationUseCase)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

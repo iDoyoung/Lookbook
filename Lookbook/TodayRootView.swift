@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TodayRootView: View {
     
-    @State var locationAuthorizationStatus: LocationAuthorizationStatus = .unauthorized
     @State var model: TodayModel
     
     @State var city: String = ""
@@ -138,7 +137,7 @@ struct TodayRootView: View {
                             weight: .medium))
                     .padding(.vertical, 6)
                 
-                if locationAuthorizationStatus == .unauthorized {
+                if model.locationAuthorizationStatus == .unauthorized {
                     Text("(알 수 없음)")
                 }
             }
@@ -149,7 +148,7 @@ struct TodayRootView: View {
     
     @ViewBuilder
     var locationWarningLabel: some View {
-        if locationAuthorizationStatus == .unauthorized {
+        if model.locationAuthorizationStatus == .unauthorized {
             Text("⚠️ 위치 접근 권한에 대해 거절 상태입니다. 정확한 현재 위치를 알 수 없어서, 현재 위치에 날씨 정보를 얻기 위해서는 탭해주세요.")
                 .foregroundStyle(.white)
                 .font(

@@ -8,7 +8,8 @@ final class TodayViewController: ViewController {
     
     var requestWeatherUseCase: RequestWeatherUseCaseProtocol?
     var photosUseCase: PhotosUseCaseProtocol?
-    var locationUseCase: LocationUseCaseProtocol?
+    var getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol?
+    var requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol?
     
     // UI
     
@@ -31,36 +32,23 @@ final class TodayViewController: ViewController {
     
     func requestLocationAuthorization() {
         defaultLogger.log("Try to execute request authorization")
-        locationUseCase?.executeRequestAuthorization()
+        requestLocationAuthorizationUseCase?.execute()
     }
     
     static func buildToday(
         requestWeatherUseCase: RequestWeatherUseCaseProtocol,
         photosUseCase: PhotosUseCaseProtocol,
-        locationUseCase: LocationUseCaseProtocol) -> TodayViewController {
+        getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol,
+        requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol) -> TodayViewController {
             let viewController = TodayViewController()
             viewController.requestWeatherUseCase = requestWeatherUseCase
-            viewController.locationUseCase = locationUseCase
+            viewController.getLocationAuthorizationLocationUseCase = getLocationAuthorizationLocationUseCase
+            viewController.requestLocationAuthorizationUseCase = requestLocationAuthorizationUseCase
             viewController.photosUseCase = photosUseCase
             
             return viewController
         }
-    
-//    private func requestCurrentLocation() {
-//        switch locationManager?.authorizationStatus {
-//        case .notDetermined:
-//            locationManager?.requestAuthorization()
-//        case .restricted, .denied:
-//            break
-//        case .authorizedAlways, .authorizedWhenInUse:
-//            break
-//        case nil:
-//            defaultLogger.debug("Location manager is nil")
-//        @unknown default:
-//            break
-//        }
-//    }
-       
+      
     // Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,16 +62,22 @@ final class TodayViewController: ViewController {
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
         
+        // Interactor
         guard let rootView,
-              let photosUseCase else { return }
+              let photosUseCase,
+              let requestLocationAuthorizationUseCase,
+              let getLocationAuthorizationLocationUseCase else { return }
         
         Task {
             rootView.model.photosAuthorizationStatus = await photosUseCase.execute()
+        }
+        
+        getLocationAuthorizationLocationUseCase.execute { [weak self] status in
+            self?.rootView?.model.locationAuthorizationStatus = status
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
 }

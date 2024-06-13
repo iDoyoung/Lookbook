@@ -11,28 +11,26 @@ final class TodayViewControllerTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         
-        locationUseCaseSpy = LocationUseCaseSpy()
+        requestLocationAuthorizationUseCaseSpy = RequestLocationAuthorizationUseCaseSpy()
+        getLocationAuthorizationUseCaseSpy = GetLocationAuthorizationUseCaseSpy()
         photosUseCaseSpy = PhotosUseCaseSpy()
         
         sut = TodayViewController()
-        sut.locationUseCase = locationUseCaseSpy
+        sut.requestLocationAuthorizationUseCase = requestLocationAuthorizationUseCaseSpy
+        sut.getLocationAuthorizationLocationUseCase = getLocationAuthorizationUseCaseSpy
         sut.photosUseCase = photosUseCaseSpy
     }
 
     override func tearDownWithError() throws {
         photosUseCaseSpy = nil
-        locationUseCaseSpy = nil
+        requestLocationAuthorizationUseCaseSpy = nil
         sut = nil
         try super.tearDownWithError()
     }
     
-    // Test doubles
-    var locationUseCaseSpy: LocationUseCaseSpy!
-    var photosUseCaseSpy: PhotosUseCaseSpy!
-    
     //MARK: - Tests
     
-    /// 뷰 Did Load 시 Photos Use Case 호출
+    /// 뷰 Did Load 시 Photos Use Case 호출 여부 테스트
     func test_whenViewDidLoad_shouldCallUseCase() async {
         
         // given
@@ -46,10 +44,10 @@ final class TodayViewControllerTests: XCTestCase {
         await task.value
         
         // then
-        XCTAssertTrue(photosUseCaseSpy.calledUseCase, "Photos Use Case 호출 성공")
+        XCTAssertTrue(photosUseCaseSpy.calledUseCase, "Photos Use Case 호출")
     }
     
-    /// Location 권한 요청
+    /// Request Location Authorization Use Case 호출 여부 테스트
     func test_whenRequestLocationAuthorization_shouldCallLocationUseCase() {
         // given
         
@@ -57,6 +55,21 @@ final class TodayViewControllerTests: XCTestCase {
         sut.requestLocationAuthorization()
         
         // then
-        XCTAssert(locationUseCaseSpy.calledExecuteRequestAuthorization, "Location Use Case 호출 성공")
+        XCTAssert(requestLocationAuthorizationUseCaseSpy.calledExecute, "Request Location Authorization Use Case 호출")
     }
+    
+    /// Get Location Authorization Use Case 호출 여부 테스트
+    func test_whenViewDidLoad_shouldBeCallGetLocationAuthorizationUseCase() {
+        
+        // when
+        sut.viewDidLoad()
+        
+        // then
+        XCTAssertTrue(getLocationAuthorizationUseCaseSpy.calledExecute, "Get Location Authorization Use Case 호출")
+    }
+    
+    // Test doubles
+    private var requestLocationAuthorizationUseCaseSpy: RequestLocationAuthorizationUseCaseSpy!
+    private var getLocationAuthorizationUseCaseSpy: GetLocationAuthorizationUseCaseSpy!
+    private var photosUseCaseSpy: PhotosUseCaseSpy!
 }
