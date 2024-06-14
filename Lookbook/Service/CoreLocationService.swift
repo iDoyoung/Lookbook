@@ -10,8 +10,6 @@ protocol CoreLocationServiceProtocol {
   
     
     func getAuthorizationStatus() -> CLAuthorizationStatus
-    func startUpdatingLocation()
-    func stopUpdatingLocation()
     
     func requestAuthorization()
     func requestCurrentLocation()
@@ -23,17 +21,10 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     var authorizationStatusSubject: CurrentValueSubject<CLAuthorizationStatus, Never>
   
     func getAuthorizationStatus() -> CLAuthorizationStatus {
+        logger.log("Get authorization Status")
         return manager.authorizationStatus
     }
-    
-    func startUpdatingLocation() {
-        manager.startUpdatingLocation()
-    }
-    
-    func stopUpdatingLocation() {
-        manager.startUpdatingLocation()
-    }
-    
+   
     func requestAuthorization() {
         guard manager.authorizationStatus != .authorizedWhenInUse else {
             logger.log("Current location status is authorized")
@@ -54,10 +45,18 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
         authorizationStatusSubject = CurrentValueSubject(manager.authorizationStatus)
         super.init()
         manager.delegate = self
+        authorizationStatusSubject.sink { [weak self] status in
+            if status == .authorizedAlways || status == .authorizedWhenInUse {
+                self?.manager.startUpdatingLocation()
+            }
+        }
+        .store(in: &cancellableBag)
     }
+    
     
     // Private
     private var manager: CLLocationManager
+    private var cancellableBag = Set<AnyCancellable>()
     private let logger = Logger(subsystem: "io.doyoung.Lookbook.LocationManager", category: "Location Manager")
 }
 
@@ -69,7 +68,8 @@ extension CoreLocationService: CLLocationManagerDelegate {
     }
     
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
+         logger.log("Updating Location")
+         if let location = locations.last {
             logger.log("Read location by Core Location: \(location)")
             locationSubject.send(location)
         }
