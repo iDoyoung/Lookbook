@@ -4,4 +4,5 @@ import Foundation
 class TodayModel {
     var photosAuthorizationStatus: PhotosAuthStatus = .unknowned
     var locationAuthorizationStatus: LocationAuthorizationStatus = .unauthorized
+    var currentLocationName: String = ""
 }

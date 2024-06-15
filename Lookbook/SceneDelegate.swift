@@ -23,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     lazy var photosUseCase = PhotosUseCase(repository:photosRepository)
     lazy var getLocationAuthorizationLocationUseCase = GetLocationAuthorizationStatusUseCase(repository: locationRepository)
     lazy var requestLocationAuthorizationUseCase = RequestLocationAuthorizationLocationUseCase(repository: locationRepository)
+    lazy var getCurrentLocationUseCase = GetCurrentLocationUseCase(repository: locationRepository)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -34,7 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 requestWeatherUseCase: requestWeatherUseCase,
                 photosUseCase: photosUseCase, 
                 getLocationAuthorizationLocationUseCase: getLocationAuthorizationLocationUseCase,
-                requestLocationAuthorizationUseCase: requestLocationAuthorizationUseCase)
+                requestLocationAuthorizationUseCase: requestLocationAuthorizationUseCase, 
+                getCurrentLocationUseCase: getCurrentLocationUseCase
+            )
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

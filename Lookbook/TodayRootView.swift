@@ -4,7 +4,6 @@ struct TodayRootView: View {
     
     @State var model: TodayModel
     
-    @State var city: String = ""
     @State var weather = TheDayWeather()
     @State var image: UIImage? = nil
     var tapLocationWaringLabel: () -> Void
@@ -142,7 +141,7 @@ struct TodayRootView: View {
                 }
             }
             
-            Text(city)
+            Text(model.currentLocationName)
         }
     }
     
@@ -186,13 +185,11 @@ struct TodayRootView: View {
 }
 
 #Preview {
-    var city = "수원"
     var image = UIImage(named: "sample_image.JPG")
     
     return TodayRootView(
         model: .init(),
-        city: city,
-        image: image, 
+        image: image,
         tapLocationWaringLabel: {
             print("Tap")
         }

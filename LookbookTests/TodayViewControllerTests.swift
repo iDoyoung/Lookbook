@@ -14,11 +14,13 @@ final class TodayViewControllerTests: XCTestCase {
         requestLocationAuthorizationUseCaseSpy = RequestLocationAuthorizationUseCaseSpy()
         getLocationAuthorizationUseCaseSpy = GetLocationAuthorizationUseCaseSpy()
         photosUseCaseSpy = PhotosUseCaseSpy()
+        getCurrentLocationUseCaseSpy = GetCurrentLocationUseCaseSpy()
         
         sut = TodayViewController()
         sut.requestLocationAuthorizationUseCase = requestLocationAuthorizationUseCaseSpy
         sut.getLocationAuthorizationLocationUseCase = getLocationAuthorizationUseCaseSpy
         sut.photosUseCase = photosUseCaseSpy
+        sut.getCurrentLocationUseCase = getCurrentLocationUseCaseSpy
     }
 
     override func tearDownWithError() throws {
@@ -47,6 +49,17 @@ final class TodayViewControllerTests: XCTestCase {
         XCTAssertTrue(photosUseCaseSpy.calledUseCase, "Photos Use Case 호출")
     }
     
+    /// 뷰, did load 시,  Get CurrentLocation Use Case 호출 여부 테스트
+    func test_whenViewDidLoad_shouldCellGetCurrentLocationUseCase() {
+        // given
+        
+        // when
+        sut.viewDidLoad()
+        
+        // then
+        XCTAssertTrue(getCurrentLocationUseCaseSpy.calledExecute)
+    }
+   
     /// Request Location Authorization Use Case 호출 여부 테스트
     func test_whenRequestLocationAuthorization_shouldCallLocationUseCase() {
         // given
@@ -72,4 +85,5 @@ final class TodayViewControllerTests: XCTestCase {
     private var requestLocationAuthorizationUseCaseSpy: RequestLocationAuthorizationUseCaseSpy!
     private var getLocationAuthorizationUseCaseSpy: GetLocationAuthorizationUseCaseSpy!
     private var photosUseCaseSpy: PhotosUseCaseSpy!
+    private var getCurrentLocationUseCaseSpy: GetCurrentLocationUseCaseSpy!
 }

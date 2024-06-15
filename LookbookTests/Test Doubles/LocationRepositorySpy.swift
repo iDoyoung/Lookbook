@@ -6,9 +6,11 @@ import CoreLocation
 
 final class LocationRepositorySpy: LocationRepositoryProtocol {
     
+    var currentLocation: CurrentValueSubject<CLLocation?, Never> = CurrentValueSubject(nil)
     var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never> = CurrentValueSubject(.notDetermined)
     var changedAuthorizationStatus = false
     var calledRequestAuthorization = false
+    var updatedCurrentLocation = false
     
     func requestAuthorization() {
         calledRequestAuthorization = true
@@ -17,6 +19,10 @@ final class LocationRepositorySpy: LocationRepositoryProtocol {
     init() {
         authorizationStatus.sink { [weak self] _ in
             self?.changedAuthorizationStatus = true
+        }.cancel()
+        
+        currentLocation.sink { [weak self] _ in
+            self?.updatedCurrentLocation = true
         }.cancel()
     }
 }

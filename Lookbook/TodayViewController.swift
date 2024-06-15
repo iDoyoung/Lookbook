@@ -10,6 +10,7 @@ final class TodayViewController: ViewController {
     var photosUseCase: PhotosUseCaseProtocol?
     var getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol?
     var requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol?
+    var getCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol?
     
     // UI
     
@@ -39,11 +40,13 @@ final class TodayViewController: ViewController {
         requestWeatherUseCase: RequestWeatherUseCaseProtocol,
         photosUseCase: PhotosUseCaseProtocol,
         getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol,
-        requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol) -> TodayViewController {
+        requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol,
+        getCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol) -> TodayViewController {
             let viewController = TodayViewController()
             viewController.requestWeatherUseCase = requestWeatherUseCase
             viewController.getLocationAuthorizationLocationUseCase = getLocationAuthorizationLocationUseCase
             viewController.requestLocationAuthorizationUseCase = requestLocationAuthorizationUseCase
+            viewController.getCurrentLocationUseCase = getCurrentLocationUseCase
             viewController.photosUseCase = photosUseCase
             
             return viewController
@@ -62,18 +65,27 @@ final class TodayViewController: ViewController {
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
         
-        // Interactor
         guard let rootView,
               let photosUseCase,
-              let requestLocationAuthorizationUseCase,
-              let getLocationAuthorizationLocationUseCase else { return }
-        
+              let getLocationAuthorizationLocationUseCase,
+              let getCurrentLocationUseCase else {
+            defaultLogger.debug("Some compoenent(s) is(are) nil")
+            return
+        }
+       
+        // Interactor
         Task {
             rootView.model.photosAuthorizationStatus = await photosUseCase.execute()
         }
         
         getLocationAuthorizationLocationUseCase.execute { [weak self] status in
             self?.rootView?.model.locationAuthorizationStatus = status
+            self?.defaultLogger.log("Current Location Status: \(status.hashValue)")
+        }
+        
+        getCurrentLocationUseCase.execute { [weak self] location in
+            self?.defaultLogger.log("Current Location: \(location)")
+            self?.rootView?.model.currentLocationName = location
         }
     }
     

@@ -1,4 +1,5 @@
 import XCTest
+import CoreLocation
 @testable import Lookbook
 
 final class LocationRepositoryTests: XCTestCase {
@@ -41,6 +42,20 @@ final class LocationRepositoryTests: XCTestCase {
         XCTAssertEqual(coreLocationServiceSpy.authorizationStatusSubject.value, sut.authorizationStatus.value, "Core location Service와 동일한 접근 권한 상태 변경")
     }
     
+    /// Core location service 에서 위치 업데이트 시, Location repository의 Current location 업데이트 테스트
+    func test_whenUpdatedLocationFromCoreLocationService_shouldBeUpdatedCurrentLocation() {
+        
+        // given
+        let mockLatitue: CLLocationDegrees = 37.33483990328966
+        let mockLongitude: CLLocationDegrees = -122.00896129006036
+        let mockLocation = CLLocation(
+            latitude: mockLatitue,
+            longitude: mockLongitude)
+        coreLocationServiceSpy.locationSubject.send(mockLocation)
+        
+        // then
+        XCTAssertEqual(mockLocation, sut.currentLocation.value, "업데이트 된 현재위치와 동일")
+    }
     
     // MARK: - Test doubles
     var coreLocationServiceSpy: CoreLocationServiceSpy!
