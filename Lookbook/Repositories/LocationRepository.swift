@@ -27,11 +27,8 @@ final class LocationRepository: LocationRepositoryProtocol {
             Task { [weak self] in
                 let locationName = await location?.name
                 
-                let locationInfo = LocationInfo(
-                    name: locationName,
-                    latitude: location?.coordinate.latitude,
-                    longitude: location?.coordinate.longitude
-                )
+                let locationInfo =  LocationInfo(name: locationName, location: location)
+                
                 self?.currentLocation.send(locationInfo)
             }
         }
