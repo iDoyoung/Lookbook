@@ -3,7 +3,7 @@ import Combine
 import CoreLocation
 
 protocol LocationRepositoryProtocol {
-    var currentLocation: CurrentValueSubject<CLLocation?, Never> { get }
+    var currentLocation: CurrentValueSubject<LocationInfo?, Never> { get }
     var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never> { get }
     
     func requestAuthorization()
@@ -11,7 +11,7 @@ protocol LocationRepositoryProtocol {
 
 final class LocationRepository: LocationRepositoryProtocol {
     
-    var currentLocation: CurrentValueSubject<CLLocation?, Never>
+    var currentLocation: CurrentValueSubject<LocationInfo?, Never>
     var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never>
     
     func requestAuthorization() {
@@ -20,11 +20,20 @@ final class LocationRepository: LocationRepositoryProtocol {
     
     init(service: CoreLocationServiceProtocol) {
         self.service = service
-        self.currentLocation = CurrentValueSubject(service.locationSubject.value)
+        self.currentLocation = CurrentValueSubject(nil)
         self.authorizationStatus = CurrentValueSubject(service.authorizationStatusSubject.value)
         
-        service.locationSubject.sink { [weak self] location in
-            self?.currentLocation.send(location)
+        service.locationSubject.sink { location in
+            Task { [weak self] in
+                let locationName = await location?.name
+                
+                let locationInfo = LocationInfo(
+                    name: locationName,
+                    latitude: location?.coordinate.latitude,
+                    longitude: location?.coordinate.longitude
+                )
+                self?.currentLocation.send(locationInfo)
+            }
         }
         .store(in: &cancellableBag)
         
@@ -37,4 +46,14 @@ final class LocationRepository: LocationRepositoryProtocol {
     // Private
     private var service: CoreLocationServiceProtocol
     private var cancellableBag = Set<AnyCancellable>()
+}
+
+extension CLLocation {
+    
+    var name: String? {
+        get async {
+            let placemarks = try? await CLGeocoder().reverseGeocodeLocation(self)
+            return placemarks?.first?.locality
+        }
+    }
 }
