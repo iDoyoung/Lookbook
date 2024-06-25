@@ -1,20 +1,23 @@
 import UIKit
 import Combine
 import SwiftUI
+import CoreLocation
 
 final class TodayViewController: ViewController {
     
     // MARK: - Properties
     
-    var requestWeatherUseCase: RequestWeatherUseCaseProtocol?
+    // Repository
+    var locationRepository: LocationRepositoryProtocol?
+    var weatherRepository: WeatherRepositoryProtocol?
+    
     var photosUseCase: PhotosUseCaseProtocol?
-    var getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol?
-    var requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol?
-    var getCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol?
     
     // UI
     
+    private var model = TodayModel()
     private var rootView: TodayRootView?
+    private var cancellableBag = Set<AnyCancellable>()
     private var hostingController: UIHostingController<TodayRootView>?
     
     // MARK: - Method
@@ -33,20 +36,17 @@ final class TodayViewController: ViewController {
     
     func requestLocationAuthorization() {
         defaultLogger.log("Try to execute request authorization")
-        requestLocationAuthorizationUseCase?.execute()
+        locationRepository?.requestAuthorization()
+//        requestLocationAuthorizationUseCase?.execute()
     }
     
     static func buildToday(
-        requestWeatherUseCase: RequestWeatherUseCaseProtocol,
-        photosUseCase: PhotosUseCaseProtocol,
-        getLocationAuthorizationLocationUseCase: GetLocationAuthorizationStatusUseCaseProtocol,
-        requestLocationAuthorizationUseCase: RequestLocationAuthorizationUseCaseProtocol,
-        getCurrentLocationUseCase: GetCurrentLocationUseCaseProtocol) -> TodayViewController {
+        locationRepository: LocationRepositoryProtocol,
+        weatherRepository: WeatherRepositoryProtocol,
+        photosUseCase: PhotosUseCaseProtocol) -> TodayViewController {
             let viewController = TodayViewController()
-            viewController.requestWeatherUseCase = requestWeatherUseCase
-            viewController.getLocationAuthorizationLocationUseCase = getLocationAuthorizationLocationUseCase
-            viewController.requestLocationAuthorizationUseCase = requestLocationAuthorizationUseCase
-            viewController.getCurrentLocationUseCase = getCurrentLocationUseCase
+            viewController.locationRepository = locationRepository
+            viewController.weatherRepository = weatherRepository
             viewController.photosUseCase = photosUseCase
             
             return viewController
@@ -67,29 +67,39 @@ final class TodayViewController: ViewController {
         
         guard let rootView,
               let photosUseCase,
-              let getLocationAuthorizationLocationUseCase,
-              let getCurrentLocationUseCase else {
+              let locationRepository else {
             defaultLogger.debug("Some compoenent(s) is(are) nil")
             return
         }
        
         // Interactor
+        locationRepository.currentLocation.sink { location in
+            self.rootView?.model.location = location
+            if let location = location?.location {
+                Task.detached {  @MainActor in
+                    try await self.weatherRepository?.requestWeather(for: location)
+                    let currentWeather: WeatherData? = self.weatherRepository?[location]
+                   
+                    rootView.model.weather = currentWeather
+                }
+            }
+        }
+        .store(in: &cancellableBag)
+        
+        locationRepository.authorizationStatus.sink { status in
+            switch status {
+            case .notDetermined, .restricted, .denied:
+                self.rootView?.model.locationAuthorizationStatus = .unauthorized
+            case .authorizedAlways, .authorizedWhenInUse, .authorized:
+                self.rootView?.model.locationAuthorizationStatus = .authorized
+            default:
+                self.rootView?.model.locationAuthorizationStatus = .unauthorized
+            }
+        }
+        .store(in: &cancellableBag)
+        
         Task {
             rootView.model.photosAuthorizationStatus = await photosUseCase.execute()
         }
-        
-        getLocationAuthorizationLocationUseCase.execute { [weak self] status in
-            self?.rootView?.model.locationAuthorizationStatus = status
-            self?.defaultLogger.log("Current Location Status: \(status.hashValue)")
-        }
-        
-        getCurrentLocationUseCase.execute { [weak self] location in
-            self?.defaultLogger.log("Current Location: \(location)")
-            self?.rootView?.model.currentLocationName = location
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 }

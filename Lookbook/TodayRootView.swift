@@ -3,9 +3,8 @@ import SwiftUI
 struct TodayRootView: View {
     
     @State var model: TodayModel
-    
-    @State var weather = TheDayWeather()
     @State var image: UIImage? = nil
+    
     var tapLocationWaringLabel: () -> Void
     
     var body: some View {
@@ -21,7 +20,7 @@ struct TodayRootView: View {
             
             // 오늘 날씨 정보
             VStack(alignment: .leading) {
-               
+                       
                 ZStack(alignment: .center) {
                     Circle()
                         .foregroundStyle(.black)
@@ -32,42 +31,46 @@ struct TodayRootView: View {
                 }
                 .frame(maxWidth: .infinity)
                 
+                //MARK: Location Label
                 locationLabel
-               
-                Text(weather.temp ?? "--")
-                    .font(
-                        .system(
-                            size: 80,
-                            weight: .light,
-                            design: .monospaced))
                 
-                Text(weather.maxTemp ?? "--")
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced))
-                
-                Text(weather.minTemp ?? "--")
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced))
-                    .padding(.bottom, 1)
-                
+                //MARK: Weather Condition
                 HStack {
-                    Text(Image(systemName: weather.iconName ?? "questionmark"))
-                    Text(weather.condition ?? "")
+                    Text(Image(systemName: model.weather?.current?.symbolName ?? "questionmark"))
+                    Text(model.weather?.current?.condition ?? "")
                         .font(
                             .system(
                                 size: 16,
                                 weight: .light,
                                 design: .monospaced))
                 }
-                .padding(.vertical, 1)
+                .padding(.top, 2)
+         
+                //MARK: Temperatures
+                Text(model.weather?.current?.temperature ?? "--")
+                    .font(
+                        .system(
+                            size: 80,
+                            weight: .light))
                 
-                Text("체감 온도: \(weather.feelTemp ?? "--")")
+                HStack {
+                    Text("최고:\(model.weather?.dailyForecast?[0].maximumTemperature ?? "--")")
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .light,
+                                design: .monospaced))
+                    
+                    Text("최저:\(model.weather?.dailyForecast?[0].minimumTemperature ?? "--")")
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .light,
+                                design: .monospaced))
+                        .padding(.bottom, 1)
+                }
+                
+                Text("체감 온도: \(model.weather?.current?.feelTemperature ?? "--")")
                     .font(
                         .system(
                             size: 16,
@@ -75,36 +78,54 @@ struct TodayRootView: View {
                             design: .monospaced))
                     .padding(.vertical, 1)
                 
-                Spacer()
+                // - MARK:
+                Divider()
+                    .padding(.top)
                 
-                photosWarningLabel
-                    .background(.white)
-                
-                locationWarningLabel
-                    .background(.black)
-                
+                // MARK: Houly Forecast
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(weather.forecast, id: \.date) { weather in
-                            Text(weather.temp ?? "--")
-                                .font(
-                                    .system(
-                                        size: 12,
-                                        weight: .light,
-                                        design: .monospaced))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
+                        ForEach(model.weather?.hourlyForecast ?? [], id: \.date) { weather in
+                            VStack {
+                                
+                                Text(weather.date.hour)
+                                    .font(
+                                        .system(
+                                            size: 14,
+                                            weight: .light,
+                                            design: .monospaced))
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                
+                                Image(systemName: weather.symbolName)
+                                    .padding(.vertical, 1)
+                                
+                                Text(weather.temperature)
+                                    .font(
+                                        .system(
+                                            size: 14,
+                                            weight: .light,
+                                            design: .monospaced))
+                            }
                         }
                     }
                 }
                 
+                Spacer()
+                
+                //MARK: Today Date
                 Text("\(Date())")
                     .font(
                         .system(
                             size: 10,
                             weight: .light,
                             design: .monospaced))
-                
+                    .padding(.vertical)
+//                photosWarningLabel
+//                    .background(.white)
+//                
+//                locationWarningLabel
+//                    .background(.black)
             }
             .frame(
                 width: 240,
@@ -134,14 +155,12 @@ struct TodayRootView: View {
                         .system(
                             size: 20,
                             weight: .medium))
-                    .padding(.vertical, 6)
-                
-                if model.locationAuthorizationStatus == .unauthorized {
-                    Text("(알 수 없음)")
-                }
+                    .padding(.top, 6)
             }
             
-            Text(model.currentLocationName)
+            Text(model.location?.name ?? "알 수 없음")
+                .font(.footnote)
+                .fontWeight(.semibold)
         }
     }
     
