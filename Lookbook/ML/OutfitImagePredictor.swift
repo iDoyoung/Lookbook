@@ -66,7 +66,9 @@ final class ImagePredictor {
                   let topResult = results.first else {
                 fatalError("Unexpected results type from VNCoreMLRequest")
             }
+            
             self?.logger.log("\(topResult.identifier) in \(results.count)")
+            
         }
         
         imageClassificationRequest.imageCropAndScaleOption = .centerCrop
@@ -76,16 +78,36 @@ final class ImagePredictor {
     /// Generates an image classification prediction for a photo.
     /// - Parameter photo: An image, typically of an object or a scene.
     /// - Tag: makePredictions
-    func makePredictions(for photo: UIImage) throws {
-        guard let photoImage = photo.cgImage else {
-            fatalError("Photo doesn't have underlying CGImage.")
-        }
-
+    func makePredictions(for photo: CGImage) throws {
         let imageClassificationRequest = createImageClassificationRequest()
-        let handler = VNImageRequestHandler(cgImage: photoImage)
+        let handler = VNImageRequestHandler(cgImage: photo)
         let requests: [VNRequest] = [imageClassificationRequest]
 
         // Start the image classification request.
         try handler.perform(requests)
+    }
+}
+
+let request = VNCoreMLRequest(model: model) { (request, error) in
+    guard let results = request.results as? [VNClassificationObservation],
+          let topResult = results.first else {
+        print("분류 결과를 가져올 수 없습니다.")
+        return
+    }
+    
+    // 분류 결과 확인
+    print("분류 결과: \(topResult.identifier), 확률: \(topResult.confidence)")
+    
+    // 분류 결과가 1인 경우에 대한 조건 추가
+    if topResult.identifier == "1" && topResult.confidence >= 0.7 {
+        // 1로 분류되고 확률이 70% 이상일 때 true를 리턴
+        DispatchQueue.main.async {
+            return true
+        }
+    } else {
+        // 그 외의 경우에는 false를 리턴
+        DispatchQueue.main.async {
+            return false
+        }
     }
 }
