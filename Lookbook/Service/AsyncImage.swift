@@ -5,23 +5,21 @@ struct AsyncImage: View {
     
     let asset: PHAsset
     
-    @State private var image: UIImage? = nil
+    @State private var imageData: Data? = nil
     
     var body: some View {
-        if let image = image {
-            Image(uiImage: image)
+        if let data = imageData,
+           let uiImage = UIImage(data: data)  {
+            Image(uiImage: uiImage)
                 .resizable()
+                .onDisappear {
+                    imageData = nil
+                }
         } else {
             ProgressView()
-                .onAppear {
-                    loadImage()
+                .task {
+                    self.imageData = await asset.data()
                 }
-        }
-    }
-    
-    private func loadImage() {
-        Task.detached { @MainActor in
-            self.image = await asset.uiImage()
         }
     }
 }
