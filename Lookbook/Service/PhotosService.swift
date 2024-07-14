@@ -6,41 +6,108 @@ import Photos
 import UIKit
 import os
 
-enum PhotosError: Error {
-    case error(status: PHAuthorizationStatus)
-    case failed
-    case unowned
+enum PhotosOptions {
+    case all
+    case date(start: Date, end: Date)
 }
 
 protocol PhotosServiceProtocol {
-    func getAuthorizationStatus() async throws -> PHAuthorizationStatus
-    func fetchPhotos() -> PHFetchResult<PHAsset>
+    func authorizationStatus() async throws -> PHAuthorizationStatus
+    func fetchResult(
+        mediaType: PhotosService.MediaType,
+        albumType: PhotosService.AlbumType?,
+        dateRange: (startDate: Date, endDate: Date)?
+    ) -> PHFetchResult<PHAsset>
 }
 
-
 final class PhotosService: PhotosServiceProtocol {
+   
+    enum AlbumType { case userAlbum(title: String? = nil), smartAlbum(subtype: PHAssetCollectionSubtype) }
+    enum MediaType { case all, image, video }
     
-    func getAuthorizationStatus() async throws -> PHAuthorizationStatus  {
-        
+    // Private PROPERTIES
+    
+    private let logger = Logger(subsystem: "io.doyoung.PhotosService", category: "Photos")
+    
+    private let sortDescriptors = [
+        NSSortDescriptor(key: "creationDate", ascending: false)
+    ]
+    
+    
+    // MARK: Public METHODs
+    
+    func authorizationStatus() async throws -> PHAuthorizationStatus {
         if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined {
             await PHPhotoLibrary.requestAuthorization(for: .readWrite)
         }
         
         return PHPhotoLibrary.authorizationStatus(for: .readWrite)
     }
-  
-    func fetchPhotos() -> PHFetchResult<PHAsset> {
-        let options = PHFetchOptions()
     
-        options.predicate = NSPredicate(
-            format: "mediaType == %d && !(mediaSubtypes == %d)",
-            PHAssetMediaType.image.rawValue,
-            PHAssetMediaSubtype.photoScreenshot.rawValue)
+    func fetchResult(
+        mediaType: MediaType,
+        albumType: AlbumType?,
+        dateRange: (startDate: Date, endDate: Date)?
+    ) -> PHFetchResult<PHAsset> {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = sortDescriptors
         
-        logger.log("Called Photos Manger To Fetch PHAsst With \(options)")
-        return PHAsset.fetchAssets(with: options)
+        var predicates = [NSPredicate]()
+        
+    /// - setup predicate of media type
+        if let mediaTypePredicate = mediaTypePredicate(mediaType) {
+            predicates.append(mediaTypePredicate)
+        }
+        
+        /// - setup predicate of date range of creation date
+        if let dateRange {
+            let predicate = dateRangePredicate(
+                startDate: dateRange.startDate,
+                endDate: dateRange.endDate
+            )
+            
+            predicates.append(predicate)
+        }
+        
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        
+        fetchOptions.predicate = compoundPredicate
+        
+        if let albumType,
+           let assetCollection = fetchAssetCollection(albumType: albumType).firstObject {
+            return PHAsset.fetchAssets(
+                in: assetCollection,
+                options: fetchOptions
+            )
+        } else {
+            return PHAsset.fetchAssets(with: fetchOptions)
+        }
     }
     
-    // Private
-    private let logger = Logger()
+    // Private METHODS
+    
+    private func fetchAssetCollection(albumType: AlbumType) -> PHFetchResult<PHAssetCollection> {
+        let options = PHFetchOptions()
+        switch albumType {
+        case .userAlbum(let title):
+            
+            if let title {
+                options.predicate = albumTitlePredicate(title: title)
+            }
+            
+            return PHAssetCollection.fetchAssetCollections(
+                with: .album,
+                subtype: .albumRegular,
+                options: options
+            )
+            
+        case .smartAlbum(let subType):
+            
+            return PHAssetCollection.fetchAssetCollections(
+                with: .smartAlbum,
+                subtype: subType,
+                options: nil
+            )
+        }
+    }
 }
