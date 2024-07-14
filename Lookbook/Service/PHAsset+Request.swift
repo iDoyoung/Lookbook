@@ -24,4 +24,19 @@ extension PHAsset {
                 }
         }
     }
+    
+    func data() async -> Data {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        
+        return await withCheckedContinuation { continuation in
+            PHImageManager.default().requestImageDataAndOrientation(
+                for: self,
+                options: options) { data, _, _, _ in
+                    guard let data else { return }
+                    continuation.resume(returning: data)
+                }
+        }
+    }
 }
