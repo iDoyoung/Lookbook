@@ -4,23 +4,26 @@ import CoreLocation
 
 struct OutfitPhoto {
     
-    private var asset: PHAsset
+    var asset: PHAsset
     
     var id: String  {
         asset.localIdentifier
     }
     
-    var creationDate: Date? {
-        asset.creationDate
+    var creationDate: String? {
+        asset.creationDate?.longStyle
     }
     
     var location: CLLocation? {
         asset.location
     }
+   
+    var highTemp: String
+    var lowTemp: String
     
-    var imageData: Data {
-        get async {
-            await asset.data()
-        }
+    init(asset: PHAsset, highTemp: String, lowTemp: String) {
+        self.asset = asset
+        self.highTemp = highTemp
+        self.lowTemp = lowTemp
     }
 }
