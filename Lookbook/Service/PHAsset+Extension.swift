@@ -40,3 +40,17 @@ extension PHAsset {
         }
     }
 }
+
+extension PHFetchResult<PHAsset> {
+    
+    var assets: [PHAsset] {
+        
+        var output = [PHAsset]()
+        
+        self.enumerateObjects { asset, _, _ in
+            output.append(asset)
+        }
+        
+        return output
+    }
+}
