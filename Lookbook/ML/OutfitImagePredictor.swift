@@ -44,13 +44,14 @@ final class OutfitImagePredictor {
     /// - Tag: makePredictions
     func makePredictions(for data: Data, completion: @escaping (Bool) -> Void) {
         
-        let imageClassificationRequest = VNCoreMLRequest(model: OutfitImagePredictor.imageClassifier) { request, error in
+        let imageClassificationRequest = VNCoreMLRequest(model: OutfitImagePredictor.imageClassifier) { [weak self] request, error in
             guard let results = request.results as? [VNClassificationObservation],
                   let topResult = results.first else {
                 completion(false)
                 return
             }
             if topResult.identifier == "People", topResult.confidence > 0.9 {
+                self?.logger.log("Predicated, confidence: \(String(describing: topResult.confidence))")
                 completion(true)
             }
         }
