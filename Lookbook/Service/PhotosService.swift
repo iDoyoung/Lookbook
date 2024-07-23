@@ -2,8 +2,8 @@
 /// https://developer.apple.com/documentation/photokit
 /// https://developer.apple.com/documentation/photokit/phphotolibrary/requesting_changes_to_the_photo_library
 
+import Foundation
 import Photos
-import UIKit
 import os
 
 enum PhotosOptions {
@@ -27,17 +27,17 @@ final class PhotosService: PhotosServiceProtocol {
     
     // Private PROPERTIES
     
-    private let logger = Logger(subsystem: "io.doyoung.PhotosService", category: "Photos")
+    private let logger = Logger(subsystem: "io.doyoung.PhotosService", category: "Service")
     
     private let sortDescriptors = [
         NSSortDescriptor(key: "creationDate", ascending: false)
     ]
     
-    
     // MARK: Public METHODs
     
     func authorizationStatus() async throws -> PHAuthorizationStatus {
         if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined {
+            logger.log("Try request Photos Authorization")
             await PHPhotoLibrary.requestAuthorization(for: .readWrite)
         }
         
@@ -61,6 +61,9 @@ final class PhotosService: PhotosServiceProtocol {
         
         /// - setup predicate of date range of creation date
         if let dateRange {
+            if dateRange.startDate > dateRange.endDate {
+                fatalError("The start date cannot be later than the end date")
+            }
             let predicate = dateRangePredicate(
                 startDate: dateRange.startDate,
                 endDate: dateRange.endDate
@@ -69,6 +72,7 @@ final class PhotosService: PhotosServiceProtocol {
             predicates.append(predicate)
         }
         
+        logger.log("Fetch options's Predicates: \(predicates)")
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         
         fetchOptions.predicate = compoundPredicate
