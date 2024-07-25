@@ -16,14 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let photosService = PhotosService()
     let coreLocationService = CoreLocationService()
     
-    lazy var photosRepository = PhotosRepository(photosService: photosService)
     lazy var locationRepository = LocationRepository(service: coreLocationService)
     
-    lazy var requestWeatherUseCase = RequestWeatherUseCase(repository: weatherRepository)
-    lazy var photosUseCase = PhotosUseCase(repository:photosRepository)
-    lazy var getLocationAuthorizationLocationUseCase = GetLocationAuthorizationStatusUseCase(repository: locationRepository)
+//    lazy var getLocationAuthorizationLocationUseCase = GetLocationAuthorizationStatusUseCase(repository: locationRepository)
     lazy var requestLocationAuthorizationUseCase = RequestLocationAuthorizationLocationUseCase(repository: locationRepository)
-    lazy var getCurrentLocationUseCase = GetCurrentLocationUseCase(repository: locationRepository)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -31,13 +27,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         window?.rootViewController = TodayViewController
-            .buildToday(
-                requestWeatherUseCase: requestWeatherUseCase,
-                photosUseCase: photosUseCase, 
-                getLocationAuthorizationLocationUseCase: getLocationAuthorizationLocationUseCase,
-                requestLocationAuthorizationUseCase: requestLocationAuthorizationUseCase, 
-                getCurrentLocationUseCase: getCurrentLocationUseCase
-            )
+            .buildToday(locationRepository: locationRepository, 
+                        weatherRepository: weatherRepository,
+                        photosService: photosService)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
