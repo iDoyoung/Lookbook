@@ -13,7 +13,6 @@ struct WeatherOutfitView: View {
     @State private var imageData: Data? = nil
     
     var body: some View {
-        
         ZStack {
             if let data = imageData,
                let uiImage = UIImage(data: data) {
@@ -29,21 +28,7 @@ struct WeatherOutfitView: View {
                         self.imageData = await photoAsset.data()
                     }
             }
-            
-            VStack() {
-                Text(locationName ?? "")
-                    .foregroundStyle(.white)
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced)
-                    )
-                    .padding(.vertical, 5)
-                    .task {
-                        locationName = await location?.name
-                    }
-                
+            VStack {
                 HStack {
                     Text(highTemperature)
                         .foregroundStyle(.white)
@@ -70,6 +55,10 @@ struct WeatherOutfitView: View {
                             weight: .light,
                             design: .monospaced))
             }
+            .padding(6)
+            .background(.black.opacity(0.4))
         }
+        .aspectRatio(contentMode: .fill)
+        .containerRelativeFrame(.vertical)
     }
 }

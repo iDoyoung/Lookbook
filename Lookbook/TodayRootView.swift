@@ -1,26 +1,48 @@
 import SwiftUI
+import Photos
 
 struct TodayRootView: View {
     
     @State var model: TodayModel
-    @State var image: UIImage? = nil
+    
+    @State private var rotation: Double = 0
+    @State private var isScrolling = false
+    @State private var isHiddenWeatherTag: Bool = false
+    
+    @State private var scrollOffset: CGFloat = 0.0
     
     var tapLocationWaringLabel: () -> Void
     
     var body: some View {
-        ZStack(alignment: .leading) {
-        
+        ZStack {
             // 작년 복장 사진
-            Rectangle()
-                .overlay {
-                    outfitImage
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(model.outfitPhotos, id: \.id) { photo in
+                        WeatherOutfitView(
+                            photoAsset: photo.asset,
+                            location: photo.location,
+                            date: photo.creationDate,
+                            lowTemperature: photo.lowTemp,
+                            highTemperature: photo.highTemp
+                        )
                         .scaledToFill()
+                    }
+                    .onTapGesture {
+                        print("Tap")
+                        withAnimation {
+                            rotation = 0
+                        }
+                    }
                 }
-                .ignoresSafeArea()
+                .scrollTargetLayout()
+            }
+            .scrollTargetBehavior(.paging)
             
             // 오늘 날씨 정보
             VStack(alignment: .leading) {
-                       
+                
+                // 펀치 홀 UI
                 ZStack(alignment: .center) {
                     Circle()
                         .foregroundStyle(.black)
@@ -33,6 +55,7 @@ struct TodayRootView: View {
                 
                 //MARK: Location Label
                 locationLabel
+                    .padding([.top, .horizontal])
                 
                 //MARK: Weather Condition
                 HStack {
@@ -45,13 +68,16 @@ struct TodayRootView: View {
                                 design: .monospaced))
                 }
                 .padding(.top, 2)
-         
+                .padding(.horizontal)
+                
                 //MARK: Temperatures
                 Text(model.weather?.current?.temperature ?? "--")
                     .font(
                         .system(
                             size: 80,
                             weight: .light))
+                    .padding(.horizontal)
+                
                 
                 HStack {
                     Text("최고:\(model.weather?.dailyForecast?[0].maximumTemperature ?? "--")")
@@ -69,6 +95,8 @@ struct TodayRootView: View {
                                 design: .monospaced))
                         .padding(.bottom, 1)
                 }
+                .padding(.horizontal)
+                
                 
                 Text("체감 온도: \(model.weather?.current?.feelTemperature ?? "--")")
                     .font(
@@ -77,17 +105,19 @@ struct TodayRootView: View {
                             weight: .light,
                             design: .monospaced))
                     .padding(.vertical, 1)
+                    .padding(.horizontal)
                 
                 // - MARK:
                 Divider()
-                    .padding(.top)
+                    .padding(.vertical, 1)
+                    .padding(.horizontal)
+                
                 
                 // MARK: Houly Forecast
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(model.weather?.hourlyForecast ?? [], id: \.date) { weather in
                             VStack {
-                                
                                 Text(weather.date.hour)
                                     .font(
                                         .system(
@@ -110,8 +140,7 @@ struct TodayRootView: View {
                         }
                     }
                 }
-                
-                Spacer()
+                .contentMargins(10)
                 
                 //MARK: Today Date
                 Text("\(Date())")
@@ -120,30 +149,39 @@ struct TodayRootView: View {
                             size: 10,
                             weight: .light,
                             design: .monospaced))
-                    .padding(.vertical)
-//                photosWarningLabel
-//                    .background(.white)
-//                
-//                locationWarningLabel
-//                    .background(.black)
+                    .padding()
+                
+                Spacer()
+                
             }
             .frame(
                 width: 240,
                 alignment: .leading)
-            .padding()
-            .background(.thinMaterial)
-            .padding()
+            .padding(.vertical)
+            .background(.background.opacity(0.8))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(
+                        .black.opacity(0.9),
+                        lineWidth:1))
+            .padding(.vertical, 60)
+            .rotation3DEffect(
+                Angle(degrees: rotation),
+                axis: (
+                    x: 1,
+                    y: 0,
+                    z: 0),
+                anchor: .top)
+            .onTapGesture {
+                withAnimation {
+                    if rotation == 0 {
+                        rotation = -90
+                    }
+                }
+            }
         }
-    }
-    
-    @ViewBuilder
-    var outfitImage: some View {
-        if let image {
-            Image(uiImage: image)
-                .resizable()
-        } else {
-            Text("Hello, world!")
-        }
+        .ignoresSafeArea()
     }
     
     @ViewBuilder
@@ -201,16 +239,4 @@ struct TodayRootView: View {
                 .padding()
         }
     }
-}
-
-#Preview {
-    var image = UIImage(named: "sample_image.JPG")
-    
-    return TodayRootView(
-        model: .init(),
-        image: image,
-        tapLocationWaringLabel: {
-            print("Tap")
-        }
-    )
 }
