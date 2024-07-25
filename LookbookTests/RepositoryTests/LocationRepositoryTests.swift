@@ -46,15 +46,29 @@ final class LocationRepositoryTests: XCTestCase {
     func test_whenUpdatedLocationFromCoreLocationService_shouldBeUpdatedCurrentLocation() {
         
         // given
+        let promise = expectation(description: "Updated Location")
+        
         let mockLatitue: CLLocationDegrees = 37.33483990328966
         let mockLongitude: CLLocationDegrees = -122.00896129006036
         let mockLocation = CLLocation(
             latitude: mockLatitue,
             longitude: mockLongitude)
-        coreLocationServiceSpy.locationSubject.send(mockLocation)
+        
+        
+        let mockLocationInfo = LocationInfo(location: mockLocation)
         
         // then
-        XCTAssertEqual(mockLocation, sut.currentLocation.value, "업데이트 된 현재위치와 동일")
+        sut.currentLocation.sink {
+            if $0 != nil {
+                promise.fulfill()
+            }
+        }
+        .cancel()
+        
+        coreLocationServiceSpy.locationSubject.send(mockLocation)
+        
+        wait(for: [promise], timeout: 10)
+        XCTAssertEqual(mockLocationInfo, self.sut.currentLocation.value, "업데이트 된 현재위치와 동일")
     }
     
     // MARK: - Test doubles

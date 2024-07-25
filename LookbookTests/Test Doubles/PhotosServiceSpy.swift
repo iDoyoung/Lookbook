@@ -10,12 +10,12 @@ final class PhotosServiceSpy: PhotosServiceProtocol {
     var mockAuthorizationStatus: PHAuthorizationStatus = .notDetermined
     var mockFetchedAsset = PHFetchResult<PHAsset>()
     
-    func getAuthorizationStatus() async throws -> PHAuthorizationStatus {
+    func authorizationStatus() async throws -> PHAuthorizationStatus {
         calledGetAuthorizationStatus = true
         return mockAuthorizationStatus
     }
     
-    func fetchPhotos() -> PHFetchResult<PHAsset> {
+    func fetchResult() -> PHFetchResult<PHAsset> {
         calledFetchPhotos = false
         return mockFetchedAsset
     }

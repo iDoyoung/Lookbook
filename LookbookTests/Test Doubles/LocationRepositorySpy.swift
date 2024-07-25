@@ -5,8 +5,7 @@ import CoreLocation
 @testable import Lookbook
 
 final class LocationRepositorySpy: LocationRepositoryProtocol {
-    
-    var currentLocation: CurrentValueSubject<CLLocation?, Never> = CurrentValueSubject(nil)
+    var currentLocation: CurrentValueSubject<LocationInfo?, Never> = CurrentValueSubject(nil)
     var authorizationStatus: CurrentValueSubject<CLAuthorizationStatus, Never> = CurrentValueSubject(.notDetermined)
     var changedAuthorizationStatus = false
     var calledRequestAuthorization = false
