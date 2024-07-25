@@ -7,11 +7,11 @@ final class TodayViewController: ViewController {
     
     // MARK: - Properties
     
+    var photosService: PhotosServiceProtocol?
+    var photoWorker = PhotosWorker()
     // Repository
     var locationRepository: LocationRepositoryProtocol?
     var weatherRepository: WeatherRepositoryProtocol?
-    
-    var photosUseCase: PhotosUseCaseProtocol?
     
     // UI
     
@@ -37,20 +37,20 @@ final class TodayViewController: ViewController {
     func requestLocationAuthorization() {
         defaultLogger.log("Try to execute request authorization")
         locationRepository?.requestAuthorization()
-//        requestLocationAuthorizationUseCase?.execute()
     }
     
     static func buildToday(
         locationRepository: LocationRepositoryProtocol,
         weatherRepository: WeatherRepositoryProtocol,
-        photosUseCase: PhotosUseCaseProtocol) -> TodayViewController {
-            let viewController = TodayViewController()
-            viewController.locationRepository = locationRepository
-            viewController.weatherRepository = weatherRepository
-            viewController.photosUseCase = photosUseCase
-            
-            return viewController
-        }
+        photosService: PhotosService
+    ) -> TodayViewController {
+        let viewController = TodayViewController()
+        viewController.locationRepository = locationRepository
+        viewController.weatherRepository = weatherRepository
+        viewController.photosService = photosService
+        
+        return viewController
+    }
       
     // Life Cycle
     override func viewDidLoad() {
@@ -66,9 +66,8 @@ final class TodayViewController: ViewController {
         view.addSubview(hostingController.view)
         
         guard let rootView,
-              let photosUseCase,
               let locationRepository else {
-            defaultLogger.debug("Some compoenent(s) is(are) nil")
+            defaultLogger.debug("Some component(s) is(are) nil")
             return
         }
        
@@ -78,8 +77,8 @@ final class TodayViewController: ViewController {
             if let location = location?.location {
                 Task.detached {  @MainActor in
                     try await self.weatherRepository?.requestWeather(for: location)
-                    let currentWeather: WeatherData? = self.weatherRepository?[location]
-                   
+                    await self.requestLastYearWeathers(location: location)
+                    let currentWeather: CurrentlyWeather? = self.weatherRepository?[location]
                     rootView.model.weather = currentWeather
                 }
             }
@@ -99,7 +98,32 @@ final class TodayViewController: ViewController {
         .store(in: &cancellableBag)
         
         Task {
-            rootView.model.photosAuthorizationStatus = await photosUseCase.execute()
+            switch try? await photosService?.authorizationStatus() {
+            case .notDetermined:
+                break
+            case .restricted, .denied:
+                rootView.model.locationAuthorizationStatus = .unauthorized
+            case .authorized:
+                rootView.model.locationAuthorizationStatus = .authorized
+                rootView.model.photosAssets = (try? await photoWorker.fetchPhotosAssets()) ?? []
+            case .limited:
+                break
+            case .none:
+                defaultLogger.debug("Photos 권한 nil")
+            @unknown default:
+                defaultLogger.debug("")
+            }
         }
+    }
+   
+    func requestLastYearWeathers(location: CLLocation) async {
+        let calendar = Calendar.current
+        let today = Date()
+        guard let lastYear = calendar.date(byAdding: .year, value: -1, to: today),
+              let lastYearAndTenDayAgo = calendar.date(byAdding: .day, value: -10, to: lastYear) else {
+            return
+        }
+        try! await weatherRepository?.requestWeathr(for: location, startDate: lastYearAndTenDayAgo, endDate: lastYear)
+        rootView?.model.lastYearWeathers = self.weatherRepository?[location]
     }
 }
