@@ -70,9 +70,10 @@ extension CoreLocationService: CLLocationManagerDelegate {
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          logger.log("Updating Location")
          if let location = locations.last {
-            logger.log("Read location by Core Location: \(location)")
-            locationSubject.send(location)
-        }
+             logger.log("Read location by Core Location: \(location)")
+             locationSubject.send(location)
+             manager.stopUpdatingLocation()
+         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
