@@ -18,9 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var locationRepository = LocationRepository(service: coreLocationService)
     
-//    lazy var getLocationAuthorizationLocationUseCase = GetLocationAuthorizationStatusUseCase(repository: locationRepository)
-    lazy var requestLocationAuthorizationUseCase = RequestLocationAuthorizationLocationUseCase(repository: locationRepository)
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
