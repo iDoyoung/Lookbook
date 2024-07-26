@@ -27,6 +27,7 @@
 		7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F302C520F2B0069925C /* TodayModel.swift */; };
 		7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F352C520F2B0069925C /* ViewController.swift */; };
 		7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */; };
+		7F6A0F402C5344150069925C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */; };
 		7F77240B2C0EF31C00C01394 /* PhotosUseCaseSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F77240A2C0EF31C00C01394 /* PhotosUseCaseSpy.swift */; };
 		7F929F2F2C1D3324001F48E7 /* GetCurrentLocationUseCaseSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F929F2E2C1D3324001F48E7 /* GetCurrentLocationUseCaseSpy.swift */; };
 		7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */; };
@@ -96,6 +97,7 @@
 		7F6A0F322C520F2B0069925C /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		7F6A0F352C520F2B0069925C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherOutfitView.swift; sourceTree = "<group>"; };
+		7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Resources/Lookbook/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7F77240A2C0EF31C00C01394 /* PhotosUseCaseSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosUseCaseSpy.swift; sourceTree = "<group>"; };
 		7F929F2E2C1D3324001F48E7 /* GetCurrentLocationUseCaseSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentLocationUseCaseSpy.swift; sourceTree = "<group>"; };
 		7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepositorySpy.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 		7FC02EB32BFB00E600217CAE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */,
 				7FC02EB42BFB063700217CAE /* sample_image.JPG */,
 			);
 			path = Resources;
@@ -465,6 +468,9 @@
 				Base,
 			);
 			mainGroup = 7FA27BC82BECDB5900BDB1A9;
+			packageReferences = (
+				7F6A0F412C5344C10069925C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 7FA27BD22BECDB5900BDB1A9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -482,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA27BE12BECDB5A00BDB1A9 /* LaunchScreen.storyboard in Resources */,
+				7F6A0F402C5344150069925C /* GoogleService-Info.plist in Resources */,
 				7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */,
 				7FA27BDE2BECDB5A00BDB1A9 /* Assets.xcassets in Resources */,
 			);
@@ -893,6 +900,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7F6A0F412C5344C10069925C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.29.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7FA27BC92BECDB5900BDB1A9 /* Project object */;
 }
