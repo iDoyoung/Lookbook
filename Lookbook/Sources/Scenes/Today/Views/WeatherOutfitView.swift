@@ -13,40 +13,9 @@ struct WeatherOutfitView: View {
     @State private var imageData: Data? = nil
     
     var body: some View {
-        ZStack {
-            if let data = imageData,
-               let uiImage = UIImage(data: data) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .onDisappear {
-                        imageData = nil
-                    }
-            } else {
-                ProgressView()
-                    .task {
-                        self.imageData = await photoAsset.data()
-                    }
-            }
-            VStack {
-                HStack {
-                    Text(highTemperature)
-                        .foregroundStyle(.white)
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .black,
-                                design: .monospaced))
-                    
-                    Text(lowTemperature)
-                        .foregroundStyle(.white)
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .regular,
-                                design: .monospaced))
-                }
-                
+        VStack {
+            Spacer()
+            HStack {
                 Text(date ?? "")
                     .foregroundStyle(.white)
                     .font(
@@ -54,11 +23,63 @@ struct WeatherOutfitView: View {
                             size: 16,
                             weight: .light,
                             design: .monospaced))
+                
+                Spacer()
+                
+                Text(highTemperature)
+                    .foregroundStyle(.white)
+                    .font(
+                        .system(
+                            size: 20,
+                            weight: .black,
+                            design: .monospaced))
+                
+                Text(lowTemperature)
+                    .foregroundStyle(.white)
+                    .font(
+                        .system(
+                            size: 20,
+                            weight: .regular,
+                            design: .monospaced))
             }
-            .padding(6)
-            .background(.black.opacity(0.4))
+            .padding()
         }
-        .aspectRatio(contentMode: .fill)
+        .background(
+            imageView
+        )
         .containerRelativeFrame(.vertical)
     }
+    
+    @ViewBuilder
+    var imageView: some View {
+        if let data = imageData,
+           let uiImage = UIImage(data: data) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .onDisappear {
+                    imageData = nil
+                }
+        } else {
+            Rectangle()
+                .foregroundStyle(Color(uiColor: .lightGray))
+                .scaledToFill()
+                .task {
+                    self.imageData = await photoAsset.data()
+                }
+        }
+    }
+}
+
+#Preview {
+    var preview = WeatherOutfitView(
+        photoAsset: PHAsset.init(),
+        location: nil,
+        date: "qwer qwer",
+        locationName: "nil",
+        lowTemperature: "qwerty",
+        highTemperature: "qwerty"
+    )
+   
+    return preview
 }
