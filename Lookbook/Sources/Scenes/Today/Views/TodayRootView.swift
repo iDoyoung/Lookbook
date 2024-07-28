@@ -4,12 +4,8 @@ import Photos
 struct TodayRootView: View {
     
     @State var model: TodayModel
-    
-    @State private var rotation: Double = 0
     @State private var isScrolling = false
     @State private var isHiddenWeatherTag: Bool = false
-    
-    @State private var scrollOffset: CGFloat = 0.0
     
     var tapLocationWaringLabel: () -> Void
     
@@ -27,12 +23,6 @@ struct TodayRootView: View {
                             highTemperature: photo.highTemp
                         )
                         .scaledToFill()
-                    }
-                    .onTapGesture {
-                        print("Tap")
-                        withAnimation {
-                            rotation = 0
-                        }
                     }
                 }
                 .scrollTargetLayout()
@@ -77,7 +67,6 @@ struct TodayRootView: View {
                             size: 80,
                             weight: .light))
                     .padding(.horizontal)
-                
                 
                 HStack {
                     Text("최고:\(model.weather?.dailyForecast?[0].maximumTemperature ?? "--")")
@@ -153,11 +142,20 @@ struct TodayRootView: View {
                 
                 Spacer()
                 
+                GoogleAdBannerView()
+                    .frame(height: 50, alignment: .bottom)
+                
+                HStack {
+                    Image(systemName: "info.circle.fill")
+                        .frame(width: 20)
+                        .aspectRatio(1, contentMode: .fit)
+                }
+                .padding()
             }
             .frame(
                 width: 240,
                 alignment: .leading)
-            .padding(.vertical)
+            .padding(.top)
             .background(.background.opacity(0.8))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
@@ -166,22 +164,14 @@ struct TodayRootView: View {
                         .black.opacity(0.9),
                         lineWidth:1))
             .padding(.vertical, 60)
-            .rotation3DEffect(
-                Angle(degrees: rotation),
-                axis: (
-                    x: 1,
-                    y: 0,
-                    z: 0),
-                anchor: .top)
-            .onTapGesture {
-                withAnimation {
-                    if rotation == 0 {
-                        rotation = -90
-                    }
-                }
-            }
+            .rotation3DEffect(.degrees(isHiddenWeatherTag ? -81 : 0), axis: (1, 0, 0), anchor: .top)
         }
         .ignoresSafeArea()
+        .onTapGesture { position in
+            withAnimation {
+                isHiddenWeatherTag.toggle()
+            }
+        }
     }
     
     @ViewBuilder
