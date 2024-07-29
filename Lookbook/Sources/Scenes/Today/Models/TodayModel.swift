@@ -5,7 +5,7 @@ import UIKit
 @Observable
 class TodayModel {
     var photosAuthorizationStatus: PhotosAuthStatus? = nil
-    var locationAuthorizationStatus: LocationAuthorizationStatus = .unauthorized
+    var locationAuthorizationStatus: LocationAuthorizationStatus? = nil
     var location: LocationInfo? = nil
     var weather: CurrentlyWeather? = nil
     var photosData: [Data] = []
