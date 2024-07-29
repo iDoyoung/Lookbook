@@ -7,8 +7,7 @@ final class TodayViewController: ViewController {
     
     // MARK: - Properties
     
-    var photosService: PhotosServiceProtocol?
-    var photoWorker = PhotosWorker()
+    var photosWorker: PhotosWorker?
     // Repository
     var locationRepository: LocationRepositoryProtocol?
     var weatherRepository: WeatherRepositoryProtocol?
@@ -23,17 +22,15 @@ final class TodayViewController: ViewController {
     // MARK: - Method
     private func buildHostingController() {
         rootView = TodayRootView(
-            model: TodayModel(),
-            tapLocationWaringLabel: { [weak self] in
-            self?.requestLocationAuthorization()
-        })
+            model: TodayModel()
+       )
         if let rootView {
             hostingController = UIHostingController(rootView: rootView)
         } else {
             fatalError()
         }
     }
-    
+   
     func requestLocationAuthorization() {
         defaultLogger.log("Try to execute request authorization")
         locationRepository?.requestAuthorization()
@@ -42,12 +39,12 @@ final class TodayViewController: ViewController {
     static func buildToday(
         locationRepository: LocationRepositoryProtocol,
         weatherRepository: WeatherRepositoryProtocol,
-        photosService: PhotosService
+        photosWorker: PhotosWorker
     ) -> TodayViewController {
         let viewController = TodayViewController()
         viewController.locationRepository = locationRepository
         viewController.weatherRepository = weatherRepository
-        viewController.photosService = photosService
+        viewController.photosWorker = photosWorker
         
         return viewController
     }
@@ -64,13 +61,17 @@ final class TodayViewController: ViewController {
         addChild(hostingController)
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
         
         guard let rootView,
               let locationRepository else {
             defaultLogger.debug("Some component(s) is(are) nil")
             return
         }
-       
+        
         // Interactor
         locationRepository.currentLocation.sink { location in
             self.rootView?.model.location = location
@@ -84,7 +85,6 @@ final class TodayViewController: ViewController {
             }
         }
         .store(in: &cancellableBag)
-        
         locationRepository.authorizationStatus.sink { status in
             switch status {
             case .notDetermined, .restricted, .denied:
@@ -98,16 +98,16 @@ final class TodayViewController: ViewController {
         .store(in: &cancellableBag)
         
         Task {
-            switch try? await photosService?.authorizationStatus() {
+            switch try? await photosWorker?.authorizationStatus() {
             case .notDetermined:
                 break
             case .restricted, .denied:
-                rootView.model.locationAuthorizationStatus = .unauthorized
+                rootView.model.photosAuthorizationStatus = .restrictedOrDenied
             case .authorized:
-                rootView.model.locationAuthorizationStatus = .authorized
-                rootView.model.photosAssets = (try? await photoWorker.fetchPhotosAssets()) ?? []
+                rootView.model.photosAuthorizationStatus = .all
+                rootView.model.photosAssets = (try? await photosWorker?.fetchPhotosAssets()) ?? []
             case .limited:
-                break
+                rootView.model.photosAuthorizationStatus = .limited
             case .none:
                 defaultLogger.debug("Photos 권한 nil")
             @unknown default:
@@ -115,7 +115,7 @@ final class TodayViewController: ViewController {
             }
         }
     }
-   
+  
     func requestLastYearWeathers(location: CLLocation) async {
         let calendar = Calendar.current
         let today = Date()
