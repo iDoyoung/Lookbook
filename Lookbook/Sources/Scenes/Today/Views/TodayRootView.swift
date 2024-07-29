@@ -7,8 +7,6 @@ struct TodayRootView: View {
     @State private var isScrolling = false
     @State private var isHiddenWeatherTag: Bool = false
     
-    var tapLocationWaringLabel: () -> Void
-    
     var body: some View {
         ZStack {
             // 작년 복장 사진
@@ -142,13 +140,21 @@ struct TodayRootView: View {
                 
                 Spacer()
                 
+                VStack(alignment: .leading, spacing: 4) {
+                    locationWarningLabel
+                    photosWarningLabel
+                }
+                
                 GoogleAdBannerView()
                     .frame(height: 50, alignment: .bottom)
-                
+               
                 HStack {
-                    Image(systemName: "info.circle.fill")
-                        .frame(width: 20)
-                        .aspectRatio(1, contentMode: .fit)
+                    Image(systemName: "gearshape.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .onTapGesture {
+                            
+                        }
                 }
                 .padding()
             }
@@ -195,38 +201,72 @@ struct TodayRootView: View {
     @ViewBuilder
     var locationWarningLabel: some View {
         if model.locationAuthorizationStatus == .unauthorized {
-            Text("⚠️ 위치 접근 권한에 대해 거절 상태입니다. 정확한 현재 위치를 알 수 없어서, 현재 위치에 날씨 정보를 얻기 위해서는 탭해주세요.")
+            Text("⚠️ 위치 접근 권한에 대해 거절 상태입니다. 현재 위치에 날씨 정보를 얻기 위해서 권한을 설정해주세요.")
                 .foregroundStyle(.white)
                 .font(
                     .system(
                         size: 12,
                         weight: .light))
-                .padding()
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .padding(6)
+                .background(.black)
+                .border(.yellow, width: 2)
+                .padding(.horizontal, 6)
                 .onTapGesture {
-                    // Show Alert
-                    tapLocationWaringLabel()
+                    openSetting()
                 }
         }
     }
     
     @ViewBuilder
     var photosWarningLabel: some View {
-        if model.photosAuthorizationStatus == .restrictedOrDenied {
-            Text("You've given Lookbook access to a select number of photos.")
-                .font(
-                .system(
-                    size: 12,
-                    weight: .light))
-                .foregroundStyle(.black)
-                .padding()
-        } else if model.photosAuthorizationStatus == .restrictedOrDenied {
-            Text("Please allow access to your photos")
+        if model.photosAuthorizationStatus == .limited {
+            
+            // You've given Lookbook access to a select number of photos.
+            Text(" 제한된 사진 접근상태입니다.")
                 .font(
                     .system(
                         size: 12,
                         weight: .light))
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
                 .foregroundStyle(.black)
-                .padding()
+                .padding(.horizontal, 6)
+                .onTapGesture {
+                    openSetting()
+                }
+        } else if model.photosAuthorizationStatus == .restrictedOrDenied {
+            
+            // Please allow access to your photos
+            Text("⚠️ 사진에 접근을 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+                .foregroundStyle(.white)
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .light))
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .frame(maxWidth: .infinity)
+                .padding(6)
+                .background(.black)
+                .border(.yellow, width: 2)
+                .padding(.horizontal, 6)
+                .onTapGesture {
+                    openSetting()
+                }
+        }
+    }
+    
+    func openSetting() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
         }
     }
 }
