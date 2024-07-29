@@ -13,8 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var weatherRepository = WeatherRepository()
     
-    let photosService = PhotosService()
     let coreLocationService = CoreLocationService()
+    var photosWorker = PhotosWorker()
     
     lazy var locationRepository = LocationRepository(service: coreLocationService)
     
@@ -24,9 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         window?.rootViewController = TodayViewController
-            .buildToday(locationRepository: locationRepository, 
+            .buildToday(locationRepository: locationRepository,
                         weatherRepository: weatherRepository,
-                        photosService: photosService)
+                        photosWorker: photosWorker)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
