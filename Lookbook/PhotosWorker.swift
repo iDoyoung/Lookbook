@@ -8,6 +8,10 @@ class PhotosWorker {
     private var predictor = OutfitImagePredictor()
     private let logger = Logger(subsystem: "", category: "worker")
     
+    func authorizationStatus() async throws -> PHAuthorizationStatus {
+        try await service.authorizationStatus()
+    }
+    
     func fetchPhotosAssets() async throws -> [PHAsset] {
         // 날짜 계산
         // 작년 기준 10일 전에 사진을 뷰에 나타내야한다.
