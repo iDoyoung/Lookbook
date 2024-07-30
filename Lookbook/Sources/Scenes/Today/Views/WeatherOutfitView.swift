@@ -70,16 +70,3 @@ struct WeatherOutfitView: View {
         }
     }
 }
-
-#Preview {
-    var preview = WeatherOutfitView(
-        photoAsset: PHAsset.init(),
-        location: nil,
-        date: "qwer qwer",
-        locationName: "nil",
-        lowTemperature: "qwerty",
-        highTemperature: "qwerty"
-    )
-   
-    return preview
-}

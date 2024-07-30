@@ -58,13 +58,12 @@ final class LocationRepositoryTests: XCTestCase {
         let mockLocationInfo = LocationInfo(location: mockLocation)
         
         // then
-        sut.currentLocation.sink {
-            if $0 != nil {
+        let cancellable = sut.currentLocation.sink { location in
+            if location == mockLocationInfo {
                 promise.fulfill()
             }
         }
-        .cancel()
-        
+       
         coreLocationServiceSpy.locationSubject.send(mockLocation)
         
         wait(for: [promise], timeout: 10)

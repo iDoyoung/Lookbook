@@ -21,7 +21,7 @@ protocol PhotosServiceProtocol {
 }
 
 final class PhotosService: PhotosServiceProtocol {
-   
+    
     enum AlbumType { case userAlbum(title: String? = nil), smartAlbum(subtype: PHAssetCollectionSubtype) }
     enum MediaType { case all, image, video }
     
@@ -54,7 +54,7 @@ final class PhotosService: PhotosServiceProtocol {
         
         var predicates = [NSPredicate]()
         
-    /// - setup predicate of media type
+        /// - setup predicate of media type
         if let mediaTypePredicate = mediaTypePredicate(mediaType) {
             predicates.append(mediaTypePredicate)
         }
