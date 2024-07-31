@@ -17,6 +17,8 @@
 		7F4948082C06D246004CD52F /* CoreLocationServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4948072C06D246004CD52F /* CoreLocationServiceSpy.swift */; };
 		7F4DCD1F2C2AA3D600343EDA /* Date+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4DCD1E2C2AA3D600343EDA /* Date+Extentions.swift */; };
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
+		7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */; };
+		7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6020922C59E23D001C8D26 /* SettingRootView.swift */; };
 		7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F252C4CA5270069925C /* HourlyWeather.swift */; };
 		7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F272C4CA5720069925C /* DailyWeather.swift */; };
 		7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */; };
@@ -46,10 +48,10 @@
 		7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673C82C44B28C009DFDB8 /* PhotosWorker.swift */; };
 		7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */; };
 		7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 7FC02EB42BFB063700217CAE /* sample_image.JPG */; };
+		7FC758782C59E4300080D523 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7FC758772C59E4300080D523 /* GoogleMobileAds */; };
 		7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */; };
 		7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */; };
 		7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */; };
-		7FF2F1682C54893D0076F2C2 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7FF2F1672C54893D0076F2C2 /* GoogleMobileAds */; };
 		7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +83,8 @@
 		7F4948072C06D246004CD52F /* CoreLocationServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationServiceSpy.swift; sourceTree = "<group>"; };
 		7F4DCD1E2C2AA3D600343EDA /* Date+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extentions.swift"; sourceTree = "<group>"; };
 		7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTests.swift; sourceTree = "<group>"; };
-		7F60208C2C58B398001C8D26 /* Lookbook-DEVELOP.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Lookbook-DEVELOP.xctestplan"; sourceTree = "<group>"; };
+		7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		7F6020922C59E23D001C8D26 /* SettingRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRootView.swift; sourceTree = "<group>"; };
 		7F6A0F252C4CA5270069925C /* HourlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeather.swift; sourceTree = "<group>"; };
 		7F6A0F272C4CA5720069925C /* DailyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeather.swift; sourceTree = "<group>"; };
 		7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Measurement<UnitTemperature>+Rouded.swift"; sourceTree = "<group>"; };
@@ -128,7 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FF2F1682C54893D0076F2C2 /* GoogleMobileAds in Frameworks */,
+				7FC758782C59E4300080D523 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +193,23 @@
 			path = Weather;
 			sourceTree = "<group>";
 		};
+		7F60208D2C58B8C0001C8D26 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				7F6020912C59E22C001C8D26 /* Views */,
+				7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		7F6020912C59E22C001C8D26 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7F6020922C59E23D001C8D26 /* SettingRootView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7F6A0F332C520F2B0069925C /* Today */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +228,7 @@
 				7FB11E422C58966C00A47321 /* Workers */,
 				7F6A0F4B2C538DD20069925C /* GoogleAd */,
 				7F6A0F332C520F2B0069925C /* Today */,
+				7F60208D2C58B8C0001C8D26 /* Setting */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -281,7 +302,6 @@
 		7FA27BC82BECDB5900BDB1A9 = {
 			isa = PBXGroup;
 			children = (
-				7F60208C2C58B398001C8D26 /* Lookbook-DEVELOP.xctestplan */,
 				7FA27BD32BECDB5900BDB1A9 /* Lookbook */,
 				7FA27BEA2BECDB5B00BDB1A9 /* LookbookTests */,
 				7FA27BF42BECDB5B00BDB1A9 /* LookbookUITests */,
@@ -462,7 +482,7 @@
 			);
 			name = Lookbook;
 			packageProductDependencies = (
-				7FF2F1672C54893D0076F2C2 /* GoogleMobileAds */,
+				7FC758772C59E4300080D523 /* GoogleMobileAds */,
 			);
 			productName = Lookbook;
 			productReference = 7FA27BD12BECDB5900BDB1A9 /* Lookbook.app */;
@@ -588,6 +608,7 @@
 				7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */,
 				7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */,
 				7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */,
+				7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */,
 				7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */,
 				7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */,
 				7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */,
@@ -598,6 +619,7 @@
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
 				7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */,
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
+				7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */,
 				7F6A0F382C520F570069925C /* TodayRootView.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
@@ -1111,7 +1133,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7FF2F1672C54893D0076F2C2 /* GoogleMobileAds */ = {
+		7FC758772C59E4300080D523 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7FF2F1652C5483890076F2C2 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
