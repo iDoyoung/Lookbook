@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingRootView: View {
     
     @State var temperatureUnit: UnitTemperature
+    @State private var scale: CGFloat = 0.0
 
     var body: some View {
         GeometryReader { proxy in
@@ -41,6 +42,7 @@ struct SettingRootView: View {
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
+                .scaleEffect(scale)
                 .onTapGesture {
                     // TODO: Save in User Default
                     if temperatureUnit == UnitTemperature.celsius {
@@ -81,9 +83,15 @@ struct SettingRootView: View {
                 .background(.thinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
+                .scaleEffect(scale)
             }
         }
         .padding()
+        .onAppear {
+            withAnimation {
+                scale = 1.0
+            }
+        }
     }
 }
 
