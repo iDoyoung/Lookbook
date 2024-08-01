@@ -10,7 +10,8 @@ import SwiftUI
 struct SettingRootView: View {
     
     @State var temperatureUnit: UnitTemperature
-    @State private var scale: CGFloat = 0.0
+    @State private var tempUnitScale: CGFloat = 0.0
+    @State private var trademarkScale: CGFloat = 0.0
 
     var body: some View {
         GeometryReader { proxy in
@@ -21,7 +22,6 @@ struct SettingRootView: View {
                     // app icon image
                     
                     // 앱이름
-                    
                 }
                 
                 VStack {
@@ -42,8 +42,8 @@ struct SettingRootView: View {
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
-                .scaleEffect(scale)
-                .onTapGesture {
+                .scaleEffect(tempUnitScale)
+                .onLongPressGesture(minimumDuration: 1) {
                     // TODO: Save in User Default
                     if temperatureUnit == UnitTemperature.celsius {
                         temperatureUnit = UnitTemperature.fahrenheit
@@ -52,7 +52,16 @@ struct SettingRootView: View {
                     } else if temperatureUnit == UnitTemperature.kelvin {
                         temperatureUnit = UnitTemperature.celsius
                     }
+                } onPressingChanged: { inProgress in
+                    withAnimation(.spring) {
+                        if inProgress {
+                            tempUnitScale -= 0.1
+                        } else {
+                            tempUnitScale = 1
+                        }
+                    }
                 }
+                .sensoryFeedback(.selection, trigger: temperatureUnit)
                 
                 Spacer()
                 
@@ -83,13 +92,14 @@ struct SettingRootView: View {
                 .background(.thinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
-                .scaleEffect(scale)
+                .scaleEffect(trademarkScale)
             }
         }
         .padding()
         .onAppear {
-            withAnimation {
-                scale = 1.0
+            withAnimation(.spring) {
+                tempUnitScale = 1
+                trademarkScale = 1
             }
         }
     }
