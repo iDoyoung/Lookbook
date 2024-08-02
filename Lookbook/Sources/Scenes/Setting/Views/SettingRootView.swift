@@ -1,15 +1,8 @@
-//
-//  SettingRootView.swift
-//  Lookbook
-//
-//  Created by Doyoung on 7/31/24.
-//
-
 import SwiftUI
 
 struct SettingRootView: View {
     
-    @State var temperatureUnit: UnitTemperature
+    @AppStorage("is_fahrenheit") var isFahrenheit: Bool = false
     @State private var tempUnitScale: CGFloat = 0.0
     @State private var trademarkScale: CGFloat = 0.0
 
@@ -25,7 +18,7 @@ struct SettingRootView: View {
                 }
                 
                 VStack {
-                    Text(temperatureUnit.symbol)
+                    Text(isFahrenheit ? UnitTemperature.fahrenheit.symbol: UnitTemperature.celsius.symbol)
                         .font(
                             .system(
                                 size: 30,
@@ -44,24 +37,23 @@ struct SettingRootView: View {
                 .padding()
                 .scaleEffect(tempUnitScale)
                 .onLongPressGesture(minimumDuration: 1) {
-                    // TODO: Save in User Default
-                    if temperatureUnit == UnitTemperature.celsius {
-                        temperatureUnit = UnitTemperature.fahrenheit
-                    } else if temperatureUnit == UnitTemperature.fahrenheit {
-                        temperatureUnit = UnitTemperature.kelvin
-                    } else if temperatureUnit == UnitTemperature.kelvin {
-                        temperatureUnit = UnitTemperature.celsius
-                    }
-                } onPressingChanged: { inProgress in
+                    isFahrenheit.toggle()
+                } onPressingChanged: { isProgress in
                     withAnimation(.spring) {
-                        if inProgress {
+                        if isProgress {
                             tempUnitScale -= 0.1
                         } else {
                             tempUnitScale = 1
                         }
                     }
                 }
-                .sensoryFeedback(.selection, trigger: temperatureUnit)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded({ _ in
+                            isFahrenheit.toggle()
+                        })
+                )
+                .sensoryFeedback(.selection, trigger: isFahrenheit)
                 
                 Spacer()
                 
@@ -106,5 +98,5 @@ struct SettingRootView: View {
 }
 
 #Preview {
-    SettingRootView(temperatureUnit: .celsius)
+    SettingRootView()
 }
