@@ -94,6 +94,7 @@ struct SettingRootView: View {
                 trademarkScale = 1
             }
         }
+        .safeAreaPadding(.bottom)
     }
 }
 
