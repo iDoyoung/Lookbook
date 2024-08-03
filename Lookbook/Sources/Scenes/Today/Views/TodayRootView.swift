@@ -6,6 +6,9 @@ struct TodayRootView: View {
     @State var model: TodayModel
     @State private var isScrolling = false
     @State private var isHiddenWeatherTag: Bool = false
+    @State private var weatherTagScale: CGFloat = 1
+    
+    var tapSetting: () -> Void
     
     var body: some View {
         ZStack {
@@ -47,8 +50,8 @@ struct TodayRootView: View {
                 
                 //MARK: Weather Condition
                 HStack {
-                    Text(Image(systemName: model.weather?.current?.symbolName ?? "questionmark"))
-                    Text(model.weather?.current?.condition ?? "")
+                    Text(Image(systemName: model.symbolName ?? "questionmark"))
+                    Text(model.weatherCondition)
                         .font(
                             .system(
                                 size: 16,
@@ -59,7 +62,7 @@ struct TodayRootView: View {
                 .padding(.horizontal)
                 
                 //MARK: Temperatures
-                Text(model.weather?.current?.temperature ?? "--")
+                Text(model.currentTemperature)
                     .font(
                         .system(
                             size: 80,
@@ -67,14 +70,14 @@ struct TodayRootView: View {
                     .padding(.horizontal)
                 
                 HStack {
-                    Text("최고:\(model.weather?.dailyForecast?[0].maximumTemperature ?? "--")")
+                    Text(model.maximumTemperature)
                         .font(
                             .system(
                                 size: 16,
                                 weight: .light,
                                 design: .monospaced))
                     
-                    Text("최저:\(model.weather?.dailyForecast?[0].minimumTemperature ?? "--")")
+                    Text(model.minimumTemperature)
                         .font(
                             .system(
                                 size: 16,
@@ -85,7 +88,7 @@ struct TodayRootView: View {
                 .padding(.horizontal)
                 
                 
-                Text("체감 온도: \(model.weather?.current?.feelTemperature ?? "--")")
+                Text(model.feelTemperature)
                     .font(
                         .system(
                             size: 16,
@@ -103,9 +106,9 @@ struct TodayRootView: View {
                 // MARK: Houly Forecast
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(model.weather?.hourlyForecast ?? [], id: \.date) { weather in
+                        ForEach(model.todayForcast ?? [], id: \.date) { weather in
                             VStack {
-                                Text(weather.date.hour)
+                                Text(weather.date)
                                     .font(
                                         .system(
                                             size: 14,
@@ -153,7 +156,7 @@ struct TodayRootView: View {
                         .resizable()
                         .frame(width: 20, height: 20)
                         .onTapGesture {
-                            
+                            tapSetting()
                         }
                 }
                 .padding()
@@ -170,12 +173,19 @@ struct TodayRootView: View {
                         .black.opacity(0.9),
                         lineWidth:1))
             .padding(.vertical, 60)
-            .rotation3DEffect(.degrees(isHiddenWeatherTag ? -81 : 0), axis: (1, 0, 0), anchor: .top)
+            .frame(maxWidth: .infinity)
+            .rotation3DEffect(.degrees(isHiddenWeatherTag ? 40 : 0), axis: (0, 1, 0), anchor: .center)
+            .scaleEffect(
+                x: weatherTagScale,
+                y: weatherTagScale,
+                anchor: .leading
+            )
         }
         .ignoresSafeArea()
         .onTapGesture { position in
             withAnimation {
                 isHiddenWeatherTag.toggle()
+                weatherTagScale = isHiddenWeatherTag ? 0.2: 1
             }
         }
     }
