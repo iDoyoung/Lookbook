@@ -10,8 +10,8 @@ struct CurrentlyWeather {
     struct Current {
         var date: Date
         
-        var temperature: String
-        var feelTemperature: String
+        var temperature: Measurement<UnitTemperature>
+        var feelTemperature: Measurement<UnitTemperature>
         
         var condition: String
         var symbolName: String
@@ -23,8 +23,8 @@ struct CurrentlyWeather {
         let currentWeather = weather.currentWeather
         current = Current(
             date: currentWeather.date,
-            temperature: currentWeather.temperature.rounded,
-            feelTemperature: currentWeather.apparentTemperature.rounded,
+            temperature: currentWeather.temperature,
+            feelTemperature: currentWeather.apparentTemperature,
             condition: currentWeather.condition.accessibilityDescription,
             symbolName: currentWeather.symbolName)
         dailyForecast = weather.dailyForecast.map { DailyWeather(for: $0)}

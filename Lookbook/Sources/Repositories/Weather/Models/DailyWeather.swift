@@ -8,12 +8,19 @@ struct DailyWeather {
     var condition: String
     var symbolName: String
     
-    var maximumTemperature: String
-    var minimumTemperature: String
+    var maximumTemperature: Measurement<UnitTemperature>
+    var minimumTemperature: Measurement<UnitTemperature>
     
     var precipitationChance: Int
     
-    init(date: Date, condition: String, symbolName: String, maximumTemperature: String, minimumTemperature: String, precipitationChance: Int) {
+    init(
+        date: Date,
+        condition: String,
+        symbolName: String,
+        maximumTemperature: Measurement<UnitTemperature>,
+        minimumTemperature: Measurement<UnitTemperature>,
+        precipitationChance: Int
+    ) {
         self.date = date
         self.condition = condition
         self.symbolName = symbolName
@@ -25,8 +32,8 @@ struct DailyWeather {
     init(for dayWeather: DayWeather) {
         date = dayWeather.date
         
-        maximumTemperature = dayWeather.highTemperature.rounded
-        minimumTemperature = dayWeather.lowTemperature.rounded
+        maximumTemperature = dayWeather.highTemperature
+        minimumTemperature = dayWeather.lowTemperature
         
         condition = dayWeather.condition.accessibilityDescription
         

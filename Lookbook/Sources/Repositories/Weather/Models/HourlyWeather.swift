@@ -4,8 +4,8 @@ import Foundation
 struct HourlyWeather {
     var date: Date
     
-    var temperature: String
-    var feelTemperature: String
+    var temperature: Measurement<UnitTemperature>
+    var feelTemperature: Measurement<UnitTemperature>
     
     var condition: String
     var symbolName: String
@@ -13,8 +13,8 @@ struct HourlyWeather {
     
     init(
         date: Date,
-        temperature: String,
-        feelTemperature: String,
+        temperature: Measurement<UnitTemperature>,
+        feelTemperature: Measurement<UnitTemperature>,
         condition: String,
         symbolName: String,
         precipitationChance: Int
@@ -30,8 +30,8 @@ struct HourlyWeather {
     init(for hourWeather: HourWeather) {
         date = hourWeather.date
         
-        temperature = hourWeather.temperature.rounded
-        feelTemperature = hourWeather.apparentTemperature.rounded
+        temperature = hourWeather.temperature
+        feelTemperature = hourWeather.apparentTemperature
         
         condition = hourWeather.condition.accessibilityDescription
         
