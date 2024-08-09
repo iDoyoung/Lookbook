@@ -46,29 +46,17 @@ class PhotosWorker {
             )
             .assets
         
-        let datas: [PHAsset] = await withTaskGroup(of: PHAsset?.self) { [weak self] group in
+        var datas = [PHAsset]()
+        
+        for index in 0..<fetchedAssets.count {
+            let asset = fetchedAssets[index]
+            let data = await asset.data()
             
-            guard let self else { fatalError() }
-            let count = fetchedAssets.count > 150 ? 100 : fetchedAssets.count
-            for index in 0..<count {
-                
-                group.addTask {
-                    let asset = fetchedAssets[index]
-                    let data = await asset.data()
-                    
-                    var predicate: Bool = false
-                    
-                    self.predictor.makePredictions(for: data) { res in
-                        predicate = res
-                    }
-                    
-                    return  predicate ? asset: nil
+            self.predictor.makePredictions(for: data) { isOutfitPhoto in
+                if isOutfitPhoto {
+                    datas.append(asset)
                 }
             }
-            
-            return await group
-                .reduce(into: [PHAsset?]()) { $0.append($1) }
-                .compactMap { $0 }
         }
         
         return datas
