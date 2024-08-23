@@ -6,7 +6,6 @@ import CoreLocation
 final class TodayViewController: ViewController {
     
     // MARK: - Properties
-    
     var photosWorker: PhotosWorker?
     // Repository
     var locationRepository: LocationRepositoryProtocol?
@@ -22,8 +21,12 @@ final class TodayViewController: ViewController {
     // MARK: - Method
     private func buildHostingController() {
         rootView = TodayRootView(
-            model: TodayModel()
-       )
+            model: TodayModel(),
+            tapSetting: {
+                self.presentSetting()
+            }
+        )
+        
         if let rootView {
             hostingController = UIHostingController(rootView: rootView)
         } else {
@@ -125,5 +128,12 @@ final class TodayViewController: ViewController {
         }
         try! await weatherRepository?.requestWeathr(for: location, startDate: lastYearAndTenDayAgo, endDate: lastYear)
         rootView?.model.lastYearWeathers = self.weatherRepository?[location]
+    }
+    
+    func presentSetting() {
+        let destination = SettingViewController()
+        let navationController = UINavigationController(rootViewController: destination)
+        
+        self.present(navationController, animated: true)
     }
 }

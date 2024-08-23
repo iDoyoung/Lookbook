@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */; };
 		7F1367232C27B24B00C55FB5 /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1367222C27B24B00C55FB5 /* LocationInfo.swift */; };
+		7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075132C5CB359006FF502 /* UserSetting.swift */; };
+		7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075152C5DB48D006FF502 /* TodayForecast.swift */; };
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
 		7F3510F32C3E549F003612F6 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F22C3E549F003612F6 /* AsyncImage.swift */; };
 		7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */; };
@@ -49,6 +51,7 @@
 		7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */; };
 		7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 7FC02EB42BFB063700217CAE /* sample_image.JPG */; };
 		7FC758782C59E4300080D523 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7FC758772C59E4300080D523 /* GoogleMobileAds */; };
+		7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */; };
 		7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */; };
 		7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */; };
 		7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */; };
@@ -75,6 +78,8 @@
 /* Begin PBXFileReference section */
 		7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		7F1367222C27B24B00C55FB5 /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
+		7F3075132C5CB359006FF502 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		7F3075152C5DB48D006FF502 /* TodayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecast.swift; sourceTree = "<group>"; };
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
 		7F3510F22C3E549F003612F6 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosService+Predicate.swift"; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 		7FB673C82C44B28C009DFDB8 /* PhotosWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorker.swift; sourceTree = "<group>"; };
 		7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitPhoto.swift; sourceTree = "<group>"; };
 		7FC02EB42BFB063700217CAE /* sample_image.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_image.JPG; sourceTree = "<group>"; };
+		7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Wrapper.swift"; sourceTree = "<group>"; };
 		7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationService.swift; sourceTree = "<group>"; };
 		7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthStatus.swift; sourceTree = "<group>"; };
 		7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyWeather.swift; sourceTree = "<group>"; };
@@ -242,6 +248,7 @@
 				7FD86DA12C084C720043A571 /* Repositories */,
 				7F4948092C06FA03004CD52F /* Service */,
 				7FB2D7E02BF45E1E001BA4FB /* ML */,
+				7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -250,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				7F6A0F302C520F2B0069925C /* TodayModel.swift */,
+				7F3075152C5DB48D006FF502 /* TodayForecast.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +303,7 @@
 				7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */,
 				7F929F352C1D67A0001F48E7 /* WeatherOfLocation.swift */,
 				7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */,
+				7F3075132C5CB359006FF502 /* UserSetting.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -603,12 +612,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */,
 				7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */,
 				7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */,
 				7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */,
 				7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */,
 				7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */,
 				7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */,
+				7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */,
 				7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */,
 				7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */,
 				7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */,
@@ -621,6 +632,7 @@
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
 				7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */,
+				7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */,
 				7F6A0F382C520F570069925C /* TodayRootView.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
 				7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */,

@@ -4,7 +4,8 @@ struct SettingRootView: View {
     
     @AppStorage("is_fahrenheit") var isFahrenheit: Bool = false
     @State private var tempUnitScale: CGFloat = 0.0
-    @State private var trademarkScale: CGFloat = 0.0
+    /// Gesture 가 없는 뷰의 Scale 값
+    @State private var othersScale: CGFloat = 0.0
 
     var body: some View {
         GeometryReader { proxy in
@@ -12,10 +13,24 @@ struct SettingRootView: View {
                 
                 // 앱 정보
                 HStack {
-                    // app icon image
+                    Image(systemName: "tag.fill")
+                        .resizable()
+                        .frame(
+                            width: proxy.size.width * 1/6,
+                            height: proxy.size.width * 1/6
+                        )
+                        .padding()
                     
-                    // 앱이름
+                    VStack(alignment: .leading) {
+                        Text("앱 이름")
+                        Text("Version 1.0")
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .padding(.horizontal)
+                .scaleEffect(othersScale)
                 
                 VStack {
                     Text(isFahrenheit ? UnitTemperature.fahrenheit.symbol: UnitTemperature.celsius.symbol)
@@ -34,7 +49,7 @@ struct SettingRootView: View {
                 .padding()
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding()
+                .padding(.horizontal)
                 .scaleEffect(tempUnitScale)
                 .onLongPressGesture(minimumDuration: 1) {
                     isFahrenheit.toggle()
@@ -84,14 +99,14 @@ struct SettingRootView: View {
                 .background(.thinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
-                .scaleEffect(trademarkScale)
+                .scaleEffect(othersScale)
             }
         }
         .padding()
         .onAppear {
             withAnimation(.spring) {
                 tempUnitScale = 1
-                trademarkScale = 1
+                othersScale = 1
             }
         }
         .safeAreaPadding(.bottom)

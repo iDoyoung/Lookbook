@@ -1,6 +1,7 @@
 import Foundation
 import Photos
 import os
+import Vision
 
 class PhotosWorker {
     
@@ -46,7 +47,7 @@ class PhotosWorker {
             )
             .assets
         
-        var datas = [PHAsset]()
+        var photoAssets = [PHAsset]()
         
         for index in 0..<fetchedAssets.count {
             let asset = fetchedAssets[index]
@@ -54,12 +55,12 @@ class PhotosWorker {
             
             self.predictor.makePredictions(for: data) { isOutfitPhoto in
                 if isOutfitPhoto {
-                    datas.append(asset)
+                    photoAssets.append(asset)
                 }
             }
         }
         
-        return datas
+        return photoAssets
     }
     
     func fetchAssets() -> [PHAsset] {
@@ -95,5 +96,57 @@ class PhotosWorker {
                 dateRange: (aYearAndtenDaysAgo, today)
             )
             .assets
+    }
+    
+    func imageProcess(photos: [PHAsset]) -> [PHAsset] {
+        photos.reduce([PHAsset]()) { 
+            accumulatedAssets, currentAsset in
+            let originalFPO = featureprintObservationForImage(at: )
+            return accumulatedAssets
+        }
+        
+        return []
+    }
+    
+//    func processImages() {
+//        guard let originalURL = originalImageURL else {
+//            return
+//        }
+//        /// Generate feature print for original.
+//        /// - Tag: FeaturePrintOriginal
+//        // Generate a feature print for the original drawing.
+//        guard let originalFPO = featureprintObservationForImage(atURL: originalURL) else {
+//            return
+//        }
+//        /// Generate feature print for contestants.
+//        /// - Tag: FeaturePrintContestants
+//        // Generate feature prints for contestant images.
+//        // Next compute their distances from the original feature print.
+//        for idx in contestantImageURLs.indices {
+//            let contestantImageURL = contestantImageURLs[idx]
+//            if let contestantFPO = featureprintObservationForImage(atURL: contestantImageURL) {
+//                do {
+//                    var distance = Float(0)
+//                    try contestantFPO.computeDistance(&distance, to: originalFPO)
+//                    ranking.append((contestantIndex: idx, featureprintDistance: distance))
+//                } catch {
+//                    print("Error computing distance between featureprints.")
+//                }
+//            }
+//        }
+//        // Sort results based on distance.
+//        ranking.sort { (result1, result2) -> Bool in
+//            return result1.featureprintDistance < result2.featureprintDistance
+//        }
+//        DispatchQueue.main.async {
+//            self.presentResults()
+//        }
+//    }
+    
+    private func featureprintObservationForImage(at data: Data) -> VNFeaturePrintObservation? {
+        let requestHandler = VNImageRequestHandler(data: data)
+        let request = VNGenerateImageFeaturePrintRequest()
+        try? requestHandler.perform([request])
+        return request.results?.first
     }
 }

@@ -13,7 +13,6 @@ final class TodayModel {
     var locationAuthorizationStatus: LocationAuthorizationStatus? = nil
     var location: LocationInfo? = nil
     var weather: CurrentlyWeather? = nil
-    var photosData: [Data] = []
     var lastYearWeathers: [DailyWeather]? = nil
     var photosAssets: [PHAsset] = []
     
@@ -49,10 +48,12 @@ final class TodayModel {
     
     var outfitPhotos: [OutfitPhoto] {
         return photosAssets.map { asset in
-            let filteredWeather = lastYearWeathers?.filter({ weather in
-                guard let assetCreateDate = asset.creationDate else { return false }
-                return Date.isEqual(date1: weather.date, date2: assetCreateDate)
-            }).first
+            let filteredWeather = lastYearWeathers?
+                .filter { weather in
+                    guard let assetCreateDate = asset.creationDate else { return false }
+                    return Date.isEqual(date1: weather.date, date2: assetCreateDate)
+                }
+                .first
             
             return OutfitPhoto(
                 asset: asset,

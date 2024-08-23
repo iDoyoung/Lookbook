@@ -2,7 +2,8 @@ import Foundation
 import Photos
 import CoreLocation
 
-struct OutfitPhoto {
+@Observable
+final class OutfitPhoto {
     
     var asset: PHAsset
     
