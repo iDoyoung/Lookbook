@@ -20,6 +20,7 @@
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
 		7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */; };
 		7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6020922C59E23D001C8D26 /* SettingRootView.swift */; };
+		7F6341822C869EFE00839E0E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6341812C869EFE00839E0E /* GoogleMobileAds */; };
 		7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F252C4CA5270069925C /* HourlyWeather.swift */; };
 		7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F272C4CA5720069925C /* DailyWeather.swift */; };
 		7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */; };
@@ -49,7 +50,6 @@
 		7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673C82C44B28C009DFDB8 /* PhotosWorker.swift */; };
 		7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */; };
 		7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 7FC02EB42BFB063700217CAE /* sample_image.JPG */; };
-		7FC758782C59E4300080D523 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7FC758772C59E4300080D523 /* GoogleMobileAds */; };
 		7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */; };
 		7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */; };
 		7FDFAE662C7C29A100916B7E /* Date+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFAE652C7C29A100916B7E /* Date+Strings.swift */; };
@@ -139,7 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FC758782C59E4300080D523 /* GoogleMobileAds in Frameworks */,
+				7F6341822C869EFE00839E0E /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +502,7 @@
 			);
 			name = Lookbook;
 			packageProductDependencies = (
-				7FC758772C59E4300080D523 /* GoogleMobileAds */,
+				7F6341812C869EFE00839E0E /* GoogleMobileAds */,
 			);
 			productName = Lookbook;
 			productReference = 7FA27BD12BECDB5900BDB1A9 /* Lookbook.app */;
@@ -1157,7 +1157,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7FC758772C59E4300080D523 /* GoogleMobileAds */ = {
+		7F6341812C869EFE00839E0E /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7FF2F1652C5483890076F2C2 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
