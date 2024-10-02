@@ -4,4 +4,5 @@ import CoreLocation
 final class LocationServiceState {
     var location: CLLocation?
     var authorizationStatus: CLAuthorizationStatus?
+    var error: Error?
 }
