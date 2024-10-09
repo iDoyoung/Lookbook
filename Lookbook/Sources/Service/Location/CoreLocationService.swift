@@ -3,18 +3,30 @@ import CoreLocation
 import Combine
 import os
 
+enum LocationServiceUsecase {
+    case requestLocation
+    case requestAuthorization
+}
+
 protocol CoreLocationServiceProtocol {
     
-    var state: LocationServiceState { get }
+    associatedtype State: LocationServiceState
     
-    func requestLocation()
-    func requestAuthorization()
+    func execute(_ useCase: LocationServiceUsecase, with state: State) async -> State
 }
 
 final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
+    
     typealias State = LocationServiceState
     private(set) var state: State
+    private var currentLocationHandler: ((CLLocation) -> Void)?
+    private var authorizationHandler: ((CLAuthorizationStatus) -> Void)?
+    
+    static func create(with state: LocationServiceState) -> Self {
+        let coreLocationService = Self(state: state)
+        return coreLocationService
+    }
     
     // Private
     private var locationFetcher: LocationFetcher
@@ -33,9 +45,15 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
     //MARK: - Public
     
-    func requestLocation() {
-        logger.log("Request location")
-        locationFetcher.startUpdatingLocation()
+    func execute(_ useCase: LocationServiceUsecase, with state: State) async -> State {
+        let state = state
+        switch useCase {
+        case .requestLocation:
+            state.location = await requestLocation()
+        case .requestAuthorization:
+            break
+        }
+        return state
     }
     
     func requestAuthorization() {
@@ -45,6 +63,15 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
         }
         logger.log("Request when in use authorization")
         locationFetcher.requestWhenInUseAuthorization()
+    }
+    
+    private func requestLocation() async -> CLLocation {
+        return await withCheckedContinuation { continuation in
+            currentLocationHandler = { location in
+                continuation.resume(returning: location)
+            }
+            locationFetcher.startUpdatingLocation()
+        }
     }
 }
 
@@ -57,7 +84,7 @@ extension CoreLocationService: LocationFetcherDelegate {
     func locationFetcher(_ fetcher: LocationFetcher, didUpdate locations: [CLLocation]) {
         if let location = locations.last {
             logger.log("Read location by Core Location: \(location)")
-            state.location = location
+            currentLocationHandler?(location)
             locationFetcher.stopUpdatingLocation()
         }
     }
@@ -72,7 +99,6 @@ extension CoreLocationService: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.log("Change Location Authorization")
         self.locationFetcher.locationFetcherDelegate?.locationManagerDidChangeAuthorization(manager)
-        state.authorizationStatus = manager.authorizationStatus
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -59,10 +59,9 @@ final class LocationServiceTests: XCTestCase {
     
     //MARK: - Tests
     
-    func test_requestLocation_shouldBeUpdate_locationState_toMockLocation() {
+    func test_requestLocation_shouldBeUpdate_locationState_toMockLocation() async {
         // when
-        sut.requestLocation()
-        
+        let state = await sut.execute(.requestLocation, with: state)
         // then
         XCTAssertEqual(state.location, mockLocation)
     }
