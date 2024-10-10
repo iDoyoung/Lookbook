@@ -21,7 +21,7 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     typealias State = LocationServiceState
     private(set) var state: State
     private var currentLocationHandler: ((CLLocation) -> Void)?
-    private var authorizationHandler: ((CLAuthorizationStatus) -> Void)?
+    private var didChangeAuthorizationHandler: ((CLAuthorizationStatus) -> Void)?
     
     static func create(with state: LocationServiceState) -> Self {
         let coreLocationService = Self(state: state)
@@ -51,20 +51,11 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
         case .requestLocation:
             state.location = await requestLocation()
         case .requestAuthorization:
-            break
+            state.authorizationStatus = await requestAuthorization()
         }
         return state
     }
-    
-    func requestAuthorization() {
-        guard locationFetcher.authorizationStatus != .authorizedWhenInUse else {
-            logger.log("Current location status is authorized")
-            return
-        }
-        logger.log("Request when in use authorization")
-        locationFetcher.requestWhenInUseAuthorization()
-    }
-    
+   
     private func requestLocation() async -> CLLocation {
         return await withCheckedContinuation { continuation in
             currentLocationHandler = { location in
@@ -73,12 +64,26 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
             locationFetcher.startUpdatingLocation()
         }
     }
+    
+    private func requestAuthorization() async -> CLAuthorizationStatus {
+        
+        guard locationFetcher.authorizationStatus == .notDetermined else {
+            return locationFetcher.authorizationStatus
+        }
+        
+        return await withCheckedContinuation { continuation in
+            didChangeAuthorizationHandler = { authorizationStatus in
+                continuation.resume(returning: authorizationStatus)
+            }
+            locationFetcher.requestWhenInUseAuthorization()
+        }
+    }
 }
 
 extension CoreLocationService: LocationFetcherDelegate {
     
-    func locationManagerDidChangeAuthorization(_ fetcher: LocationFetcher) {
-        state.authorizationStatus = fetcher.authorizationStatus
+    func locationManagerDidChangeAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+        state.authorizationStatus = authorizationStatus
     }
     
     func locationFetcher(_ fetcher: LocationFetcher, didUpdate locations: [CLLocation]) {
@@ -98,7 +103,7 @@ extension CoreLocationService: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         logger.log("Change Location Authorization")
-        self.locationFetcher.locationFetcherDelegate?.locationManagerDidChangeAuthorization(manager)
+        self.locationFetcher.locationFetcherDelegate?.locationManagerDidChangeAuthorization(manager.authorizationStatus)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
