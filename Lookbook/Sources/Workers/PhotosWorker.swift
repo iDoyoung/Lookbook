@@ -15,9 +15,16 @@ class PhotosWorker {
     
     enum UseCase { case fetchPhotosAssets, requestAuthorization }
     
-    private var service: PhotosServiceProtocol = PhotosService()
-    private var predictor = OutfitImagePredictor()
+    private var service: PhotosServiceProtocol
+    private var predictor: OutfitImagePredictor
     private let logger = Logger(subsystem: "", category: "worker")
+    
+    init(
+        service: PhotosServiceProtocol = PhotosService(),
+        predictor: OutfitImagePredictor = OutfitImagePredictor()) {
+        self.service = service
+        self.predictor = predictor
+    }
     
     func execute(_ useCase: UseCase, state: State) async -> State {
         let state = state
@@ -32,11 +39,11 @@ class PhotosWorker {
         return state
     }
     
-    func authorizationStatus() async throws -> PHAuthorizationStatus {
+    private func authorizationStatus() async throws -> PHAuthorizationStatus {
         try await service.authorizationStatus()
     }
     
-    func fetchPhotosAssets() async throws -> [PHAsset] {
+    private func fetchPhotosAssets() async throws -> [PHAsset] {
         // 날짜 계산
         // 작년 기준 10일 전에 사진을 뷰에 나타내야한다.
         let today = Date()
