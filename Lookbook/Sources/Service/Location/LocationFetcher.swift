@@ -4,6 +4,7 @@ protocol LocationFetcher {
     var locationFetcherDelegate: LocationFetcherDelegate? { get set }
     var authorizationStatus: CLAuthorizationStatus { get }
     
+    func requestLocation()
     func requestWhenInUseAuthorization()
     func startUpdatingLocation()
     func stopUpdatingLocation()
