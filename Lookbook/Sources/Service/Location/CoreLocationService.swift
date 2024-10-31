@@ -3,74 +3,51 @@ import CoreLocation
 import Combine
 import os
 
-enum LocationServiceUsecase {
-    case requestLocation
-    case requestAuthorization
-}
+enum CoreLocationServiceUseCase { case requestLocation, requestAuthorization }
 
 protocol CoreLocationServiceProtocol {
-    
-    associatedtype State: LocationServiceState
-    
-    func execute(_ useCase: LocationServiceUsecase, with state: State) async -> State
+    func requestLocation() async -> CLLocation
+    func requestAuthorization() async -> CLAuthorizationStatus
 }
 
 final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
+    private var continuation: CheckedContinuation<CLLocation, Error>?
     
-    typealias State = LocationServiceState
-    private(set) var state: State
     private var currentLocationHandler: ((CLLocation) -> Void)?
     private var didChangeAuthorizationHandler: ((CLAuthorizationStatus) -> Void)?
-    
-    static func create(with state: LocationServiceState) -> Self {
-        let coreLocationService = Self(state: state)
-        return coreLocationService
-    }
-    
+   
     // Private
     private var locationFetcher: LocationFetcher
     
     private let logger = Logger(
-        subsystem: "io.doyoung.Lookbook.LocationManager",
+        subsystem: "io.doyoung.Lookbook.CoreLocationService",
         category: "Location Manager"
     )
     
-    init(state: State, locationFetcher: LocationFetcher = CLLocationManager()) {
-        self.state = state
+    init(locationFetcher: LocationFetcher = CLLocationManager()) {
         self.locationFetcher = locationFetcher
         super.init()
         self.locationFetcher.locationFetcherDelegate = self
     }
-    
-    //MARK: - Public
-    
-    func execute(_ useCase: LocationServiceUsecase, with state: State) async -> State {
-        let state = state
-        switch useCase {
-        case .requestLocation:
-            state.location = await requestLocation()
-        case .requestAuthorization:
-            state.authorizationStatus = await requestAuthorization()
-        }
-        return state
-    }
    
-    private func requestLocation() async -> CLLocation {
+    func requestLocation() async -> CLLocation {
         return await withCheckedContinuation { continuation in
             currentLocationHandler = { location in
+                print("Request Location \(location.coordinate)")
                 continuation.resume(returning: location)
             }
-            locationFetcher.startUpdatingLocation()
+            locationFetcher.requestLocation()
         }
     }
     
-    private func requestAuthorization() async -> CLAuthorizationStatus {
+    func requestAuthorization() async -> CLAuthorizationStatus {
         
         guard locationFetcher.authorizationStatus == .notDetermined else {
             return locationFetcher.authorizationStatus
         }
         
+        logger.log("Location authorization is not determined. Requesting authorization...")
         return await withCheckedContinuation { continuation in
             didChangeAuthorizationHandler = { authorizationStatus in
                 continuation.resume(returning: authorizationStatus)
@@ -83,19 +60,17 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
 extension CoreLocationService: LocationFetcherDelegate {
     
     func locationManagerDidChangeAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
-        state.authorizationStatus = authorizationStatus
+        didChangeAuthorizationHandler?(authorizationStatus)
     }
     
     func locationFetcher(_ fetcher: LocationFetcher, didUpdate locations: [CLLocation]) {
         if let location = locations.last {
             logger.log("Read location by Core Location: \(location)")
             currentLocationHandler?(location)
-            locationFetcher.stopUpdatingLocation()
         }
     }
     
     func locationFetcher(_ fetcher: LocationFetcher, didFailWithError error: Error) {
-        state.error = error
     }
 }
 
