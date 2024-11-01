@@ -1,21 +1,29 @@
 import Foundation
 import Photos
 import UIKit
-import Combine
+import CoreLocation
 
 @Observable
 final class TodayModel {
     
-    private var cancellablesBag = Set<AnyCancellable>()
+    enum Destination { case setting }
+    
+    // States
+    var destination: Destination?
+    var hiddingWeatherTag: Bool = false
+    var weatherTagScale: CGFloat = 1
+    
+    var presentSetting: Bool = false
     
     var unitTemperature: UnitTemperature = .celsius
     var photosAuthorizationStatus: PhotosAuthStatus? = nil
-    var locationAuthorizationStatus: LocationAuthorizationStatus? = nil
-    var location: LocationInfo? = nil
     var weather: CurrentlyWeather? = nil
     var lastYearWeathers: [DailyWeather]? = nil
     var photosAssets: [PHAsset] = []
     
+    //FIXME: When iniitailize
+    var locationState: LocationServiceState? = .init()
+   
     var currentTemperature: String {
         weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "--"
     }
@@ -61,13 +69,5 @@ final class TodayModel {
                 lowTemp: filteredWeather?.minimumTemperature.converted(to: unitTemperature).rounded ?? ""
             )
         }
-    }
-    
-    init() {
-        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
-            .sink { [weak self] _ in
-                self?.unitTemperature = UserSetting.isFahrenheit ? .fahrenheit: .celsius
-            }
-            .store(in: &cancellablesBag)
     }
 }

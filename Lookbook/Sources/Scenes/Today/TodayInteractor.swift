@@ -5,42 +5,56 @@ import Photos
 import os
 
 enum TodayViewAction {
-    case viewDidLoad, viewIsAppearing, showSetting
+    case viewDidLoad, viewWillAppear, viewIsAppearing, updatedCurrentLocation
 }
                               
 protocol TodayInteractable: AnyObject {
-    associatedtype Model
-    func execute(action: TodayViewAction, with model: Model) async -> Model
+    func execute(action: TodayViewAction, with model: TodayModel) async -> TodayModel
 }
 
 final class TodayInteractor: TodayInteractable {
     
-    typealias Model = TodayModel
-    
-    private var logger = Logger(subsystem: "io.doyoung.Lookbook.TodayInteractor", category: "Use Case")
+    private var logger = Logger(subsystem: "io.doyoung.Lookbook.TodayInteractor", category: "Interactor")
     private var cancellableBag = Set<AnyCancellable>()
     
     // service
-    var photosWorker: PhotosWorker?
-    var weatherRepository: WeatherRepositoryProtocol?
-    var locationService: (some CoreLocationServiceProtocol)?
+    var photosWorker: PhotosWorker
+    var weatherRepository: WeatherRepositoryProtocol
+    var locationService: CoreLocationServiceProtocol
    
-    func execute(action: TodayViewAction, with model: Model) async -> TodayModel {
-        var model = model
+    init(
+        photosWorker: PhotosWorker = PhotosWorker(),
+        weatherRepository: WeatherRepositoryProtocol = WeatherRepository(),
+        locationService: CoreLocationServiceProtocol = CoreLocationService()
+    ) {
+        self.photosWorker = photosWorker
+        self.weatherRepository = weatherRepository
+        self.locationService = locationService
+    }
+    
+    func execute(action: TodayViewAction, with model: TodayModel) async -> TodayModel {
+        logger.log("Execute \(String(describing: action))")
+        
         switch action {
         case .viewDidLoad:
-            model.locationState = await requestLocationAuthorizationStatus(model.locationState!)
+            break
+        case .viewWillAppear:
+            model.locationState = await model.locationState?
+                .authorizationStatus(locationService.requestAuthorization())
+                .currentLocation(locationService.requestLocation())
         case .viewIsAppearing:
-            model = .init()
-        case .showSetting:
-            model = .init()
+            break
+        case .updatedCurrentLocation:
+            if let location = model.locationState?.location {
+                do {
+                    try await weatherRepository.requestWeather(for: location)
+                    model.weather = weatherRepository[location]
+                } catch {
+                    logger.error("Apple Weather 요청 실패\n다음 에러: \(error)")
+                }
+            }
         }
         
         return model
-    }
-    
-    func requestLocationAuthorizationStatus(_ state: LocationServiceState?) async -> LocationServiceState? {
-        guard let state = state else { return nil }
-        return await locationService?.execute(.requestAuthorization, with: state)
     }
 }
