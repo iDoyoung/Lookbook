@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */; };
+		7F04D1582CE1096E000813D4 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; };
+		7F04D15A2CE1096E000813D4 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		7F04D15F2CE324C4000813D4 /* CoreServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F04D15E2CE324C4000813D4 /* CoreServiceAssembly.swift */; };
+		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
+		7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */; };
+		7F290C212CE6F8D7001B9CBD /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */; };
 		7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075132C5CB359006FF502 /* UserSetting.swift */; };
 		7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075152C5DB48D006FF502 /* TodayForecast.swift */; };
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
@@ -16,12 +22,10 @@
 		7F3B76822C0D54E1001ECDDB /* PhotosServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */; };
 		7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */; };
 		7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F457B672CA29EC100F485D1 /* LocationFetcher.swift */; };
-		7F4948082C06D246004CD52F /* CoreLocationServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4948072C06D246004CD52F /* CoreLocationServiceSpy.swift */; };
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
 		7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */; };
 		7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6020922C59E23D001C8D26 /* SettingRootView.swift */; };
 		7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */; };
-		7F6341852C86BAD700839E0E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6341842C86BAD700839E0E /* GoogleMobileAds */; };
 		7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6341862C86BF2400839E0E /* TodayInteractor.swift */; };
 		7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6936752CC2465800106C27 /* TodayInteractorTests.swift */; };
 		7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F252C4CA5270069925C /* HourlyWeather.swift */; };
@@ -35,6 +39,7 @@
 		7F6A0F402C5344150069925C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */; };
 		7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F4C2C538E630069925C /* GoogleAdBannerViewController.swift */; };
 		7F70632B2CD1FA5F0025CEE3 /* CLLocation+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70632A2CD1FA5F0025CEE3 /* CLLocation+Name.swift */; };
+		7F76497B2CD8A02600EBBA5C /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7F76497A2CD8A02600EBBA5C /* GoogleMobileAds */; };
 		7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */; };
 		7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F929F352C1D67A0001F48E7 /* WeatherOfLocation.swift */; };
 		7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA27BD42BECDB5900BDB1A9 /* AppDelegate.swift */; };
@@ -80,8 +85,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7F04D1592CE1096E000813D4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F04D15A2CE1096E000813D4 /* Swinject-Dynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
+		7F04D15E2CE324C4000813D4 /* CoreServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreServiceAssembly.swift; sourceTree = "<group>"; };
+		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
+		7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
+		7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
 		7F3075132C5CB359006FF502 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		7F3075152C5DB48D006FF502 /* TodayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecast.swift; sourceTree = "<group>"; };
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
@@ -90,7 +113,6 @@
 		7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosServiceSpy.swift; sourceTree = "<group>"; };
 		7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAuthStatus.swift; sourceTree = "<group>"; };
 		7F457B672CA29EC100F485D1 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
-		7F4948072C06D246004CD52F /* CoreLocationServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationServiceSpy.swift; sourceTree = "<group>"; };
 		7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTests.swift; sourceTree = "<group>"; };
 		7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		7F6020922C59E23D001C8D26 /* SettingRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRootView.swift; sourceTree = "<group>"; };
@@ -147,7 +169,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F6341852C86BAD700839E0E /* GoogleMobileAds in Frameworks */,
+				7F76497B2CD8A02600EBBA5C /* GoogleMobileAds in Frameworks */,
+				7F04D1582CE1096E000813D4 /* Swinject-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,10 +191,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F04D15B2CE1D8ED000813D4 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */,
+				7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */,
+				7F04D15E2CE324C4000813D4 /* CoreServiceAssembly.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
 		7F3B76892C0D77DB001ECDDB /* Test Doubles */ = {
 			isa = PBXGroup;
 			children = (
-				7F4948072C06D246004CD52F /* CoreLocationServiceSpy.swift */,
 				7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */,
 				7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */,
 			);
@@ -232,6 +264,7 @@
 				7F6A0F3E2C520FD30069925C /* Views */,
 				7F6A0F322C520F2B0069925C /* TodayViewController.swift */,
 				7F6341862C86BF2400839E0E /* TodayInteractor.swift */,
+				7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -396,6 +429,7 @@
 		7FB11E3F2C5881F200A47321 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
+				7F04D15B2CE1D8ED000813D4 /* DI */,
 				7FA27BD42BECDB5900BDB1A9 /* AppDelegate.swift */,
 				7FA27BD62BECDB5900BDB1A9 /* SceneDelegate.swift */,
 			);
@@ -491,6 +525,7 @@
 				7FA27BCD2BECDB5900BDB1A9 /* Sources */,
 				7FA27BCE2BECDB5900BDB1A9 /* Frameworks */,
 				7FA27BCF2BECDB5900BDB1A9 /* Resources */,
+				7F04D1592CE1096E000813D4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -498,7 +533,8 @@
 			);
 			name = Lookbook;
 			packageProductDependencies = (
-				7F6341842C86BAD700839E0E /* GoogleMobileAds */,
+				7F76497A2CD8A02600EBBA5C /* GoogleMobileAds */,
+				7F04D1572CE1096E000813D4 /* Swinject-Dynamic */,
 			);
 			productName = Lookbook;
 			productReference = 7FA27BD12BECDB5900BDB1A9 /* Lookbook.app */;
@@ -573,7 +609,8 @@
 			);
 			mainGroup = 7FA27BC82BECDB5900BDB1A9;
 			packageReferences = (
-				7F6341832C86B97C00839E0E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				7F7649792CD8A00B00EBBA5C /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 7FA27BD22BECDB5900BDB1A9 /* Products */;
 			projectDirPath = "";
@@ -622,6 +659,7 @@
 				7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */,
 				7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */,
 				7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */,
+				7F290C212CE6F8D7001B9CBD /* DomainAssembly.swift in Sources */,
 				7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */,
 				7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */,
 				7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */,
@@ -639,6 +677,7 @@
 				7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
+				7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */,
 				7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */,
 				7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */,
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
@@ -653,6 +692,8 @@
 				7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */,
 				7FB11E412C5888D000A47321 /* OutfitV1.mlmodel in Sources */,
 				7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */,
+				7F04D15F2CE324C4000813D4 /* CoreServiceAssembly.swift in Sources */,
+				7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */,
 				7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */,
 				7FA27BD72BECDB5900BDB1A9 /* SceneDelegate.swift in Sources */,
 				7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */,
@@ -666,7 +707,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F3B76822C0D54E1001ECDDB /* PhotosServiceSpy.swift in Sources */,
-				7F4948082C06D246004CD52F /* CoreLocationServiceSpy.swift in Sources */,
 				7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */,
 				7FA4A74F2CB8EBA600185B08 /* PhotosWorkerTests.swift in Sources */,
 				7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */,
@@ -1105,7 +1145,7 @@
 				7FA27BFA2BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = DEVELOP;
 		};
 		7FA27BFB2BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "Lookbook" */ = {
 			isa = XCConfigurationList;
@@ -1115,7 +1155,7 @@
 				7FA27BFD2BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = DEVELOP;
 		};
 		7FA27BFE2BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "LookbookTests" */ = {
 			isa = XCConfigurationList;
@@ -1125,7 +1165,7 @@
 				7FA27C002BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = DEVELOP;
 		};
 		7FA27C012BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "LookbookUITests" */ = {
 			isa = XCConfigurationList;
@@ -1135,25 +1175,38 @@
 				7FA27C032BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = DEVELOP;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7F6341832C86B97C00839E0E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+		7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+		7F7649792CD8A00B00EBBA5C /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 11.8.0;
+				minimumVersion = 11.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7F6341842C86BAD700839E0E /* GoogleMobileAds */ = {
+		7F04D1572CE1096E000813D4 /* Swinject-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7F6341832C86B97C00839E0E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			package = 7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = "Swinject-Dynamic";
+		};
+		7F76497A2CD8A02600EBBA5C /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F7649792CD8A00B00EBBA5C /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
