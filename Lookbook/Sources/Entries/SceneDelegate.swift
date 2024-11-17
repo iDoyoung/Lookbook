@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        guard let todayViewController = assembler.resolver.resolve(TodayViewController.self) else {
-            fatalError("Today View Controller is not registered")
+        guard let todayViewController = assembler.resolver.resolve(ViewController.self, name: TodayViewController.name) else {
+                   fatalError("Today View Controller is not registered")
         }
         
         window = UIWindow(windowScene: windowScene)
