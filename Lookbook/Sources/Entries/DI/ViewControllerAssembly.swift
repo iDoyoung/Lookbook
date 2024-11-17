@@ -4,14 +4,28 @@ import Swinject
 final class ViewControllerAssembly: Assembly {
     
     func assemble(container: Container) {
-        container.register(TodayViewController.self) { resolver in
+        container.register(ViewController.self, name: TodayViewController.name) { resolver in
             TodayViewController(
                 interactor: resolver.resolve(TodayInteractable.self)!,
-                router: TodayRouter()
+                router: resolver.resolve(Routing.self, name: "Today")!
             )
         }
-        container.register(SettingViewController.self) { resolver in
-            SettingViewController()
+        
+        container.register(Routing.self, name: "Today") { resolver in
+            TodayRouter(container: container)
+        }.initCompleted { resolver, router in
+            let viewController = resolver.resolve(ViewController.self, name: TodayViewController.name)!
+            router.destination = viewController
         }
+        
+        container.register(ViewController.self, name: SettingViewController.name) { resolver in
+            SettingViewController(router: resolver.resolve(Routing.self, name: "Setting")!)
+        }
+        
+        container.register(Routing.self, name: "Setting") { _ in SettingRouter(container: container) }
+            .initCompleted { resolver, router in
+                let viewController = resolver.resolve(ViewController.self, name: SettingViewController.name)!
+                router.destination = viewController
+            }
     }
 }

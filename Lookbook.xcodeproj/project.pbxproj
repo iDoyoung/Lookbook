@@ -14,6 +14,8 @@
 		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
 		7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */; };
 		7F290C212CE6F8D7001B9CBD /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */; };
+		7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C222CE72AA8001B9CBD /* SettingRouter.swift */; };
+		7F290C272CE843DF001B9CBD /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C262CE843DF001B9CBD /* Routing.swift */; };
 		7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075132C5CB359006FF502 /* UserSetting.swift */; };
 		7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075152C5DB48D006FF502 /* TodayForecast.swift */; };
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
@@ -105,6 +107,8 @@
 		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
 		7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
 		7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
+		7F290C222CE72AA8001B9CBD /* SettingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRouter.swift; sourceTree = "<group>"; };
+		7F290C262CE843DF001B9CBD /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
 		7F3075132C5CB359006FF502 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		7F3075152C5DB48D006FF502 /* TodayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecast.swift; sourceTree = "<group>"; };
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 			children = (
 				7F6020912C59E22C001C8D26 /* Views */,
 				7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */,
+				7F290C222CE72AA8001B9CBD /* SettingRouter.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 		7F6A0F342C520F2B0069925C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7F290C262CE843DF001B9CBD /* Routing.swift */,
 				7F6A0F352C520F2B0069925C /* ViewController.swift */,
 				7F6A0F4B2C538DD20069925C /* GoogleAd */,
 				7F6A0F332C520F2B0069925C /* Today */,
@@ -661,6 +667,7 @@
 				7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */,
 				7F290C212CE6F8D7001B9CBD /* DomainAssembly.swift in Sources */,
 				7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */,
+				7F290C272CE843DF001B9CBD /* Routing.swift in Sources */,
 				7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */,
 				7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */,
 				7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */,
@@ -677,6 +684,7 @@
 				7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
+				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
 				7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */,
 				7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */,
 				7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */,
