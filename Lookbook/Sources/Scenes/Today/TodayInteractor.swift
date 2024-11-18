@@ -18,12 +18,12 @@ final class TodayInteractor: TodayInteractable {
     private var cancellableBag = Set<AnyCancellable>()
     
     // service
-    var photosWorker: PhotosWorker
+    var photosWorker: PhotosWorking
     var weatherRepository: WeatherRepositoryProtocol
     var locationService: CoreLocationServiceProtocol
    
     init(
-        photosWorker: PhotosWorker = PhotosWorker(),
+        photosWorker: PhotosWorking = PhotosWorker(),
         weatherRepository: WeatherRepositoryProtocol = WeatherRepository(),
         locationService: CoreLocationServiceProtocol = CoreLocationService()
     ) {
@@ -39,13 +39,16 @@ final class TodayInteractor: TodayInteractable {
         case .viewDidLoad:
             break
         case .viewWillAppear:
-            model.locationState = await model.locationState?
+            model.locationState = await model.locationState
                 .authorizationStatus(locationService.requestAuthorization())
                 .currentLocation(locationService.requestLocation())
+            model.photosState = await model.photosState
+                .authorizationStatus(photosWorker.requestAuthorizationStatus())
+                .assets(photosWorker.fetchPhotosAssets())
         case .viewIsAppearing:
             break
         case .updatedCurrentLocation:
-            if let location = model.locationState?.location {
+            if let location = model.locationState.location {
                 do {
                     try await weatherRepository.requestWeather(for: location)
                     model.weather = weatherRepository[location]
