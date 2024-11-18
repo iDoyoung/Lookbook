@@ -17,7 +17,11 @@ struct CurrentlyWeather {
         var symbolName: String
     }
     
-    init() { }
+    init(current: Current, hourlyForecast: [HourlyWeather], dailyForecast: [DailyWeather]) {
+        self.current = current
+        self.hourlyForecast = hourlyForecast
+        self.dailyForecast = dailyForecast
+    }
     
     init(for weather: Weather) {
         let currentWeather = weather.currentWeather

@@ -12,17 +12,17 @@ final class TodayModel {
     var destination: Destination?
     var hiddingWeatherTag: Bool = false
     var weatherTagScale: CGFloat = 1
+    var locationState: LocationServiceState = .init()
+    var photosState: PhotosState = .init()
     
     var presentSetting: Bool = false
-    
     var unitTemperature: UnitTemperature = .celsius
+    
     var photosAuthorizationStatus: PhotosAuthStatus? = nil
+    
+    // MARK: - Weather 모델 리펙토링하기
     var weather: CurrentlyWeather? = nil
     var lastYearWeathers: [DailyWeather]? = nil
-    var photosAssets: [PHAsset] = []
-    
-    //FIXME: When iniitailize
-    var locationState: LocationServiceState? = .init()
    
     var currentTemperature: String {
         weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "--"
@@ -55,7 +55,7 @@ final class TodayModel {
     }
     
     var outfitPhotos: [OutfitPhoto] {
-        return photosAssets.map { asset in
+        return photosState.assets?.compactMap { asset in
             let filteredWeather = lastYearWeathers?
                 .filter { weather in
                     guard let assetCreateDate = asset.creationDate else { return false }
@@ -68,6 +68,6 @@ final class TodayModel {
                 highTemp: filteredWeather?.maximumTemperature.converted(to: unitTemperature).rounded ?? "",
                 lowTemp: filteredWeather?.minimumTemperature.converted(to: unitTemperature).rounded ?? ""
             )
-        }
+        } ?? []
     }
 }
