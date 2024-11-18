@@ -4,11 +4,6 @@ import Photos
 struct TodayRootView: View {
     
     @State var model: TodayModel
-    @State private var isScrolling = false
-    @State private var isHiddenWeatherTag: Bool = false
-    @State private var weatherTagScale: CGFloat = 1
-    
-    var tapSetting: () -> Void
     
     var body: some View {
         ZStack {
@@ -156,7 +151,7 @@ struct TodayRootView: View {
                         .resizable()
                         .frame(width: 20, height: 20)
                         .onTapGesture {
-                            tapSetting()
+                            model.destination = .setting
                         }
                 }
                 .padding()
@@ -174,19 +169,26 @@ struct TodayRootView: View {
                         lineWidth:1))
             .padding(.vertical, 60)
             .frame(maxWidth: .infinity)
-            .rotation3DEffect(.degrees(isHiddenWeatherTag ? 40 : 0), axis: (0, 1, 0), anchor: .center)
+            .rotation3DEffect(
+                .degrees(model.hiddingWeatherTag ? 30 : 0),
+                axis: (0, 1, 0),
+                anchor: .center
+            )
             .scaleEffect(
-                x: weatherTagScale,
-                y: weatherTagScale,
+                x: model.weatherTagScale,
+                y: model.weatherTagScale,
                 anchor: .leading
             )
         }
         .ignoresSafeArea()
         .onTapGesture { position in
             withAnimation {
-                isHiddenWeatherTag.toggle()
-                weatherTagScale = isHiddenWeatherTag ? 0.2: 1
+                model.hiddingWeatherTag.toggle()
+                model.weatherTagScale = model.hiddingWeatherTag ? 0.2: 1
             }
+        }
+        .onAppear {
+            print("SwiftUI On Appear")
         }
     }
     
@@ -201,8 +203,7 @@ struct TodayRootView: View {
                             weight: .medium))
                     .padding(.top, 6)
             }
-            
-            Text(model.location?.name ?? "알 수 없음")
+            Text(model.locationState.locationName ?? "알 수 없음")
                 .font(.footnote)
                 .fontWeight(.semibold)
         }
@@ -210,7 +211,7 @@ struct TodayRootView: View {
     
     @ViewBuilder
     var locationWarningLabel: some View {
-        if model.locationAuthorizationStatus == .unauthorized {
+        if model.locationState.authorizationStatus == .denied {
             Text("⚠️ 위치 접근 권한에 대해 거절 상태입니다. 현재 위치에 날씨 정보를 얻기 위해서 권한을 설정해주세요.")
                 .foregroundStyle(.white)
                 .font(
@@ -274,7 +275,7 @@ struct TodayRootView: View {
         }
     }
     
-    func openSetting() {
+    private func openSetting() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
