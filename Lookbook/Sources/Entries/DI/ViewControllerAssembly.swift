@@ -11,12 +11,11 @@ final class ViewControllerAssembly: Assembly {
             )
         }
         
-        container.register(Routing.self, name: "Today") { resolver in
-            TodayRouter(container: container)
-        }.initCompleted { resolver, router in
-            let viewController = resolver.resolve(ViewController.self, name: TodayViewController.name)!
-            router.destination = viewController
-        }
+        container.register(Routing.self, name: "Today") { _ in TodayRouter(container: container) }
+            .initCompleted { resolver, router in
+                let viewController = resolver.resolve(ViewController.self, name: TodayViewController.name)!
+                router.destination = viewController
+            }
         
         container.register(ViewController.self, name: SettingViewController.name) { resolver in
             SettingViewController(router: resolver.resolve(Routing.self, name: "Setting")!)
