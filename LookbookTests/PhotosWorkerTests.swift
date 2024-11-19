@@ -25,16 +25,20 @@ final class PhotosWorkerTests: XCTestCase {
     // MARK: - Test Doubles
     
     class MockPhotosService: PhotosServiceProtocol {
-        var auth: PHAuthorizationStatus!
-        var assets: [PHAsset]!
-        var isCallAuthorization: Bool = false
         
-        func authorizationStatus() async throws -> PHAuthorizationStatus {
+        var auth: PHAuthorizationStatus!
+        //FIXME: - Need to mock PHAsset
+        var assets: [PHAsset] = []
+        var isCallAuthorization: Bool = false
+        var isCallFetchResult: Bool = false
+       
+        func authorizationStatus() async -> PHAuthorizationStatus {
             isCallAuthorization = true
             return auth
         }
         
         func fetchResult(mediaType: Lookbook.PhotosService.MediaType, albumType: Lookbook.PhotosService.AlbumType?, dateRange: (startDate: Date, endDate: Date)?) -> PHFetchResult<PHAsset> {
+            isCallFetchResult = true
             
             return MockPHFetchResult(assets: assets)
         }
@@ -55,15 +59,27 @@ final class PhotosWorkerTests: XCTestCase {
     
     // MARK: - Tests
     
-    func test_requestAuthorization_souldBeUpdate_state_toMockAuth() async {
+    func test_requestAuthorization_souldBeUpdateStateToMockAuthWithCallPhotoService() async {
         
         // given
         mockPhotosService.auth = .authorized
         
         // when
-        let state = await sut.execute(.requestAuthorization, state: state)
+        let pHAuthorizationStatus = await sut.requestAuthorizationStatus()
         
         // then
-        XCTAssertEqual(state.authorizationStatus, .authorized)
+        XCTAssertEqual(pHAuthorizationStatus, .authorized)
+        XCTAssertTrue(mockPhotosService.isCallAuthorization)
+    }
+    
+    func test_fetchPhotosAssets_shouldBeCallPhotosService() async {
+        
+        // given
+        
+        // when
+        let fetchResult = await sut.fetchPhotosAssets()
+        
+        // then
+        XCTAssertTrue(mockPhotosService.isCallFetchResult)
     }
 }

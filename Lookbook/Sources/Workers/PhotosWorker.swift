@@ -3,47 +3,35 @@ import Photos
 import os
 import Vision
 
-protocol PhotosWorkerProtocol {
-    associatedtype State
-    
-    func execute(_ useCase: PhotosWorker.UseCase, state: State) async -> State
+protocol PhotosWorking {
+    func requestAuthorizationStatus() async -> PHAuthorizationStatus
+    func fetchPhotosAssets() async -> [PHAsset]
 }
 
-class PhotosWorker {
-    
-    typealias State = PhotosState
+final class PhotosWorker: PhotosWorking {
     
     enum UseCase { case fetchPhotosAssets, requestAuthorization }
     
     private var service: PhotosServiceProtocol
     private var predictor: OutfitImagePredictor
-    private let logger = Logger(subsystem: "", category: "worker")
-    
+    private let logger = Logger(
+        subsystem: "io.doyoung.Lookbook.PhotosWorker",
+        category: "🌉 Photos"
+    )
+   
     init(
         service: PhotosServiceProtocol = PhotosService(),
         predictor: OutfitImagePredictor = OutfitImagePredictor()) {
         self.service = service
         self.predictor = predictor
     }
-    
-    func execute(_ useCase: UseCase, state: State) async -> State {
-        let state = state
-        
-        switch useCase {
-        case .fetchPhotosAssets:
-            state.asstes = try? await fetchPhotosAssets()
-        case .requestAuthorization:
-            state.authorizationStatus = try? await authorizationStatus()
-        }
-        
-        return state
+   
+    func requestAuthorizationStatus() async -> PHAuthorizationStatus {
+        logger.log("Request Photos authorization status")
+        return await service.authorizationStatus()
     }
     
-    private func authorizationStatus() async throws -> PHAuthorizationStatus {
-        try await service.authorizationStatus()
-    }
-    
-    private func fetchPhotosAssets() async throws -> [PHAsset] {
+    func fetchPhotosAssets() async -> [PHAsset] {
         // 날짜 계산
         // 작년 기준 10일 전에 사진을 뷰에 나타내야한다.
         let today = Date()
@@ -69,6 +57,8 @@ class PhotosWorker {
             return []
         }
         
+        logger.log("Start fetch photos assets, the \(today) to \(aYearAgo)")
+        
         let fetchedAssets = service
             .fetchResult(
                 mediaType: .image,
@@ -90,6 +80,7 @@ class PhotosWorker {
             }
         }
         
+        logger.log("Get \(photoAssets.count) PHAssets")
         return photoAssets
     }
 }

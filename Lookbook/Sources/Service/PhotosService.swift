@@ -12,7 +12,7 @@ enum PhotosOptions {
 }
 
 protocol PhotosServiceProtocol {
-    func authorizationStatus() async throws -> PHAuthorizationStatus
+    func authorizationStatus() async -> PHAuthorizationStatus
     func fetchResult(
         mediaType: PhotosService.MediaType,
         albumType: PhotosService.AlbumType?,
@@ -35,7 +35,7 @@ final class PhotosService: PhotosServiceProtocol {
     
     // MARK: Public METHODs
     
-    func authorizationStatus() async throws -> PHAuthorizationStatus {
+    func authorizationStatus() async -> PHAuthorizationStatus {
         if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined {
             logger.log("Try request Photos Authorization")
             await PHPhotoLibrary.requestAuthorization(for: .readWrite)

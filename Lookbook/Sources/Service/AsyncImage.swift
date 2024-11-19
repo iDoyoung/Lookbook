@@ -18,7 +18,7 @@ struct AsyncImage: View {
         } else {
             ProgressView()
                 .task {
-                    self.imageData = await asset.data()
+                    imageData = await asset.data()
                 }
         }
     }
