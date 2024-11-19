@@ -11,6 +11,9 @@
 		7F04D1582CE1096E000813D4 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; };
 		7F04D15A2CE1096E000813D4 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7F04D15F2CE324C4000813D4 /* CoreServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F04D15E2CE324C4000813D4 /* CoreServiceAssembly.swift */; };
+		7F1672E52CEC1DB400C25110 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672E42CEC1DB400C25110 /* MockRouter.swift */; };
+		7F1672E72CEC21AA00C25110 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; };
+		7F1672E82CEC21AA00C25110 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
 		7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */; };
 		7F290C212CE6F8D7001B9CBD /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */; };
@@ -21,7 +24,6 @@
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
 		7F3510F32C3E549F003612F6 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F22C3E549F003612F6 /* AsyncImage.swift */; };
 		7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */; };
-		7F3B76822C0D54E1001ECDDB /* PhotosServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */; };
 		7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */; };
 		7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F457B672CA29EC100F485D1 /* LocationFetcher.swift */; };
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
@@ -99,11 +101,23 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7F1672E92CEC21AA00C25110 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F1672E82CEC21AA00C25110 /* Swinject-Dynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		7F04D15E2CE324C4000813D4 /* CoreServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreServiceAssembly.swift; sourceTree = "<group>"; };
+		7F1672E42CEC1DB400C25110 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
 		7F290C1E2CE5D020001B9CBD /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
 		7F290C202CE6F8D7001B9CBD /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
@@ -114,7 +128,6 @@
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
 		7F3510F22C3E549F003612F6 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosService+Predicate.swift"; sourceTree = "<group>"; };
-		7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosServiceSpy.swift; sourceTree = "<group>"; };
 		7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAuthStatus.swift; sourceTree = "<group>"; };
 		7F457B672CA29EC100F485D1 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTests.swift; sourceTree = "<group>"; };
@@ -182,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F1672E72CEC21AA00C25110 /* Swinject-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,11 +219,20 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
+		7F1672E32CEB136E00C25110 /* Today Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */,
+				7F6936752CC2465800106C27 /* TodayInteractorTests.swift */,
+			);
+			path = "Today Tests";
+			sourceTree = "<group>";
+		};
 		7F3B76892C0D77DB001ECDDB /* Test Doubles */ = {
 			isa = PBXGroup;
 			children = (
-				7F3B76812C0D54E1001ECDDB /* PhotosServiceSpy.swift */,
 				7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */,
+				7F1672E42CEC1DB400C25110 /* MockRouter.swift */,
 			);
 			path = "Test Doubles";
 			sourceTree = "<group>";
@@ -383,12 +406,11 @@
 		7FA27BEA2BECDB5B00BDB1A9 /* LookbookTests */ = {
 			isa = PBXGroup;
 			children = (
+				7F1672E32CEB136E00C25110 /* Today Tests */,
 				7F3B76892C0D77DB001ECDDB /* Test Doubles */,
-				7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */,
 				7FB5C2A52C3252A20061C763 /* PhotosServiceTests.swift */,
 				7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */,
 				7FA4A74E2CB8EBA600185B08 /* PhotosWorkerTests.swift */,
-				7F6936752CC2465800106C27 /* TodayInteractorTests.swift */,
 			);
 			path = LookbookTests;
 			sourceTree = "<group>";
@@ -553,6 +575,7 @@
 				7FA27BE32BECDB5B00BDB1A9 /* Sources */,
 				7FA27BE42BECDB5B00BDB1A9 /* Frameworks */,
 				7FA27BE52BECDB5B00BDB1A9 /* Resources */,
+				7F1672E92CEC21AA00C25110 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -714,12 +737,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F3B76822C0D54E1001ECDDB /* PhotosServiceSpy.swift in Sources */,
 				7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */,
 				7FA4A74F2CB8EBA600185B08 /* PhotosWorkerTests.swift in Sources */,
 				7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */,
 				7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */,
 				7FB5C2A62C3252A20061C763 /* PhotosServiceTests.swift in Sources */,
+				7F1672E52CEC1DB400C25110 /* MockRouter.swift in Sources */,
 				7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1208,6 +1231,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		7F04D1572CE1096E000813D4 /* Swinject-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = "Swinject-Dynamic";
+		};
+		7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = "Swinject-Dynamic";
