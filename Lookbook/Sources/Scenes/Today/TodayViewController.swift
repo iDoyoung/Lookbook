@@ -12,7 +12,8 @@ final class TodayViewController: ViewController {
         }
     }
     
-    private var interactor: TodayInteractable = TodayInteractor()
+    private var interactor: TodayInteractable
+    private var router: Routing
     
     // UI
     private var rootView: TodayRootView?
@@ -31,50 +32,50 @@ final class TodayViewController: ViewController {
             fatalError()
         }
     }
-   
-    static func buildToday(
-        locationService: CoreLocationService,
-        weatherRepository: WeatherRepositoryProtocol,
-        photosWorker: PhotosWorker
-    ) -> TodayViewController {
-        let viewController = TodayViewController()
-        return viewController
-    }
-      
+    
     // Life Cycle
+    init(model: TodayModel = TodayModel(), interactor: TodayInteractable, router: Routing) {
+        self.model = model
+        self.interactor = interactor
+        self.router = router
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildHostingController()
-        // - setup hosting controller
         
+        // - setup hosting controller
         guard let hostingController else { fatalError() }
         
         addChild(hostingController)
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
+        
+        fahrenheitNotificationCenter()
+        observeDestinationTracking()
+        observeCurrentLocationTracking()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         Task {
             model = await interactor.execute(
                 action: .viewWillAppear,
                 with: model
             )
         }
-        observeDestinationTracking()
     }
-    
-    override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-    }
-    
-    func presentSetting() {
-        let destination = SettingViewController()
-        let navigationController = UINavigationController(rootViewController: destination)
-        
-        self.present(navigationController, animated: true)
+   
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // Create Notification To Oberserve Setting Of Fahrenheit
@@ -86,18 +87,34 @@ final class TodayViewController: ViewController {
             .store(in: &cancellableBag)
     }
     
+    private func presentSetting() {
+        router.push(viewController: SettingViewController.name)
+    }
+    
     @discardableResult
     private func observeDestinationTracking() -> TodayModel.Destination? {
         withObservationTracking {
-           rootView?.model.destination
-        } onChange: {
-            Task {
-                switch await self.model.destination {
+            model.destination
+        } onChange: { [weak self] in
+            Task {  @MainActor in
+                switch self?.model.destination {
                 case .setting:
-                    await self.presentSetting()
+                    self?.presentSetting()
                 case .none:
                     break
                 }
+            }
+        }
+    }
+    
+    @discardableResult
+    private func observeCurrentLocationTracking() -> LocationServiceState? {
+        withObservationTracking {
+            rootView?.model.locationState
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else { return }
+                self.model = await self.interactor.execute(action: .updatedCurrentLocation, with: self.model)
             }
         }
     }

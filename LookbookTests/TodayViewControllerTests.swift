@@ -2,97 +2,78 @@ import XCTest
 import CoreLocation
 @testable import Lookbook
 
-//final class TodayViewControllerTests: XCTestCase {
-//
-//    // System Under Test
-//    
-//    var sut: TodayViewController!
-//    
-//    override func setUpWithError() throws {
-//        try super.setUpWithError()
-//        
-//        requestLocationAuthorizationUseCaseSpy = RequestLocationAuthorizationUseCaseSpy()
-//        getLocationAuthorizationUseCaseSpy = GetLocationAuthorizationUseCaseSpy()
-//        photosUseCaseSpy = PhotosUseCaseSpy()
-//        
-//        locationRepositorySpy = LocationRepositorySpy()
-//        
-//        sut = TodayViewController()
-//        sut.locationRepository = locationRepositorySpy
-//        
-//        sut.photosUseCase = photosUseCaseSpy
-//    }
-//
-//    override func tearDownWithError() throws {
-//        photosUseCaseSpy = nil
-//        locationRepositorySpy = nil
-//        sut = nil
-//        try super.tearDownWithError()
-//    }
-//    
-//    //MARK: - Tests
-//    
-//    /// 뷰 Did Load 시 Photos Use Case 호출 여부 테스트
-//    func test_whenViewDidLoad_shouldCallUseCase() async {
-//        
-//        // given
-//        photosUseCaseSpy.mockPhotosAuthStatus = .notDetermined
-//        
-//        // when
-//        let task = Task {
-//            await sut.viewDidLoad()
-//        }
-//        
-//        await task.value
-//        
-//        // then
-//        XCTAssertTrue(photosUseCaseSpy.calledUseCase, "Photos Use Case 호출")
-//    }
-//    
-//    /// 뷰, did load 시,  Get CurrentLocation Use Case 호출 여부 테스트
-////    func test_whenViewDidLoad_shouldCellGetCurrentLocationUseCase() {
-////        // given
-////        
-////        // when
-////        sut.viewDidLoad()
-////        
-////        // then
-////        XCTAssertTrue(getCurrentLocationUseCaseSpy.calledExecute)
-////    }
-//   
-//    /// Request Location Authorization시,  Location Repository 호출 여부 테스트
-//    func test_whenRequestLocationAuthorization_shouldCallLocationUseCase() {
-//        // given
-//        
-//        // when
-//        sut.requestLocationAuthorization()
-//        
-//        // then
-//        XCTAssert(locationRepositorySpy.calledRequestAuthorization, "Request Location Authorization Use Case 호출")
-//    }
-//    
-//    /// View Did Load시, Location Repository 호출 여부 테스트
-//    func test_whenViewDidLoad_shouldBeCallGetLocationAuthorizationUseCase() {
-//        
-//        let mockLatitue: CLLocationDegrees = 37.33483990328966
-//        let mockLongitude: CLLocationDegrees = -122.00896129006036
-//       
-//        
-//        let mockLocationInfo = LocationInfo(location: CLLocation(
-//            latitude: mockLatitue,
-//            longitude: mockLongitude))
-//        
-//        locationRepositorySpy.currentLocation.send(mockLocationInfo)
-//        // when
-//        sut.viewDidLoad()
-//        
-//        // then
-//        
-//    }
-//    
-//    // Test doubles
-//    private var locationRepositorySpy: LocationRepositorySpy!
-//    private var requestLocationAuthorizationUseCaseSpy: RequestLocationAuthorizationUseCaseSpy!
-//    private var getLocationAuthorizationUseCaseSpy: GetLocationAuthorizationUseCaseSpy!
-//    private var photosUseCaseSpy: PhotosUseCaseSpy!
-//}
+final class TodayViewControllerTests: XCTestCase {
+
+    // System Under Test
+    
+    var sut: TodayViewController!
+    
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        mockTodayInteractor = MockTodayInteractor()
+        mockRouter = MockRouter(destinationName: SettingViewController.name)
+        
+        sut = TodayViewController(
+            model: mockModel,
+            interactor: mockTodayInteractor,
+            router: mockRouter
+        )
+    }
+
+    override func tearDownWithError() throws {
+        sut = nil
+        mockTodayInteractor = nil
+        try super.tearDownWithError()
+    }
+    
+    // Test Doubles
+    
+    var mockTodayInteractor: MockTodayInteractor!
+    var mockRouter: MockRouter!
+    var mockModel = TodayModel()
+    
+    final class MockTodayInteractor: TodayInteractable {
+        
+        var called = false
+        var receivedAction: TodayViewAction?
+        var executeExpectation = XCTestExpectation(description: "Execute called")
+            
+        func execute(action: Lookbook.TodayViewAction, with model: Lookbook.TodayModel) async -> Lookbook.TodayModel {
+            receivedAction = action
+            called = true
+            executeExpectation.fulfill()
+            
+            return model
+        }
+    }
+   
+    // Tests
+    
+    func test_viewWillAppear_shouldBeCallInteractorWithViewWillAppearAction() async {
+     
+        // given
+        // when
+        await sut.viewWillAppear(false)
+        
+        // then
+        await fulfillment(of: [mockTodayInteractor.executeExpectation])
+        
+        XCTAssertTrue(mockTodayInteractor.called)
+        XCTAssertEqual(TodayViewAction.viewWillAppear, mockTodayInteractor.receivedAction)
+    }
+    
+    func test_observeViewModel_shouldBeCallRouterWhenViewModelUpdatedDestinationToSetting() async {
+        
+        // given
+        let destination: TodayModel.Destination = .setting
+        
+        // when
+        await sut.viewDidLoad()
+        mockModel.destination = destination
+        await fulfillment(of: [mockRouter.routerExpectation], timeout: 1)
+        
+        // then
+        
+        XCTAssertTrue(mockRouter.calledPush)
+    }
+}

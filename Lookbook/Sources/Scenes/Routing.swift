@@ -5,6 +5,8 @@ protocol Routing:  AnyObject {
     var destination: ViewController? { get set }
     var container: Container { get }
     
+    func show(viewController name: String)
+    func push(viewController name: String)
     func dismiss()
     func pop()
 }
@@ -31,4 +33,3 @@ extension Routing {
         destination?.navigationController?.popViewController(animated: true)
     }
 }
-
