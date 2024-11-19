@@ -7,6 +7,8 @@ final class SettingViewController: ViewController {
     private var rootView: SettingRootView!
     private var hostingController: UIHostingController<SettingRootView>!
     
+    private var router: Routing
+    
     private lazy var closeButton: UIBarButtonItem = {
         let image = UIImage(systemName: "xmark")
         return UIBarButtonItem(
@@ -17,10 +19,20 @@ final class SettingViewController: ViewController {
         )
     }()
     
-    //MARK: - View Controller Life Cycle
     private func buildHostingController() {
         rootView = SettingRootView()
         hostingController = UIHostingController(rootView: rootView)
+    }
+    
+    //MARK: - View Controller Life Cycle
+    
+    init(router: Routing) {
+        self.router = router
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -38,6 +50,6 @@ final class SettingViewController: ViewController {
     
     @objc
     private func closeSetting() {
-        dismiss(animated: true)
+        router.pop()
     }
 }
