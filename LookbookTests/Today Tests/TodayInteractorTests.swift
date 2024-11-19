@@ -64,7 +64,7 @@ final class TodayInteractorTests: XCTestCase {
         @discardableResult
         func requestWeather(for location: CLLocation) async throws -> Weather {
             calledRequestWeahter.toggle()
-            return Weather(from: Data() some Decoder)
+            return try Weather(from: Data() as! Decoder)
         }
         
         @discardableResult
@@ -86,12 +86,12 @@ final class TodayInteractorTests: XCTestCase {
         
         // then
         XCTAssertEqual(
-            mockModel.locationState!.authorizationStatus!,
+            mockModel.locationState.authorizationStatus!,
             .authorizedWhenInUse
         )
         
         XCTAssertEqual(
-            mockModel.locationState!.location!,
+            mockModel.locationState.location!,
             mockLocationService.location
         )
     }
