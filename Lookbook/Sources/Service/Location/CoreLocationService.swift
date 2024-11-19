@@ -12,9 +12,8 @@ protocol CoreLocationServiceProtocol {
 
 final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
-    private var continuation: CheckedContinuation<CLLocation, Error>?
+    private var continuation: CheckedContinuation<CLLocation, Never>?
     
-    private var currentLocationHandler: ((CLLocation) -> Void)?
     private var didChangeAuthorizationHandler: ((CLAuthorizationStatus) -> Void)?
    
     // Private
@@ -33,10 +32,7 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
    
     func requestLocation() async -> CLLocation {
         return await withCheckedContinuation { continuation in
-            currentLocationHandler = { location in
-                print("Request Location \(location.coordinate)")
-                continuation.resume(returning: location)
-            }
+            self.continuation = continuation
             locationFetcher.requestLocation()
         }
     }
@@ -66,7 +62,9 @@ extension CoreLocationService: LocationFetcherDelegate {
     func locationFetcher(_ fetcher: LocationFetcher, didUpdate locations: [CLLocation]) {
         if let location = locations.last {
             logger.log("Read location by Core Location: \(location)")
-            currentLocationHandler?(location)
+            continuation?.resume(returning: location)
+            continuation = nil
+            fetcher.stopUpdatingLocation()
         }
     }
     
