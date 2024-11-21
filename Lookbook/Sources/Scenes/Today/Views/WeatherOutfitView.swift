@@ -17,7 +17,6 @@ struct WeatherOutfitView: View {
             Spacer()
             HStack {
                 Text(date ?? "")
-                    .foregroundStyle(.white)
                     .font(
                         .system(
                             size: 16,
@@ -27,7 +26,6 @@ struct WeatherOutfitView: View {
                 Spacer()
                 
                 Text(highTemperature)
-                    .foregroundStyle(.white)
                     .font(
                         .system(
                             size: 20,
@@ -35,38 +33,19 @@ struct WeatherOutfitView: View {
                             design: .monospaced))
                 
                 Text(lowTemperature)
-                    .foregroundStyle(.white)
                     .font(
                         .system(
                             size: 20,
                             weight: .regular,
                             design: .monospaced))
             }
-            .padding()
+            .padding(30)
+            .background(
+                Color(UIColor.systemBackground)
+            )
         }
         .background(
-            imageView
+                DataImageView(photoAsset: photoAsset)
         )
-        .containerRelativeFrame(.vertical)
-    }
-    
-    @ViewBuilder
-    var imageView: some View {
-        if let data = imageData,
-           let uiImage = UIImage(data: data) {
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
-                .onDisappear {
-                    imageData = nil
-                }
-        } else {
-            Rectangle()
-                .foregroundStyle(Color(uiColor: .lightGray))
-                .scaledToFill()
-                .task {
-                    self.imageData = await photoAsset.data()
-                }
-        }
     }
 }
