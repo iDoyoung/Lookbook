@@ -39,12 +39,17 @@ final class TodayInteractor: TodayInteractable {
         case .viewDidLoad:
             break
         case .viewWillAppear:
-            model.locationState = await model.locationState
-                .authorizationStatus(locationService.requestAuthorization())
-                .currentLocation(locationService.requestLocation())
+            
+            // Location State 먼저 할당할 경우 PhotosWorker 호출 안함
+                        
             model.photosState = await model.photosState
                 .authorizationStatus(photosWorker.requestAuthorizationStatus())
                 .assets(photosWorker.fetchPhotosAssets())
+            
+            model.locationState = await model.locationState
+                .authorizationStatus(locationService.requestAuthorization())
+                .currentLocation(locationService.requestLocation())
+            
         case .viewIsAppearing:
             break
         case .updatedCurrentLocation:

@@ -17,9 +17,7 @@ final class TodayModel {
     
     var presentSetting: Bool = false
     var unitTemperature: UnitTemperature = .celsius
-    
-    var photosAuthorizationStatus: PhotosAuthStatus? = nil
-    
+   
     // MARK: - Weather 모델 리펙토링하기
     var weather: CurrentlyWeather? = nil
     var lastYearWeathers: [DailyWeather]? = nil

@@ -1,6 +1,7 @@
 import XCTest
 import CoreLocation
 import WeatherKit
+import Photos
 
 @testable import Lookbook
 
@@ -15,7 +16,10 @@ final class TodayInteractorTests: XCTestCase {
         mockLocationServiceState = LocationServiceState()
         mockLocationService = MockLocationService()
         mockWeatherRepository = MockWeatherRepository()
+        mockPhotosWorker = MockPhotosWorker()
+        
         sut.locationService = mockLocationService
+        sut.photosWorker = mockPhotosWorker
     }
 
     override func tearDownWithError() throws {
@@ -24,6 +28,7 @@ final class TodayInteractorTests: XCTestCase {
         mockLocationService = nil
         mockLocationServiceState = nil
         mockWeatherRepository = nil
+        mockPhotosWorker = nil
         try super.tearDownWithError()
     }
     
@@ -32,6 +37,7 @@ final class TodayInteractorTests: XCTestCase {
     var mockLocationServiceState: LocationServiceState!
     var mockLocationService: MockLocationService!
     var mockWeatherRepository: MockWeatherRepository!
+    var mockPhotosWorker: MockPhotosWorker!
     
     class MockLocationService: CoreLocationServiceProtocol {
         
@@ -44,6 +50,20 @@ final class TodayInteractorTests: XCTestCase {
         
         func requestAuthorization() async -> CLAuthorizationStatus {
             return authorizationStatus
+        }
+    }
+    
+    class MockPhotosWorker: PhotosWorking {
+        var calledPhotosWorker = false
+        
+        func requestAuthorizationStatus() async -> PHAuthorizationStatus {
+            calledPhotosWorker = true
+            return .limited
+        }
+        
+        func fetchPhotosAssets() async -> [PHAsset] {
+            calledPhotosWorker = true
+            return []
         }
     }
     
@@ -94,5 +114,14 @@ final class TodayInteractorTests: XCTestCase {
             mockModel.locationState.location!,
             mockLocationService.location
         )
+    }
+    
+    func test_exectueInteractor_whenViewWillAppear_shouldBeCellPhotosWorker() async {
+        
+        //given
+        //when
+        let _ = await sut.execute(action: .viewWillAppear, with: mockModel)
+        //then
+        XCTAssertTrue(mockPhotosWorker.calledPhotosWorker)
     }
 }
