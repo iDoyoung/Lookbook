@@ -52,17 +52,21 @@ final class LocationServiceTests: XCTestCase {
         var isCallStartUpdatingLocation: Bool = false
         
         func requestLocation() {
-            locationFetcherDelegate?.locationFetcher(self, didUpdate: [location!])
+            if let error {
+                locationFetcherDelegate!.locationFetcher(self, didFailWithError: error)
+                return
+            }
+            locationFetcherDelegate!.locationFetcher(self, didUpdate: [location!])
             isCallRequestLocation = true
         }
         
         func requestWhenInUseAuthorization() {
-            locationFetcherDelegate?.locationManagerDidChangeAuthorization(authorizationStatus)
+            locationFetcherDelegate!.locationManagerDidChangeAuthorization(authorizationStatus)
             isCallRequestWhenInUseAuthorization = true
         }
         
         func startUpdatingLocation() {
-            locationFetcherDelegate?.locationFetcher(self, didUpdate: [location!])
+            locationFetcherDelegate!.locationFetcher(self, didUpdate: [location!])
             isCallStartUpdatingLocation = true
         }
         
@@ -71,26 +75,95 @@ final class LocationServiceTests: XCTestCase {
     
     //MARK: - Tests
     
-    func test_requestLocation_shouldBeUpdate_locationState_toMockLocation() async {
+    func test_requestLocation_shouldUpdateStateWithNewLocation() {
+        // When
+        sut.requestLocation()
         
-        // when
-        let state = await sut.requestLocation()
-        
-        // then
-        XCTAssertEqual(state, mockLocation)
+        // Then
+        XCTAssertEqual(sut.state.location, mockLocation)
         XCTAssertTrue(fetcher.isCallRequestLocation)
     }
     
-    func test_requestAuthorization_shouldBeUpdate_locationState_toMockAuthStatus_andBeNotCallRequestWhenInUseAuthorization_whenAuthorizationIsNotAuthorizedWhenInUse() async {
+    func test_requestLocation_whenFetcherFailsWithError_shouldNotUpdateLocation() {
+        // Given
+        fetcher.error = .locationUnavailable
+        let initialLocation = sut.state.location
         
-        // given
+        // When
+        sut.requestLocation()
+        
+        // Then
+        XCTAssertEqual(sut.state.location, initialLocation)
+    }
+    
+    // MARK: - Authorization Tests
+    
+    func test_requestAuthorization_whenNotDetermined_shouldRequestAuthorization() {
+        // Given
+        fetcher.authorizationStatus = .notDetermined
+        
+        // When
+        sut.requestAuthorization()
+        
+        // Then
+        XCTAssertTrue(fetcher.isCallRequestWhenInUseAuthorization)
+    }
+    
+    func test_requestAuthorization_whenAlreadyAuthorized_shouldNotRequestAgain() {
+        // Given
         fetcher.authorizationStatus = .authorizedWhenInUse
+        sut.state.authorizationStatus = .authorizedWhenInUse
         
-        // when
-        let state = await sut.requestAuthorization()
+        // When
+        sut.requestAuthorization()
         
-        // then
-        XCTAssertEqual(state, .authorizedWhenInUse)
+        // Then
         XCTAssertFalse(fetcher.isCallRequestWhenInUseAuthorization)
+    }
+    
+    func test_whenAuthorizationChanges_shouldUpdateState() {
+        // Given
+        let newStatus: CLAuthorizationStatus = .authorizedWhenInUse
+        
+        // When
+        fetcher.locationFetcherDelegate!.locationManagerDidChangeAuthorization(newStatus)
+        
+        // Then
+        XCTAssertEqual(sut.state.authorizationStatus, newStatus)
+    }
+    
+    func test_whenAuthorizationChangesToAuthorized_shouldRequestLocation() {
+        // Given
+        let newStatus: CLAuthorizationStatus = .authorizedWhenInUse
+        
+        // When
+        fetcher.locationFetcherDelegate!.locationManagerDidChangeAuthorization(newStatus)
+        
+        // Then
+        XCTAssertTrue(fetcher.isCallRequestLocation)
+    }
+    
+    func test_whenLocationUpdates_shouldStopUpdatingLocation() {
+        // When
+        fetcher.locationFetcherDelegate!.locationFetcher(fetcher, didUpdate: [mockLocation])
+        
+        // Then
+        XCTAssertEqual(sut.state.location, mockLocation)
+    }
+    
+    // MARK: - Error Handling Tests
+    
+    func test_whenLocationUpdateFails_shouldNotUpdateState() {
+        // Given
+        let initialLocation = sut.state.location
+        
+        // When
+        fetcher.locationFetcherDelegate!.locationFetcher(
+            fetcher,
+            didFailWithError: MockError.locationUnavailable
+        )
+        
+        // Then
+        XCTAssertEqual(sut.state.location, initialLocation)
     }
 }

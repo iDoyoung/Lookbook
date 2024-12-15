@@ -8,13 +8,14 @@ final class LocationServiceState {
     var location: CLLocation?
     var authorizationStatus: CLAuthorizationStatus?
     var error: Error?
-    var locationName: String?
+    
+    func name(_ location: CLLocation) async -> String? {
+        await location.name
+    }
     
     func currentLocation(_ location: CLLocation) async -> Self {
         self.location = location
-        self.locationName = await location.name
-        logger.log("Current location: \(self.locationName ?? "Unknown")")
-        
+       
         return self
     }
     
