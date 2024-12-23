@@ -5,7 +5,7 @@ import Photos
 import os
 
 enum TodayViewAction {
-    case viewDidLoad, viewWillAppear, viewIsAppearing, updatedCurrentLocation
+    case viewDidLoad, viewWillAppear, requestWeather
 }
                               
 protocol TodayInteractable: AnyObject {
@@ -37,29 +37,37 @@ final class TodayInteractor: TodayInteractable {
         
         switch action {
         case .viewDidLoad:
-            break
+            locationService.requestAuthorization()
+            locationService.requestLocation()
         case .viewWillAppear:
-            
-            // Location State 먼저 할당할 경우 PhotosWorker 호출 안함
-                        
             model.photosState = await model.photosState
                 .authorizationStatus(photosWorker.requestAuthorizationStatus())
-                .assets(photosWorker.fetchPhotosAssets())
-            
-            model.locationState = await model.locationState
-                .authorizationStatus(locationService.requestAuthorization())
-                .currentLocation(locationService.requestLocation())
-            
-        case .viewIsAppearing:
-            break
-        case .updatedCurrentLocation:
+                .assets(
+                    photosWorker.fetchPhotosAssets(
+                        startDate: model.dateRange.start,
+                        endDate: model.dateRange.end
+                    )
+                )
+        case .requestWeather:
             if let location = model.locationState.location {
                 do {
                     try await weatherRepository.requestWeather(for: location)
+                    await model.locationName = locationService.state.name(location)
                     model.weather = weatherRepository[location]
+                    
+                    if model.photosState.authorizationStatus == .authorized || model.photosState.authorizationStatus == .limited {
+                        try await weatherRepository.requestWeathr(
+                            for: location,
+                            startDate: model.dateRange.start,
+                            endDate: model.dateRange.end
+                        )
+                        model.lastYearWeathers = weatherRepository[location]
+                    }
                 } catch {
                     logger.error("Apple Weather 요청 실패\n다음 에러: \(error)")
                 }
+            } else {
+                logger.log("updatedCurrentLocation 실패, locationState.location: \(String(describing:  model.locationState.location)) ")
             }
         }
         

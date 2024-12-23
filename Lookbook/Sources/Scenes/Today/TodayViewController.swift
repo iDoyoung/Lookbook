@@ -2,15 +2,12 @@ import UIKit
 import Combine
 import SwiftUI
 import CoreLocation
+import Observation
 
 final class TodayViewController: ViewController {
     
     // Components
-    private var model = TodayModel() {
-        didSet {
-            rootView?.model = model
-        }
-    }
+    private var model: TodayModel
     
     private var interactor: TodayInteractable
     private var router: Routing
@@ -34,7 +31,11 @@ final class TodayViewController: ViewController {
     }
     
     // Life Cycle
-    init(model: TodayModel = TodayModel(), interactor: TodayInteractable, router: Routing) {
+    init(
+        model: TodayModel,
+        interactor: TodayInteractable,
+        router: Routing
+    ) {
         self.model = model
         self.interactor = interactor
         self.router = router
@@ -60,6 +61,13 @@ final class TodayViewController: ViewController {
         fahrenheitNotificationCenter()
         observeDestinationTracking()
         observeCurrentLocationTracking()
+        
+        Task {
+            model = await interactor.execute(
+                action: .viewWillAppear,
+                with: model
+            )
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,30 +99,35 @@ final class TodayViewController: ViewController {
         router.push(viewController: SettingViewController.name)
     }
     
+    //MARK: Understanding withObservationTracking()
     @discardableResult
     private func observeDestinationTracking() -> TodayModel.Destination? {
         withObservationTracking {
             model.destination
         } onChange: { [weak self] in
             Task {  @MainActor in
-                switch self?.model.destination {
+                guard let self else { return }
+                switch self.model.destination {
                 case .setting:
-                    self?.presentSetting()
+                    self.presentSetting()
                 case .none:
                     break
                 }
+                self.model.destination = nil
+                self.observeDestinationTracking()
             }
         }
     }
     
     @discardableResult
-    private func observeCurrentLocationTracking() -> LocationServiceState? {
+    private func observeCurrentLocationTracking() -> CLLocation? {
         withObservationTracking {
-            rootView?.model.locationState
+            rootView?.model.locationState.location
         } onChange: { [weak self] in
             Task { @MainActor in
                 guard let self else { return }
-                self.model = await self.interactor.execute(action: .updatedCurrentLocation, with: self.model)
+                self.model = await self.interactor.execute(action: .requestWeather, with: self.model)
+                self.observeCurrentLocationTracking()
             }
         }
     }
