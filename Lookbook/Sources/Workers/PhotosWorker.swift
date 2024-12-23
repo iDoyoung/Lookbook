@@ -5,7 +5,7 @@ import Vision
 
 protocol PhotosWorking {
     func requestAuthorizationStatus() async -> PHAuthorizationStatus
-    func fetchPhotosAssets() async -> [PHAsset]
+    func fetchPhotosAssets(startDate: Date, endDate: Date) async -> [PHAsset]
 }
 
 final class PhotosWorker: PhotosWorking {
@@ -31,39 +31,12 @@ final class PhotosWorker: PhotosWorking {
         return await service.authorizationStatus()
     }
     
-    func fetchPhotosAssets() async -> [PHAsset] {
-        // 날짜 계산
-        // 작년 기준 10일 전에 사진을 뷰에 나타내야한다.
-        let today = Date()
-        let calendar = Calendar.current
-        
-        // 작년 값 계산
-        guard let aYearAgo = calendar.date(
-            byAdding: .year,
-            value: -1,
-            to: today
-        ) else {
-            logger.debug("1년 전을 계산 할 수 없습니다")
-            return []
-        }
-        
-        // 작년에서 10일 전 날짜 계산
-        guard let aYearAndtenDaysAgo = calendar.date(
-            byAdding: .day,
-            value: -10,
-            to: aYearAgo
-        ) else {
-            logger.debug("1년 하고 10을 전을 계산 할 수 없습니다")
-            return []
-        }
-        
-        logger.log("Start fetch photos assets, the \(today) to \(aYearAgo)")
-        
+    func fetchPhotosAssets(startDate: Date, endDate: Date) async -> [PHAsset] {
         let fetchedAssets = service
             .fetchResult(
                 mediaType: .image,
                 albumType: nil,
-                dateRange: (aYearAndtenDaysAgo, aYearAgo)
+                dateRange: (startDate, endDate)
             )
             .assets
         
