@@ -50,7 +50,7 @@ final class OutfitImagePredictor {
                 completion(false)
                 return
             }
-            if topResult.identifier == "People", topResult.confidence > 0.9 {
+            if topResult.identifier == "People", topResult.confidence > 0.95 {
                 self?.logger.log("Predicated, confidence: \(String(describing: topResult.confidence))")
                 completion(true)
             }
