@@ -5,7 +5,9 @@ final class ViewControllerAssembly: Assembly {
     
     func assemble(container: Container) {
         container.register(ViewController.self, name: TodayViewController.name) { resolver in
-            TodayViewController(
+            let locationService = resolver.resolve(CoreLocationServiceProtocol.self)!
+            return TodayViewController(
+                model: TodayModel(locationState: locationService.state),
                 interactor: resolver.resolve(TodayInteractable.self)!,
                 router: resolver.resolve(Routing.self, name: "Today")!
             )
