@@ -9,19 +9,35 @@ final class TodayModel {
     enum Destination { case setting }
     
     // States
-    var destination: Destination?
+    var destination: Destination? = nil
     var hiddingWeatherTag: Bool = false
     var weatherTagScale: CGFloat = 1
-    var locationState: LocationServiceState = .init()
-    var photosState: PhotosState = .init()
     
+    var locationState: LocationServiceState
+    var photosState: PhotosState
+    
+    var locationName: String? = nil
     var presentSetting: Bool = false
     var unitTemperature: UnitTemperature = .celsius
+    
+    var dateRange: (start: Date, end: Date) {
+        let now = Date()
+        let oneYearAndFiveDaysAgo = now.oneYearAndFiveDaysAgo
+        return (oneYearAndFiveDaysAgo, oneYearAndFiveDaysAgo.tenDaysAfter())
+    }
    
     // MARK: - Weather 모델 리펙토링하기
     var weather: CurrentlyWeather? = nil
     var lastYearWeathers: [DailyWeather]? = nil
-   
+    
+    init(
+        locationState: LocationServiceState,
+        photosState: PhotosState = .init()
+    ) {
+        self.locationState = locationState
+        self.photosState = photosState
+    }
+    
     var currentTemperature: String {
         weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "--"
     }
