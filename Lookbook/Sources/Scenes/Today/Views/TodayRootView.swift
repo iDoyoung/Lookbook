@@ -7,7 +7,7 @@ struct TodayRootView: View {
     
     var body: some View {
         
-        ZStack {
+        ZStack(alignment: .bottom) {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     TodayWeatherView(model: model)
@@ -22,7 +22,7 @@ struct TodayRootView: View {
                     ForEach(model.outfitPhotos, id: \.id) { photo in
                         WeatherOutfitView(
                             photoAsset: photo.asset,
-                            location: photo.location,
+                            location: (model.locationState.location, photo.location),
                             date: photo.creationDate,
                             lowTemperature: photo.lowTemp,
                             highTemperature: photo.highTemp
@@ -35,6 +35,7 @@ struct TodayRootView: View {
                         }
                         .containerRelativeFrame(.vertical)
                         .clipShape(Rectangle())
+                        .shadow(radius: 10)
                     }
                 }
                 .scrollTargetLayout()

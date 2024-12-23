@@ -6,6 +6,10 @@ struct TodayWeatherView: View {
     
     var body: some View {
         ZStack {
+            LastYearOutfitGridView(
+                outfitPhotos: model.outfitPhotos,
+                dateRange: model.dateRange
+            )
             VStack(alignment: .leading) {
                 
                 // 펀치 홀 UI
@@ -67,7 +71,7 @@ struct TodayWeatherView: View {
                     .font(
                         .system(
                             size: 16,
-                            weight: .light,
+                            weight: .bold,
                             design: .monospaced))
                     .padding(.vertical, 1)
                     .padding(.horizontal)
@@ -138,15 +142,17 @@ struct TodayWeatherView: View {
             }
             .frame(
                 width: 240,
-                alignment: .leading)
+                alignment: .leading
+            )
             .padding(.top)
-            .background(.background.opacity(0.8))
+            .background(.background.opacity(0.9))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .strokeBorder(
                         .black.opacity(0.9),
-                        lineWidth:1))
+                        lineWidth:1)
+            )
             .padding(.vertical, 60)
             .frame(maxWidth: .infinity)
             .rotation3DEffect(
@@ -160,38 +166,21 @@ struct TodayWeatherView: View {
                 anchor: .leading
             )
         }
-        .background(
-            backgroundView
-        )
         .containerRelativeFrame(.vertical)
-//        .onTapGesture { position in
-//            withAnimation {
-//                model.hiddingWeatherTag.toggle()
-//                model.weatherTagScale = model.hiddingWeatherTag ? 0.2: 1
-//            }
-//        }
-    }
-    
-    @ViewBuilder
-    var backgroundView: some View {
-        if !model.outfitPhotos.isEmpty {
-            let asset = model.outfitPhotos[0].asset
-            AsyncImage(asset: asset)
-        }
     }
     
     @ViewBuilder
     var locationLabel: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("My Location")
+                Text("내 위치")
                     .font(
                         .system(
                             size: 20,
                             weight: .medium))
                     .padding(.top, 6)
             }
-            Text(model.locationState.locationName ?? "알 수 없음")
+            Text(model.locationName ?? "알 수 없음")
                 .font(.footnote)
                 .fontWeight(.semibold)
         }
@@ -225,7 +214,7 @@ struct TodayWeatherView: View {
         if model.photosState.authorizationStatus == .limited {
             
             // You've given Lookbook access to a select number of photos.
-            Text(" 제한된 사진 접근상태입니다.")
+            Text("제한된 사진 접근상태입니다. 더 많은 사진을 가져오기 위해 사진에 접근을 설정해 주세요.")
                 .font(
                     .system(
                         size: 12,

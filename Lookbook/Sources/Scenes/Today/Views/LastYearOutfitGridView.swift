@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LastYearOutfitGridView: View {
     var outfitPhotos: [OutfitPhoto]
+    var dateRange: (start: Date, end: Date)
     
     private var columns: Int {
         switch outfitPhotos.count {
@@ -20,9 +21,11 @@ struct LastYearOutfitGridView: View {
                     EmptyView()
                 } else if outfitPhotos.count == 1 {
                     let asset = outfitPhotos[0].asset
-                    AsyncImage(asset: asset)
-                        .frame(width: geometry.size.width, height: geometry.size.height)
-                        .clipped()
+                    DataImageView(
+                        isRotated: true,
+                        photoAsset: asset)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
                 } else {
                     let rows = ceil(Double(min(outfitPhotos.count, 12)) / Double(columns))
                     let spacing: CGFloat = 10
@@ -39,13 +42,17 @@ struct LastYearOutfitGridView: View {
                         spacing: spacing
                     ) {
                         ForEach(Array(outfitPhotos.prefix(12).enumerated()), id: \.offset) { index, photo in
-                            AsyncImage(asset: photo.asset)
-                                .scaledToFill()
-                                .frame(
-                                    width: itemWidth,
-                                    height: itemHeight
-                                )
-                                .clipped()
+                            DataImageView(
+                                isRotated: true,
+                                photoAsset: photo.asset,
+                                animationDelay: Double(index)
+                            )
+                            .scaledToFill()
+                            .frame(
+                                width: itemWidth,
+                                height: itemHeight
+                            )
+                            .clipped()
                         }
                     }
                 }
@@ -54,9 +61,9 @@ struct LastYearOutfitGridView: View {
             
             //FIXME: - Hard coding 수정
             VStack {
-                Text("2023-12-11 2023-12-17 @ 12 photos")
+                Text("\(dateRange.start.longStyle) - \(dateRange.end.longStyle) @ \(outfitPhotos.count)개 사진")
                     .font(.footnote)
-                Text("아래로 내려서보기")
+                Text("위로 올려 크게 보기")
                     .fontWeight(.semibold)
             }
             .padding(.bottom)
