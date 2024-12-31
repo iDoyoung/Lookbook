@@ -7,6 +7,13 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    var styleMMddKOR: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "MM월 dd일"
+        return dateFormatter.string(from: self)
+    }
+    
     var longStyle: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
