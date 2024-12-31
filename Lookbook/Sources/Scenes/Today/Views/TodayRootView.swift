@@ -1,87 +1,96 @@
 import SwiftUI
 
 struct TodayRootView: View {
-    
+   
     @State var model: TodayModel
+    @State private var imageOpacity: Bool = false
+    @State private var isShowWeatherDetails: Bool = false
+    
+    let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 0), count: 3)
     
     var body: some View {
-        VStack {
+        ZStack {
             VStack {
-                HStack(alignment: .center) {
-                    Text(Image(systemName: model.symbolName ?? "questionmark"))
-                    Text(model.weatherCondition)
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .light,
-                                design: .monospaced))
-                    Spacer()
+                if isShowWeatherDetails {
+                    EmptyView()
+                } else {
+                    todayWeatherView
                 }
-                .padding(.bottom, 4)
                 
-                HStack {
-                    Text(model.currentTemperature)
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .bold,
-                                design: .monospaced))
-                    Spacer()
-                    Text("작년 12월 31일과 비슷한 기온이에요")
-                        .font(
-                            .system(
-                                size: 14,
-                                weight: .light,
-                                design: .monospaced))
-                }
-            }
-            .padding()
-            .debugBorder()
-            
-            ScrollView {
-                LazyVStack {
-                    VStack(alignment: .leading) {
-                        Text("2023.12.31 STYLE")
-                            .font(.custom("Futura", size: 20))
-                            .italic()
+                ScrollView {
+                    LazyVStack {
+                        VStack(alignment: .leading) {
+                            Text(model.lastYearSimilarWeatherDateStyleText ?? "")
+                                .font(.custom("Futura", size: 20))
+                                .italic()
+                                .debugBorder()
+                            
+                            HStack {
+                                Text(model.maximumTemperatureText)
+                                    .font(
+                                        .system(
+                                            size: 16,
+                                            weight: .bold,
+                                            design: .monospaced))
+                                Text("⎮")
+                                Text(model.minimumTemperatureText)
+                                    .font(
+                                        .system(
+                                            size: 16,
+                                            weight: .regular,
+                                            design: .monospaced))
+                            }
                             .debugBorder()
-                        
-                        DataImageView(photoAsset: model.photosState.assets?.first)
-                            .border(
-                                Color(uiColor: .label),
-                                width: 2
-                            )
-                            .debugBorder()
-                        
-                        HStack {
-                            Text(model.maximumTemperature)
-                                .font(
-                                    .system(
-                                        size: 16,
-                                        weight: .bold,
-                                        design: .monospaced))
-                            Text("⎮")
-                            Text(model.minimumTemperature)
-                                .font(
-                                    .system(
-                                        size: 16,
-                                        weight: .regular,
-                                        design: .monospaced))
+                            
+                            if let photoAsset = model.recommendedPHAsset {
+                                
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .aspectRatio(3/4, contentMode: .fit)
+                                    .background(
+                                        DataImageView(
+                                            photoAsset: photoAsset
+                                        )
+                                    )
+                                    .border(
+                                        Color(uiColor: .label),
+                                        width: 2
+                                    )
+                                    .rotation3DEffect(
+                                        .degrees(imageOpacity ? 0 : 50),
+                                        axis: (0, 1, 0),
+                                        anchor: .center
+                                    )
+                                    .onAppear {
+                                        withAnimation(.easeIn(duration: 0.3)) {
+                                            imageOpacity = true
+                                        }
+                                    }
+                                    .clipped()
+                                    .debugBorder()
+                            } else {
+                                Rectangle()
+                                    .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
+                                    .aspectRatio(3/4, contentMode: .fit)
+                            }
+                            
+                            
+                            Divider()
+                                .padding(.vertical)
+                            
+                            GoogleAdBannerView()
+                                .frame(
+                                    height: 50,
+                                    alignment: .bottom)
+                                .debugBorder()
+                            
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
                         .debugBorder()
                         
-                        GoogleAdBannerView()
-                            .frame(
-                                height: 50,
-                                alignment: .bottom)
-                            .debugBorder()
-                        
-                        
-                        Divider()
-                            .padding(.vertical)
-                        
                         HStack(alignment: .center) {
-                            Text("2023년 12월의 옷차림들")
+                            Text("작년 이맘때의 옷차림")
                                 .font(
                                     .system(
                                         size: 16,
@@ -89,19 +98,23 @@ struct TodayRootView: View {
                                         design: .monospaced))
                             
                             Spacer()
-                            Text("기온차")
-                                .font(
-                                    .system(
-                                        size: 16,
-                                        weight: .bold,
-                                        design: .monospaced))
-                                .padding(.vertical, 6)
-                                .padding(.horizontal)
-                                .background(.mint)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
                         }
-                        .padding(.top, 6)
+                        .padding(.horizontal)
                         .debugBorder()
+                        
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            ForEach(model.outfitPhotos, id: \.id) { photo in
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .aspectRatio(3/4, contentMode: .fit)
+                                    .background(
+                                        DataImageView(
+                                            photoAsset: photo.asset
+                                        )
+                                    )
+                                    .clipped()
+                            }
+                        }
                         
                         //MARK: - Weather Kit
                         VStack {
@@ -129,24 +142,83 @@ struct TodayRootView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
+                        
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
                     .debugBorder()
                 }
+                .scrollIndicators(.hidden)
+                .onScrollPhaseChange { oldPhase, newPhase in
+                    if isShowWeatherDetails {
+                        showWeatherDetails()
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .background()
                 .debugBorder()
             }
             .frame(maxWidth: .infinity)
-            .debugBorder()
+            .background(.regularMaterial)
+            
+            if isShowWeatherDetails {
+                    TodayWeatherView(model: model)
+                        .onTapGesture {
+                            showWeatherDetails()
+                        }
+            } else {
+                EmptyView()
+            }
         }
-        .frame(maxWidth: .infinity)
     }
     
-    var currentWeather: some View {
-        HStack {
+    var todayWeatherView: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Text(Image(systemName: model.symbolName ?? "questionmark"))
+                Text(model.weatherCondition)
+                    .font(
+                        .system(
+                            size: 16,
+                            weight: .light,
+                            design: .monospaced))
+                Spacer()
+            }
+            .padding(.bottom, 4)
             
+            HStack {
+                Text(model.currentTemperature)
+                    .font(
+                        .system(
+                            size: 16,
+                            weight: .bold,
+                            design: .monospaced))
+                Spacer()
+                Text(model.lastYearSimilarWeatherDateText ?? "")
+                    .font(
+                        .system(
+                            size: 14,
+                            weight: .light,
+                            design: .monospaced))
+            }
         }
-        .padding()
+        .padding(.horizontal)
+        .onTapGesture {
+            showWeatherDetails()
+        }
+        .debugBorder()
+
+    }
+    
+    private func showWeatherDetails() {
+        withAnimation(.spring()) {
+            isShowWeatherDetails.toggle()
+        }
+    }
+}
+
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
