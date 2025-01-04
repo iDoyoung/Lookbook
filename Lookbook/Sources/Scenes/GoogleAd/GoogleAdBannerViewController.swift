@@ -1,7 +1,7 @@
 // https://developers.google.com/admob/ios/swiftui
 
 import UIKit
-import GoogleMobileAds
+//import GoogleMobileAds
 
 protocol GoogleAdBannerViewControllerWidthDelegate: AnyObject {
   func bannerViewController(_ bannerViewController: GoogleAdBannerViewController, didUpdate width: CGFloat)
