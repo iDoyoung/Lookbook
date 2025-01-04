@@ -5,167 +5,147 @@ struct TodayWeatherView: View {
     @State var model: TodayModel
     
     var body: some View {
-        ZStack {
-            LastYearOutfitGridView(
-                outfitPhotos: model.outfitPhotos,
-                dateRange: model.dateRange
-            )
-            VStack(alignment: .leading) {
-                
-                // 펀치 홀 UI
-                ZStack(alignment: .center) {
-                    Circle()
-                        .foregroundStyle(.black)
-                        .frame(
-                            width: 15,
-                            height: 15,
-                            alignment: .center)
-                }
-                .frame(maxWidth: .infinity)
-                
-                //MARK: Location Label
-                locationLabel
-                    .padding([.top, .horizontal])
-                
-                //MARK: Weather Condition
-                HStack {
-                    Text(Image(systemName: model.symbolName ?? "questionmark"))
-                    Text(model.weatherCondition)
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .light,
-                                design: .monospaced))
-                }
-                .padding(.top, 2)
-                .padding(.horizontal)
-                
-                //MARK: Temperatures
-                Text(model.currentTemperature)
-                    .font(
-                        .system(
-                            size: 80,
-                            weight: .light))
-                    .padding(.horizontal)
-                
-                HStack {
-                    Text(model.maximumTemperature)
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .light,
-                                design: .monospaced))
-                    
-                    Text(model.minimumTemperature)
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .light,
-                                design: .monospaced))
-                        .padding(.bottom, 1)
-                }
-                .padding(.horizontal)
-                
-                
-                Text(model.feelTemperature)
+        VStack(alignment: .leading) {
+            
+            // 펀치 홀 UI
+            ZStack(alignment: .center) {
+                Circle()
+                    .foregroundStyle(.black)
+                    .frame(
+                        width: 15,
+                        height: 15,
+                        alignment: .center)
+            }
+            .frame(maxWidth: .infinity)
+            
+            //MARK: Location Label
+            locationLabel
+                .padding([.top, .horizontal])
+            
+            //MARK: Weather Condition
+            HStack {
+                Text(Image(systemName: model.symbolName ?? "questionmark"))
+                Text(model.weatherCondition)
                     .font(
                         .system(
                             size: 16,
-                            weight: .bold,
+                            weight: .light,
                             design: .monospaced))
-                    .padding(.vertical, 1)
-                    .padding(.horizontal)
+            }
+            .padding(.top, 2)
+            .padding(.horizontal)
+            
+            //MARK: Temperatures
+            Text(model.currentTemperature)
+                .font(
+                    .system(
+                        size: 80,
+                        weight: .light))
+                .padding(.horizontal)
+            
+            HStack {
+                Text(model.maximumTemperatureText)
+                    .font(
+                        .system(
+                            size: 16,
+                            weight: .light,
+                            design: .monospaced))
                 
-                // - MARK:
-                Divider()
-                    .padding(.vertical, 1)
-                    .padding(.horizontal)
-                
-                
-                // MARK: Houly Forecast
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(model.todayForcast ?? [], id: \.date) { weather in
-                            VStack {
-                                Text(weather.date)
-                                    .font(
-                                        .system(
-                                            size: 14,
-                                            weight: .light,
-                                            design: .monospaced))
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                
-                                Image(systemName: weather.symbolName)
-                                    .padding(.vertical, 1)
-                                
-                                Text(weather.temperature)
-                                    .font(
-                                        .system(
-                                            size: 14,
-                                            weight: .light,
-                                            design: .monospaced))
-                            }
+                Text(model.minimumTemperatureText)
+                    .font(
+                        .system(
+                            size: 16,
+                            weight: .light,
+                            design: .monospaced))
+                    .padding(.bottom, 1)
+            }
+            .padding(.horizontal)
+            
+            
+            Text(model.feelTemperature)
+                .font(
+                    .system(
+                        size: 16,
+                        weight: .bold,
+                        design: .monospaced))
+                .padding(.vertical, 1)
+                .padding(.horizontal)
+            
+            // - MARK:
+            Divider()
+                .padding(.vertical, 1)
+                .padding(.horizontal)
+            
+            // MARK: Houly Forecast
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(model.todayForcast ?? [], id: \.date) { weather in
+                        VStack {
+                            Text(weather.date)
+                                .font(
+                                    .system(
+                                        size: 14,
+                                        weight: .light,
+                                        design: .monospaced))
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                            
+                            Image(systemName: weather.symbolName)
+                                .padding(.vertical, 1)
+                            
+                            Text(weather.temperature)
+                                .font(
+                                    .system(
+                                        size: 14,
+                                        weight: .light,
+                                        design: .monospaced))
                         }
                     }
                 }
-                .contentMargins(10)
-                
-                //MARK: Today Date
-                Text("\(Date())")
-                    .font(
-                        .system(
-                            size: 10,
-                            weight: .light,
-                            design: .monospaced))
-                    .padding()
-                
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    locationWarningLabel
-                    photosWarningLabel
-                }
-                
-                GoogleAdBannerView()
-                    .frame(height: 50, alignment: .bottom)
-                
-                HStack {
-                    Image(systemName: "gearshape.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .onTapGesture {
-                            model.destination = .setting
-                        }
-                }
-                .padding()
             }
-            .frame(
-                width: 240,
-                alignment: .leading
-            )
-            .padding(.top)
-            .background(.background.opacity(0.9))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(
-                        .black.opacity(0.9),
-                        lineWidth:1)
-            )
-            .padding(.vertical, 60)
-            .frame(maxWidth: .infinity)
-            .rotation3DEffect(
-                .degrees(model.hiddingWeatherTag ? 30 : 0),
-                axis: (0, 1, 0),
-                anchor: .center
-            )
-            .scaleEffect(
-                x: model.weatherTagScale,
-                y: model.weatherTagScale,
-                anchor: .leading
-            )
+            .contentMargins(10)
+            
+            //MARK: Today Date
+            Text("\(Date())")
+                .font(
+                    .system(
+                        size: 10,
+                        weight: .light,
+                        design: .monospaced))
+                .padding()
+            
+            Spacer()
+            
+            VStack(alignment: .leading, spacing: 4) {
+                locationWarningLabel
+                photosWarningLabel
+            }
+            
+            HStack {
+                Image(systemName: "gearshape.fill")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .onTapGesture {
+                        model.destination = .setting
+                    }
+            }
+            .padding()
         }
+        .frame(
+            width: 240,
+            alignment: .leading
+        )
+        .padding(.top)
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(
+                    .black.opacity(0.9),
+                    lineWidth:1)
+        )
+        .padding(.vertical, 60)
+        .frame(maxWidth: .infinity)
         .containerRelativeFrame(.vertical)
     }
     
@@ -257,4 +237,10 @@ struct TodayWeatherView: View {
             UIApplication.shared.open(url)
         }
     }
+}
+
+#Preview {
+    TodayWeatherView(
+        model: TodayModel(locationState: LocationServiceState())
+    )
 }

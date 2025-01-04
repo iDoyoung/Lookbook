@@ -5,13 +5,16 @@ struct TodayRootView: View {
     @State var model: TodayModel
     @State private var imageOpacity: Bool = false
     @State private var isShowWeatherDetails: Bool = false
+    @State private var hideCurrntWeather: Bool = false
+    
+    @State private var lastOffset: CGFloat = 0.0
     
     let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 0), count: 3)
     
     var body: some View {
         ZStack {
             VStack {
-                if isShowWeatherDetails {
+                if hideCurrntWeather {
                     EmptyView()
                 } else {
                     todayWeatherView
@@ -20,28 +23,21 @@ struct TodayRootView: View {
                 ScrollView {
                     LazyVStack {
                         VStack(alignment: .leading) {
+                            Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
+                                .font(.caption2)
+                                .padding(.top)
+                                .padding(.bottom, 4)
+                            
                             Text(model.lastYearSimilarWeatherDateStyleText ?? "")
                                 .font(.custom("Futura", size: 20))
                                 .italic()
-                                .debugBorder()
-                            
-                            HStack {
-                                Text(model.maximumTemperatureText)
-                                    .font(
-                                        .system(
-                                            size: 16,
-                                            weight: .bold,
-                                            design: .monospaced))
-                                Text("⎮")
-                                Text(model.minimumTemperatureText)
-                                    .font(
-                                        .system(
-                                            size: 16,
-                                            weight: .regular,
-                                            design: .monospaced))
-                            }
-                            .debugBorder()
-                            
+                                .frame(
+                                    maxWidth: .infinity,
+                                    minHeight: 30,
+                                    alignment: .leading
+                                )
+                                .debugBorder(.blue)
+                           
                             if let photoAsset = model.recommendedPHAsset {
                                 
                                 Rectangle()
@@ -73,34 +69,26 @@ struct TodayRootView: View {
                                     .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
                                     .aspectRatio(3/4, contentMode: .fit)
                             }
-                            
-                            
-                            Divider()
-                                .padding(.vertical)
-                            
-                            GoogleAdBannerView()
-                                .frame(
-                                    height: 50,
-                                    alignment: .bottom)
-                                .debugBorder()
-                            
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
                         .debugBorder()
                         
-                        HStack(alignment: .center) {
-                            Text("작년 이맘때의 옷차림")
-                                .font(
-                                    .system(
-                                        size: 16,
-                                        weight: .bold,
-                                        design: .monospaced))
-                            
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        .debugBorder()
+                        Divider()
+                            .padding()
+                        
+                        Text("\(model.dateRange.start.longStyle)~\n\(model.dateRange.end.longStyle)")
+                            .font(
+                                .system(
+                                    size: 16,
+                                    weight: .medium,
+                                    design: .monospaced))
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                            .padding(.horizontal)
+                            .debugBorder()
                         
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(model.outfitPhotos, id: \.id) { photo in
@@ -147,70 +135,87 @@ struct TodayRootView: View {
                     .debugBorder()
                 }
                 .scrollIndicators(.hidden)
-                .onScrollPhaseChange { oldPhase, newPhase in
-                    if isShowWeatherDetails {
-                        showWeatherDetails()
-                    }
+                .onScrollPhaseChange { oldPhase, newPhase, context in
+                    
+                    isShowWeatherDetails = false
+                    lastOffset = context.geometry.contentOffset.y
                 }
                 .frame(maxWidth: .infinity)
                 .background()
                 .debugBorder()
             }
+            .background(Color(uiColor: .label))
             .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
             
             if isShowWeatherDetails {
-                    TodayWeatherView(model: model)
-                        .onTapGesture {
-                            showWeatherDetails()
-                        }
+                TodayWeatherView(model: model)
+                    .onTapGesture {
+                        isShowWeatherDetails = false
+                    }
             } else {
                 EmptyView()
             }
         }
     }
     
+    //MARK: - Today Weather View
     var todayWeatherView: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
                 Text(Image(systemName: model.symbolName ?? "questionmark"))
+                    .font(
+                        .system(
+                            size: 20,
+                            weight: .bold)
+                    )
+                    .foregroundStyle(Color(uiColor: .systemBackground))
+                
                 Text(model.weatherCondition)
                     .font(
                         .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced))
+                            size: 20,
+                            weight: .bold,
+                            design: .monospaced)
+                    )
+                    .foregroundStyle(Color(uiColor: .systemBackground))
                 Spacer()
             }
             .padding(.bottom, 4)
             
-            HStack {
+            HStack(alignment: .bottom) {
                 Text(model.currentTemperature)
                     .font(
                         .system(
-                            size: 16,
+                            size: 20,
                             weight: .bold,
-                            design: .monospaced))
+                            design: .monospaced)
+                    )
+                    .foregroundStyle(Color(uiColor: .systemBackground))
+                
                 Spacer()
+                
                 Text(model.lastYearSimilarWeatherDateText ?? "")
                     .font(
                         .system(
-                            size: 14,
-                            weight: .light,
-                            design: .monospaced))
+                            size: 16,
+                            weight: .regular,
+                            design: .monospaced)
+                    )
+                    .foregroundStyle(Color(uiColor: .systemBackground))
             }
+            .debugBorder(.yellow)
         }
         .padding(.horizontal)
         .onTapGesture {
-            showWeatherDetails()
+            isShowWeatherDetails = true
         }
         .debugBorder()
 
     }
     
-    private func showWeatherDetails() {
+    private func toggleHideCurrntWeather(_ isHidden: Bool) {
         withAnimation(.spring()) {
-            isShowWeatherDetails.toggle()
+            hideCurrntWeather = isHidden
         }
     }
 }

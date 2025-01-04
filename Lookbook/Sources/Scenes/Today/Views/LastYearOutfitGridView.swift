@@ -58,15 +58,6 @@ struct LastYearOutfitGridView: View {
                 }
             }
             .padding()
-            
-            //FIXME: - Hard coding 수정
-            VStack {
-                Text("\(dateRange.start.longStyle) - \(dateRange.end.longStyle) @ \(outfitPhotos.count)개 사진")
-                    .font(.footnote)
-                Text("위로 올려 크게 보기")
-                    .fontWeight(.semibold)
-            }
-            .padding(.bottom)
         }
     }
 }

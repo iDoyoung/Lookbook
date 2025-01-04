@@ -30,7 +30,7 @@ final class TodayViewControllerTests: XCTestCase {
     
     var mockTodayInteractor: MockTodayInteractor!
     var mockRouter: MockRouter!
-    var mockModel = TodayModel()
+    var mockModel = TodayModel(locationState: .init())
     
     final class MockTodayInteractor: TodayInteractable {
         

@@ -10,28 +10,6 @@ struct SettingRootView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading) {
-                
-                // 앱 정보
-                HStack {
-                    Image(systemName: "tag.fill")
-                        .resizable()
-                        .frame(
-                            width: proxy.size.width * 1/6,
-                            height: proxy.size.width * 1/6
-                        )
-                        .padding()
-                    
-                    VStack(alignment: .leading) {
-                        Text("앱 이름")
-                        Text("Version 1.0")
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.thinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal)
-                .scaleEffect(othersScale)
-                
                 VStack {
                     Text(isFahrenheit ? UnitTemperature.fahrenheit.symbol: UnitTemperature.celsius.symbol)
                         .font(

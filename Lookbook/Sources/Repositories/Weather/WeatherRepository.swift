@@ -19,6 +19,7 @@ final class WeatherRepository: WeatherRepositoryProtocol {
     private var currentWeathers = [CLLocation: CurrentlyWeather]()
     private var weathersOfDate = [CLLocation: [DailyWeather]]()
     
+    
     /// WeatherKit 프레임 워크 사용하여 날씨 요청
     @discardableResult
     func requestWeather(for location: CLLocation) async throws -> Weather {
@@ -53,8 +54,12 @@ final class WeatherRepository: WeatherRepositoryProtocol {
                 .map { weather in
                     DailyWeather(for: weather)
                 }
-            
-            self.weathersOfDate[location] = weathers
+            if weathersOfDate[location] != nil {
+                weathersOfDate[location]! += weathers
+            } else {
+                weathersOfDate[location] = weathers
+            }
+                
             return weathers
         } catch {
             logger.error("Error: \(error.localizedDescription)")

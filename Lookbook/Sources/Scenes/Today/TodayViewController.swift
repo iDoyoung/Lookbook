@@ -64,7 +64,7 @@ final class TodayViewController: ViewController {
         
         Task {
             model = await interactor.execute(
-                action: .viewWillAppear,
+                action: .viewDidLoad,
                 with: model
             )
         }

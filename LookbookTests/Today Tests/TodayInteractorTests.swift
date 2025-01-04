@@ -12,7 +12,7 @@ final class TodayInteractorTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         sut = TodayInteractor()
-        mockModel = TodayModel()
+        mockModel = TodayModel(locationState: .init())
         mockLocationServiceState = LocationServiceState()
         mockLocationService = MockLocationService()
         mockWeatherRepository = MockWeatherRepository()
@@ -40,9 +40,18 @@ final class TodayInteractorTests: XCTestCase {
     var mockPhotosWorker: MockPhotosWorker!
     
     class MockLocationService: CoreLocationServiceProtocol {
+        var state: Lookbook.LocationServiceState = .init()
+        
+        
         
         var authorizationStatus: CLAuthorizationStatus = .notDetermined
         var location = CLLocation(latitude: 0, longitude: 0)
+        
+        func requestLocation() {
+        }
+        
+        func requestAuthorization() {
+        }
         
         func requestLocation() async -> CLLocation {
             return location

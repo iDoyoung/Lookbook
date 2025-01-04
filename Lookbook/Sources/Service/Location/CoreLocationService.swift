@@ -53,6 +53,8 @@ extension CoreLocationService: LocationFetcherDelegate {
         logger.log("🗺️ Change Location Authorization: \(authorizationStatus.rawValue)")
         if state.authorizationStatus == .authorizedWhenInUse {
             locationFetcher.requestLocation()
+        } else {
+            state.location = nil
         }
     }
     

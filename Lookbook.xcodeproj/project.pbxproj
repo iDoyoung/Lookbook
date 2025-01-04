@@ -24,11 +24,13 @@
 		7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075132C5CB359006FF502 /* UserSetting.swift */; };
 		7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075152C5DB48D006FF502 /* TodayForecast.swift */; };
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
-		7F3510F32C3E549F003612F6 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F22C3E549F003612F6 /* AsyncImage.swift */; };
 		7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */; };
 		7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */; };
 		7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F457B672CA29EC100F485D1 /* LocationFetcher.swift */; };
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
+		7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */; };
+		7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */; };
+		7F5103422D226667001E5F4B /* Date+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5103412D226667001E5F4B /* Date+Style.swift */; };
 		7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */; };
 		7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6020922C59E23D001C8D26 /* SettingRootView.swift */; };
 		7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */; };
@@ -38,7 +40,7 @@
 		7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F272C4CA5720069925C /* DailyWeather.swift */; };
 		7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */; };
 		7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F322C520F2B0069925C /* TodayViewController.swift */; };
-		7F6A0F382C520F570069925C /* TodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F312C520F2B0069925C /* TodayRootView.swift */; };
+		7F6A0F382C520F570069925C /* LegacyTodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */; };
 		7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F302C520F2B0069925C /* TodayModel.swift */; };
 		7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F352C520F2B0069925C /* ViewController.swift */; };
 		7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */; };
@@ -68,6 +70,8 @@
 		7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */; };
 		7FDFAE662C7C29A100916B7E /* Date+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFAE652C7C29A100916B7E /* Date+Strings.swift */; };
 		7FDFAE682C7C29CB00916B7E /* Date+IsEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFAE672C7C29CB00916B7E /* Date+IsEqual.swift */; };
+		7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */; };
+		7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */; };
 		7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */; };
 		7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */; };
 		7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */; };
@@ -130,11 +134,13 @@
 		7F3075132C5CB359006FF502 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		7F3075152C5DB48D006FF502 /* TodayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecast.swift; sourceTree = "<group>"; };
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
-		7F3510F22C3E549F003612F6 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosService+Predicate.swift"; sourceTree = "<group>"; };
 		7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAuthStatus.swift; sourceTree = "<group>"; };
 		7F457B672CA29EC100F485D1 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTests.swift; sourceTree = "<group>"; };
+		7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRootView.swift; sourceTree = "<group>"; };
+		7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugBorder.swift"; sourceTree = "<group>"; };
+		7F5103412D226667001E5F4B /* Date+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Style.swift"; sourceTree = "<group>"; };
 		7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		7F6020922C59E23D001C8D26 /* SettingRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRootView.swift; sourceTree = "<group>"; };
 		7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManger+LocationFetcherDelegate.swift"; sourceTree = "<group>"; };
@@ -144,7 +150,7 @@
 		7F6A0F272C4CA5720069925C /* DailyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeather.swift; sourceTree = "<group>"; };
 		7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Measurement<UnitTemperature>+Rouded.swift"; sourceTree = "<group>"; };
 		7F6A0F302C520F2B0069925C /* TodayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModel.swift; sourceTree = "<group>"; };
-		7F6A0F312C520F2B0069925C /* TodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRootView.swift; sourceTree = "<group>"; };
+		7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyTodayRootView.swift; sourceTree = "<group>"; };
 		7F6A0F322C520F2B0069925C /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		7F6A0F352C520F2B0069925C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherOutfitView.swift; sourceTree = "<group>"; };
@@ -179,6 +185,8 @@
 		7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		7FDFAE652C7C29A100916B7E /* Date+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Strings.swift"; sourceTree = "<group>"; };
 		7FDFAE672C7C29CB00916B7E /* Date+IsEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+IsEqual.swift"; sourceTree = "<group>"; };
+		7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastYearOutfitGridView.swift; sourceTree = "<group>"; };
+		7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+LastYear.swift"; sourceTree = "<group>"; };
 		7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthStatus.swift; sourceTree = "<group>"; };
 		7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyWeather.swift; sourceTree = "<group>"; };
 		7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdBannerView.swift; sourceTree = "<group>"; };
@@ -253,7 +261,6 @@
 		7F49480C2C06FA2F004CD52F /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				7F3510F22C3E549F003612F6 /* AsyncImage.swift */,
 				7FB2D7E62BF483EC001BA4FB /* PhotosService.swift */,
 				7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */,
 				7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */,
@@ -341,10 +348,12 @@
 		7F6A0F3E2C520FD30069925C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7F6A0F312C520F2B0069925C /* TodayRootView.swift */,
+				7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */,
+				7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */,
 				7F1672F32CEDB1BA00C25110 /* TodayWeatherView.swift */,
 				7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */,
 				7F1672F52CEDC3B800C25110 /* DataImageView.swift */,
+				7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -483,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				7FDFAE642C7C298F00916B7E /* Date+Extentions */,
+				7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,6 +548,8 @@
 			children = (
 				7FDFAE652C7C29A100916B7E /* Date+Strings.swift */,
 				7FDFAE672C7C29CB00916B7E /* Date+IsEqual.swift */,
+				7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */,
+				7F5103412D226667001E5F4B /* Date+Style.swift */,
 			);
 			path = "Date+Extentions";
 			sourceTree = "<group>";
@@ -709,13 +721,17 @@
 				7F1672F42CEDB1BA00C25110 /* TodayWeatherView.swift in Sources */,
 				7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */,
 				7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */,
+				7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */,
+				7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */,
 				7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */,
 				7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */,
+				7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */,
 				7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
 				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
 				7F290C1F2CE5D020001B9CBD /* ViewControllerAssembly.swift in Sources */,
+				7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */,
 				7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */,
 				7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */,
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
@@ -723,20 +739,20 @@
 				7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */,
 				7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */,
-				7F6A0F382C520F570069925C /* TodayRootView.swift in Sources */,
+				7F6A0F382C520F570069925C /* LegacyTodayRootView.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
 				7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */,
 				7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */,
 				7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */,
 				7FB11E412C5888D000A47321 /* OutfitV1.mlmodel in Sources */,
 				7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */,
+				7F5103422D226667001E5F4B /* Date+Style.swift in Sources */,
 				7F04D15F2CE324C4000813D4 /* CoreServiceAssembly.swift in Sources */,
 				7F1672F62CEDC3B800C25110 /* DataImageView.swift in Sources */,
 				7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */,
 				7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */,
 				7FA27BD72BECDB5900BDB1A9 /* SceneDelegate.swift in Sources */,
 				7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */,
-				7F3510F32C3E549F003612F6 /* AsyncImage.swift in Sources */,
 				7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -866,12 +882,14 @@
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lookbook/Supportings/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Look Weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1052,12 +1070,14 @@
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lookbook/Supportings/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Look Weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1082,12 +1102,14 @@
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lookbook/Supportings/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Look Weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

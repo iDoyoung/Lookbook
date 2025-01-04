@@ -77,7 +77,7 @@ final class TodayModel {
     
     var lastYearSimilarWeatherDateStyleText: String? {
         if let date = lastYearSimilarWeather?.date {
-            return "LOOK, YOUR \(date.longStyle) STYLE"
+            return "\(date.longStyle)의 스타일"
         } else {
             return nil
         }
