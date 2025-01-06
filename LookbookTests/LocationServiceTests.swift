@@ -70,7 +70,13 @@ final class LocationServiceTests: XCTestCase {
             isCallStartUpdatingLocation = true
         }
         
-        func stopUpdatingLocation() {   }
+        func stopUpdatingLocation() {
+            if let error {
+                locationFetcherDelegate!.locationFetcher(self, didFailWithError: error)
+                return
+            }
+            locationFetcherDelegate!.locationFetcher(self, didUpdate: [location!])
+        }
     }
     
     //MARK: - Tests
@@ -81,7 +87,7 @@ final class LocationServiceTests: XCTestCase {
         
         // Then
         XCTAssertEqual(sut.state.location, mockLocation)
-        XCTAssertTrue(fetcher.isCallRequestLocation)
+        XCTAssertTrue(fetcher.isCallStartUpdatingLocation)
     }
     
     func test_requestLocation_whenFetcherFailsWithError_shouldNotUpdateLocation() {

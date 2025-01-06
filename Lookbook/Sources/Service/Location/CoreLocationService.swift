@@ -34,7 +34,7 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     }
    
     func requestLocation() {
-        locationFetcher.requestLocation()
+        locationFetcher.startUpdatingLocation()
     }
     
     /// Request Core Location Authorization when authorizationStatus is not determinded call requestWhenInUseAuthorization()
@@ -52,7 +52,7 @@ extension CoreLocationService: LocationFetcherDelegate {
         state.authorizationStatus = authorizationStatus
         logger.log("🗺️ Change Location Authorization: \(authorizationStatus.rawValue)")
         if state.authorizationStatus == .authorizedWhenInUse {
-            locationFetcher.requestLocation()
+            locationFetcher.startUpdatingLocation()
         } else {
             state.location = nil
         }
