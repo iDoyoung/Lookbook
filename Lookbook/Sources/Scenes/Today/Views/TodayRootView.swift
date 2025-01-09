@@ -1,4 +1,5 @@
 import SwiftUI
+import Photos
 
 struct TodayRootView: View {
    
@@ -36,39 +37,34 @@ struct TodayRootView: View {
                                     minHeight: 30,
                                     alignment: .leading
                                 )
-                                .debugBorder(.blue)
-                           
-                            if let photoAsset = model.recommendedPHAsset {
-                                
-                                Rectangle()
-                                    .fill(Color.clear)
-                                    .aspectRatio(3/4, contentMode: .fit)
-                                    .background(
-                                        DataImageView(
-                                            photoAsset: photoAsset
-                                        )
-                                    )
-                                    .border(
-                                        Color(uiColor: .label),
-                                        width: 2
-                                    )
-                                    .rotation3DEffect(
-                                        .degrees(imageOpacity ? 0 : 50),
-                                        axis: (0, 1, 0),
-                                        anchor: .center
-                                    )
-                                    .onAppear {
-                                        withAnimation(.easeIn(duration: 0.3)) {
-                                            imageOpacity = true
+                                .debugBorder()
+                            
+                                ScrollView(.horizontal) {
+                                    LazyHStack(spacing: 0) {
+                                        if let recommendedPhotoAssets = model.recommendedPHAssets {
+                                            ForEach(recommendedPhotoAssets, id: \.self) { asset in
+                                                Rectangle()
+                                                    .fill(Color.clear)
+                                                    .aspectRatio(3/4, contentMode: .fit)
+                                                    .background(
+                                                        DataImageView(
+                                                            photoAsset: asset
+                                                        )
+                                                    )
+                                            }
+                                        } else {
+                                            // TODO: 사진이 없는 경우 UI 구현
+                                            Rectangle()
+                                                .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
+                                                .aspectRatio(3/4, contentMode: .fit)
                                         }
                                     }
-                                    .clipped()
-                                    .debugBorder()
-                            } else {
-                                Rectangle()
-                                    .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
-                                    .aspectRatio(3/4, contentMode: .fit)
-                            }
+                                }
+                                .aspectRatio(3/4, contentMode: .fit)
+                                .border(
+                                    Color(uiColor: .label),
+                                    width: 2
+                                )
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
@@ -194,16 +190,17 @@ struct TodayRootView: View {
                 
                 Spacer()
                 
-                Text(model.lastYearSimilarWeatherDateText ?? "")
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .regular,
-                            design: .monospaced)
-                    )
-                    .foregroundStyle(Color(uiColor: .systemBackground))
+                //FIXME: - 적절하지 않은 UI
+//                Text(model.lastYearSimilarWeatherDateText ?? "")
+//                    .font(
+//                        .system(
+//                            size: 16,
+//                            weight: .regular,
+//                            design: .monospaced)
+//                    )
+//                    .foregroundStyle(Color(uiColor: .systemBackground))
             }
-            .debugBorder(.yellow)
+            .debugBorder()
         }
         .padding(.horizontal)
         .onTapGesture {
