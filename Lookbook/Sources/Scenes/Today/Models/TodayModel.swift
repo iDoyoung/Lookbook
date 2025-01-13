@@ -8,7 +8,7 @@ import os
 final class TodayModel {
     
     private let logger: Logger = Logger(subsystem: "io.doyoung.Lookbook.TodayModel", category: "Observable Model")
-    enum Destination { case setting }
+    enum Destination { case setting, details(asset: PHAsset) }
     
     // States
     var destination: Destination? = nil

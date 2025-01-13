@@ -2,7 +2,7 @@ import SwiftUI
 import Photos
 
 struct TodayRootView: View {
-   
+    
     @State var model: TodayModel
     @State private var imageOpacity: Bool = false
     @State private var isShowWeatherDetails: Bool = false
@@ -30,8 +30,7 @@ struct TodayRootView: View {
                                 .padding(.bottom, 4)
                             
                             Text(model.lastYearSimilarWeatherDateStyleText ?? "")
-                                .font(.custom("Futura", size: 20))
-                                .italic()
+                                .dateFont()
                                 .frame(
                                     maxWidth: .infinity,
                                     minHeight: 30,
@@ -39,32 +38,26 @@ struct TodayRootView: View {
                                 )
                                 .debugBorder()
                             
-                                ScrollView(.horizontal) {
-                                    LazyHStack(spacing: 0) {
-                                        if let recommendedPhotoAssets = model.recommendedPHAssets {
-                                            ForEach(recommendedPhotoAssets, id: \.self) { asset in
-                                                Rectangle()
-                                                    .fill(Color.clear)
-                                                    .aspectRatio(3/4, contentMode: .fit)
-                                                    .background(
-                                                        DataImageView(
-                                                            photoAsset: asset
-                                                        )
-                                                    )
-                                            }
-                                        } else {
-                                            // TODO: 사진이 없는 경우 UI 구현
-                                            Rectangle()
-                                                .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
-                                                .aspectRatio(3/4, contentMode: .fit)
-                                        }
+                            if let asset = model.recommendedPHAsset {
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .aspectRatio(3/4, contentMode: .fit)
+                                    .background(
+                                        DataImageView(
+                                            photoAsset: asset
+                                        )
+                                    )
+                                    .clipped()
+                                    .border(Color(uiColor: .label))
+                                    .onTapGesture {
+                                        model.destination = .details(asset: asset)
                                     }
-                                }
-                                .aspectRatio(3/4, contentMode: .fit)
-                                .border(
-                                    Color(uiColor: .label),
-                                    width: 2
-                                )
+                            } else {
+                                // TODO: 사진이 없는 경우 UI 구현
+                                Rectangle()
+                                    .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
+                                    .aspectRatio(3/4, contentMode: .fit)
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
@@ -132,7 +125,6 @@ struct TodayRootView: View {
                 }
                 .scrollIndicators(.hidden)
                 .onScrollPhaseChange { oldPhase, newPhase, context in
-                    
                     isShowWeatherDetails = false
                     lastOffset = context.geometry.contentOffset.y
                 }
@@ -191,14 +183,14 @@ struct TodayRootView: View {
                 Spacer()
                 
                 //FIXME: - 적절하지 않은 UI
-//                Text(model.lastYearSimilarWeatherDateText ?? "")
-//                    .font(
-//                        .system(
-//                            size: 16,
-//                            weight: .regular,
-//                            design: .monospaced)
-//                    )
-//                    .foregroundStyle(Color(uiColor: .systemBackground))
+                //                Text(model.lastYearSimilarWeatherDateText ?? "")
+                //                    .font(
+                //                        .system(
+                //                            size: 16,
+                //                            weight: .regular,
+                //                            design: .monospaced)
+                //                    )
+                //                    .foregroundStyle(Color(uiColor: .systemBackground))
             }
             .debugBorder()
         }

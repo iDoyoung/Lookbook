@@ -10,7 +10,7 @@ final class TodayViewController: ViewController {
     private var model: TodayModel
     
     private var interactor: TodayInteractable
-    private var router: Routing
+    private var router: TodayRouter
     
     // UI
     private var rootView: TodayRootView?
@@ -34,7 +34,7 @@ final class TodayViewController: ViewController {
     init(
         model: TodayModel,
         interactor: TodayInteractable,
-        router: Routing
+        router: TodayRouter
     ) {
         self.model = model
         self.interactor = interactor
@@ -95,10 +95,6 @@ final class TodayViewController: ViewController {
             .store(in: &cancellableBag)
     }
     
-    private func presentSetting() {
-        router.push(viewController: SettingViewController.name)
-    }
-    
     //MARK: Understanding withObservationTracking()
     @discardableResult
     private func observeDestinationTracking() -> TodayModel.Destination? {
@@ -109,7 +105,9 @@ final class TodayViewController: ViewController {
                 guard let self else { return }
                 switch self.model.destination {
                 case .setting:
-                    self.presentSetting()
+                    self.router.push(viewController: SettingViewController.name)
+                case .details(let asset):
+                    self.router.pushDetails(with: asset)
                 case .none:
                     break
                 }
