@@ -20,9 +20,9 @@ final class ViewControllerAssembly: Assembly {
                 router.destination = viewController
             }
         
-        container.register(DetailsViewController.self) { resolver in
+        container.register(DetailsViewController.self) { (resolver, model: DetailsModel) in
             return DetailsViewController(
-                model: DetailsModel()
+                model: model
             )
         }
         
@@ -31,6 +31,12 @@ final class ViewControllerAssembly: Assembly {
                 let viewController = resolver.resolve(ViewController.self, name: DetailsViewController.name)!
                 router.destination = viewController
             }
+        
+        container.register(TodayWeatherViewController.self) { (resolver, model: TodayWeatherModel) in
+            return TodayWeatherViewController(
+                model: model
+            )
+        }
         
         container.register(ViewController.self, name: SettingViewController.name) { resolver in
             SettingViewController(router: resolver.resolve(Routing.self, name: "Setting")!)

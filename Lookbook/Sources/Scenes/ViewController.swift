@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 import os
 
 class ViewController: UIViewController {
@@ -40,5 +41,16 @@ class ViewController: UIViewController {
       
     deinit {
         defaultLogger.log("⚫️ Deallocating instance of '\(type(of: self))'")
+    }
+}
+
+extension ViewController {
+    func hostingController(rootView: some View) {
+        let hostingController = UIHostingController(rootView: rootView)
+        
+        addChild(hostingController)
+        hostingController.view.frame = view.frame
+        hostingController.view.backgroundColor = .clear
+        view.addSubview(hostingController.view)
     }
 }

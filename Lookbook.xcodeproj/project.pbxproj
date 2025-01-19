@@ -26,6 +26,12 @@
 		7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */; };
 		7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */; };
 		7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */; };
+		7F3DD5922D2FBCA200E1A9CC /* DetailsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3DD5912D2FBCA200E1A9CC /* DetailsRootView.swift */; };
+		7F3DD5942D2FBCCA00E1A9CC /* DetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3DD5932D2FBCCA00E1A9CC /* DetailsModel.swift */; };
+		7F3DD5962D30D69D00E1A9CC /* View+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3DD5952D30D69D00E1A9CC /* View+Text.swift */; };
+		7F3DD5982D30E4B300E1A9CC /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3DD5972D30E4B300E1A9CC /* DetailsViewController.swift */; };
+		7F3DD59A2D312F6300E1A9CC /* DetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3DD5992D312F6300E1A9CC /* DetailsRouter.swift */; };
+		7F42E20E2D376751008523FC /* UIColor+GradientEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F42E20D2D376751008523FC /* UIColor+GradientEffect.swift */; };
 		7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F457B672CA29EC100F485D1 /* LocationFetcher.swift */; };
 		7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */; };
 		7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */; };
@@ -71,6 +77,9 @@
 		7FDFAE682C7C29CB00916B7E /* Date+IsEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFAE672C7C29CB00916B7E /* Date+IsEqual.swift */; };
 		7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */; };
 		7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */; };
+		7FE8DE162D3CB1DD000E6571 /* TodayWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */; };
+		7FE8DE182D3CB208000E6571 /* TodayWeatherRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */; };
+		7FE8DE1A2D3CB215000E6571 /* TodayWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */; };
 		7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */; };
 		7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */; };
 		7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */; };
@@ -135,6 +144,12 @@
 		7F3510F02C3E5251003612F6 /* PHAsset+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extension.swift"; sourceTree = "<group>"; };
 		7F35116E2C42040A003612F6 /* PhotosService+Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosService+Predicate.swift"; sourceTree = "<group>"; };
 		7F3B76852C0D6F9C001ECDDB /* PhotosAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAuthStatus.swift; sourceTree = "<group>"; };
+		7F3DD5912D2FBCA200E1A9CC /* DetailsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRootView.swift; sourceTree = "<group>"; };
+		7F3DD5932D2FBCCA00E1A9CC /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
+		7F3DD5952D30D69D00E1A9CC /* View+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Text.swift"; sourceTree = "<group>"; };
+		7F3DD5972D30E4B300E1A9CC /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		7F3DD5992D312F6300E1A9CC /* DetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRouter.swift; sourceTree = "<group>"; };
+		7F42E20D2D376751008523FC /* UIColor+GradientEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+GradientEffect.swift"; sourceTree = "<group>"; };
 		7F457B672CA29EC100F485D1 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		7F4F8D272C058CAF007B9F74 /* TodayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewControllerTests.swift; sourceTree = "<group>"; };
 		7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRootView.swift; sourceTree = "<group>"; };
@@ -186,6 +201,9 @@
 		7FDFAE672C7C29CB00916B7E /* Date+IsEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+IsEqual.swift"; sourceTree = "<group>"; };
 		7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastYearOutfitGridView.swift; sourceTree = "<group>"; };
 		7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+LastYear.swift"; sourceTree = "<group>"; };
+		7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherViewController.swift; sourceTree = "<group>"; };
+		7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherRootView.swift; sourceTree = "<group>"; };
+		7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherModel.swift; sourceTree = "<group>"; };
 		7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthStatus.swift; sourceTree = "<group>"; };
 		7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyWeather.swift; sourceTree = "<group>"; };
 		7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdBannerView.swift; sourceTree = "<group>"; };
@@ -245,6 +263,17 @@
 				7F1672E42CEC1DB400C25110 /* MockRouter.swift */,
 			);
 			path = "Test Doubles";
+			sourceTree = "<group>";
+		};
+		7F3DD5902D2FBC8D00E1A9CC /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				7F3DD5932D2FBCCA00E1A9CC /* DetailsModel.swift */,
+				7F3DD5912D2FBCA200E1A9CC /* DetailsRootView.swift */,
+				7F3DD5972D30E4B300E1A9CC /* DetailsViewController.swift */,
+				7F3DD5992D312F6300E1A9CC /* DetailsRouter.swift */,
+			);
+			path = Details;
 			sourceTree = "<group>";
 		};
 		7F4948092C06FA03004CD52F /* Service */ = {
@@ -313,6 +342,8 @@
 				7F6A0F352C520F2B0069925C /* ViewController.swift */,
 				7F6A0F4B2C538DD20069925C /* GoogleAd */,
 				7F6A0F332C520F2B0069925C /* Today */,
+				7FE8DE142D3CB1C1000E6571 /* TodayWeather */,
+				7F3DD5902D2FBC8D00E1A9CC /* Details */,
 				7F60208D2C58B8C0001C8D26 /* Setting */,
 			);
 			path = Scenes;
@@ -491,6 +522,8 @@
 			children = (
 				7FDFAE642C7C298F00916B7E /* Date+Extentions */,
 				7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */,
+				7F3DD5952D30D69D00E1A9CC /* View+Text.swift */,
+				7F42E20D2D376751008523FC /* UIColor+GradientEffect.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -550,6 +583,16 @@
 				7F5103412D226667001E5F4B /* Date+Style.swift */,
 			);
 			path = "Date+Extentions";
+			sourceTree = "<group>";
+		};
+		7FE8DE142D3CB1C1000E6571 /* TodayWeather */ = {
+			isa = PBXGroup;
+			children = (
+				7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */,
+				7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */,
+				7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */,
+			);
+			path = TodayWeather;
 			sourceTree = "<group>";
 		};
 		7FF2F1662C54893D0076F2C2 /* Frameworks */ = {
@@ -712,17 +755,22 @@
 				7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */,
 				7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */,
 				7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */,
+				7F3DD59A2D312F6300E1A9CC /* DetailsRouter.swift in Sources */,
 				7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */,
+				7F3DD5982D30E4B300E1A9CC /* DetailsViewController.swift in Sources */,
 				7F70632B2CD1FA5F0025CEE3 /* CLLocation+Name.swift in Sources */,
 				7F1672F42CEDB1BA00C25110 /* TodayWeatherView.swift in Sources */,
 				7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */,
 				7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */,
+				7FE8DE162D3CB1DD000E6571 /* TodayWeatherViewController.swift in Sources */,
 				7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */,
 				7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */,
 				7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */,
 				7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */,
+				7FE8DE182D3CB208000E6571 /* TodayWeatherRootView.swift in Sources */,
 				7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */,
 				7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */,
+				7F3DD5942D2FBCCA00E1A9CC /* DetailsModel.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
 				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
@@ -744,12 +792,16 @@
 				7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */,
 				7F5103422D226667001E5F4B /* Date+Style.swift in Sources */,
 				7F04D15F2CE324C4000813D4 /* CoreServiceAssembly.swift in Sources */,
+				7F3DD5922D2FBCA200E1A9CC /* DetailsRootView.swift in Sources */,
 				7F1672F62CEDC3B800C25110 /* DataImageView.swift in Sources */,
 				7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */,
+				7F3DD5962D30D69D00E1A9CC /* View+Text.swift in Sources */,
 				7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */,
 				7FA27BD72BECDB5900BDB1A9 /* SceneDelegate.swift in Sources */,
+				7FE8DE1A2D3CB215000E6571 /* TodayWeatherModel.swift in Sources */,
 				7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */,
 				7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */,
+				7F42E20E2D376751008523FC /* UIColor+GradientEffect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,7 +960,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -926,6 +978,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1127,7 +1180,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1146,7 +1199,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1164,6 +1217,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1181,6 +1235,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3XVAQ6DRC4;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.doyoung.LookbookUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
