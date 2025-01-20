@@ -8,13 +8,34 @@ final class DetailsModel {
         didSet {
             Task {
                 imageData = await phAsset?.data()
+                location = await phAsset?.location?.name
             }
         }
     }
     
+    var weather: DailyWeather?
+    
     var imageData: Data?
-    var date: Date? { phAsset?.creationDate }
-    var maximuTemperature: Double?
-    var minimumTemperature: Double?
-    var location = ""
+    
+    var creationDateText: String {
+        if let creationDate = phAsset?.creationDate {
+            return creationDate.longStyleWithTime
+        } else {
+            return ""
+        }
+    }
+    var location: String?
+    
+    var maximumTemperature: String {
+        weather?.maximumTemperature.rounded ?? ""
+    }
+    
+    var minimumTemperature: String {
+        weather?.minimumTemperature.rounded ?? ""
+    }
+    
+    init(asset: PHAsset, weather: DailyWeather? = nil) {
+        phAsset = asset
+        self.weather = weather
+    }
 }
