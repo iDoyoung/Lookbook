@@ -42,5 +42,35 @@ final class DetailsViewController: ViewController {
         addChild(hostingController)
         hostingController.view.frame = view.frame
         view.addSubview(hostingController.view)
+        
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.tintColor = .white
+        
+        let appearance = UINavigationBarAppearance()
+        
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .gradientEffect(
+            colors: [.black, .clear],
+            locations: nil,
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: navigationBar.frame.width,
+                height: navigationBar.frame.height + 60
+            ),
+            startPoint: CGPoint(
+                x: 0.5,
+                y: 0
+            ),
+            endPoint: CGPoint(
+                x: 0.5,
+                y: 1
+            )
+        )
+        
+        appearance.shadowColor = nil
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
     }
+    
 }
