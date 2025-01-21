@@ -13,7 +13,7 @@ protocol CoreLocationServiceProtocol {
 
 final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     
-    private(set) var state = LocationServiceState()
+    private(set) var state: LocationServiceState
     
     private var locationContinuation: CheckedContinuation<CLLocation, Never>?
     private var authorizationContinuation: CheckedContinuation<CLAuthorizationStatus, Never>?
@@ -27,13 +27,18 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
         category: "🗺️ Location Manager"
     )
     
-    init(locationFetcher: LocationFetcher = CLLocationManager()) {
+    init(
+        state: LocationServiceState,
+        locationFetcher: LocationFetcher = CLLocationManager()
+    ) {
+        self.state = state
         self.locationFetcher = locationFetcher
         super.init()
         self.locationFetcher.locationFetcherDelegate = self
     }
    
     func requestLocation() {
+        print("🗺️ Request Location")
         locationFetcher.startUpdatingLocation()
     }
     
@@ -60,9 +65,20 @@ extension CoreLocationService: LocationFetcherDelegate {
     
     func locationFetcher(_ fetcher: LocationFetcher, didUpdate locations: [CLLocation]) {
         if let location = locations.last {
-            logger.log("🗺️ Read location by Core Location: \(location)")
-            state.location = location
             fetcher.stopUpdatingLocation()
+            
+            if let previousLocation = state.location {
+                let distance = previousLocation.distance(from: location)
+                if distance > 50 {
+                    logger.log("🗺️ Distance exceeded 50m: \(distance)m. Updating location.")
+                    state.location = location
+                } else {
+                    logger.log("🗺️ Distance is less than or equal to 50m: \(distance)m. Location not updated.")
+                }
+            } else {
+                logger.log("🗺️ No previous location. Setting initial location.")
+                state.location = location
+            }
         }
     }
     
