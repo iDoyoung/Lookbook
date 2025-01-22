@@ -85,6 +85,7 @@
 		7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */; };
 		7FF8294B2D40E3910076A515 /* PhotosWorkerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8294A2D40E3910076A515 /* PhotosWorkerSpy.swift */; };
 		7FF8294D2D40E43E0076A515 /* LocationServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8294C2D40E43E0076A515 /* LocationServiceSpy.swift */; };
+		7FF829502D40F9130076A515 /* CLLocation+Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8294F2D40F9130076A515 /* CLLocation+Place.swift */; };
 		7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF9E4F42CB7A2F700A738FE /* PhotosWorkerState.swift */; };
 /* End PBXBuildFile section */
 
@@ -211,6 +212,7 @@
 		7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdBannerView.swift; sourceTree = "<group>"; };
 		7FF8294A2D40E3910076A515 /* PhotosWorkerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerSpy.swift; sourceTree = "<group>"; };
 		7FF8294C2D40E43E0076A515 /* LocationServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceSpy.swift; sourceTree = "<group>"; };
+		7FF8294F2D40F9130076A515 /* CLLocation+Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Place.swift"; sourceTree = "<group>"; };
 		7FF9E4F42CB7A2F700A738FE /* PhotosWorkerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -490,11 +492,11 @@
 		7FB11E3C2C58778A00A47321 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				7FF829512D40F9170076A515 /* Extensions */,
 				7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */,
 				7FA623F72C995E3A0090E282 /* LocationServiceState.swift */,
 				7F457B672CA29EC100F485D1 /* LocationFetcher.swift */,
 				7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */,
-				7F70632A2CD1FA5F0025CEE3 /* CLLocation+Name.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -630,6 +632,15 @@
 				7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */,
 			);
 			path = Spys;
+			sourceTree = "<group>";
+		};
+		7FF829512D40F9170076A515 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7F70632A2CD1FA5F0025CEE3 /* CLLocation+Name.swift */,
+				7FF8294F2D40F9130076A515 /* CLLocation+Place.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -803,6 +814,7 @@
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
 				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
+				7FF829502D40F9130076A515 /* CLLocation+Place.swift in Sources */,
 				7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */,
 				7FE1A65B2D3E2DF90051A400 /* DIContainer.swift in Sources */,
 				7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */,
