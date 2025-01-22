@@ -8,7 +8,7 @@ protocol WeatherRepositoryProtocol {
     subscript(location: CLLocation) -> [DailyWeather]? { get }
     
     @discardableResult
-    func requestWeather(for location: CLLocation) async throws -> Weather
+    func requestWeather(for location: CLLocation) async throws -> CurrentlyWeather?
     
     @discardableResult
     func requestWeathr(for location: CLLocation, startDate: Date, endDate: Date) async throws -> [DailyWeather]
@@ -22,13 +22,13 @@ final class WeatherRepository: WeatherRepositoryProtocol {
     
     /// WeatherKit 프레임 워크 사용하여 날씨 요청
     @discardableResult
-    func requestWeather(for location: CLLocation) async throws -> Weather {
+    func requestWeather(for location: CLLocation) async throws -> CurrentlyWeather? {
         logger.log("Execute Request Weather")
         do {
             let weather = try await service.weather(for: location)
             self.currentWeathers[location] = CurrentlyWeather(for: weather)
             
-            return weather
+            return self.currentWeathers[location]
         } catch {
             logger.error("Error: \(error.localizedDescription)")
             throw error
@@ -38,29 +38,29 @@ final class WeatherRepository: WeatherRepositoryProtocol {
     @discardableResult
     func requestWeathr(for location: CLLocation, startDate: Date, endDate: Date) async throws -> [DailyWeather] {
         do {
-            let forecasts = try await service.weather(
-                for: location,
-                including: .daily(
-                    startDate: startDate,
-                    endDate: startDate < endDate ? endDate: Calendar.current.date(
-                        byAdding: .day,
-                        value: 10,
-                        to: startDate
-                    )!
+            let pastThirtyDaysSummary = try await service
+                .dailySummary(
+                    for: location,
+                    forDaysIn: DateInterval(start: startDate, end: endDate),
+                    including: .temperature
                 )
-            )
-            logger.log("Fetched Weathers: \(String(describing: forecasts))")
-            let weathers = forecasts
-                .map { weather in
-                    DailyWeather(for: weather)
+                .map {
+                    DailyWeather(
+                        date: $0.date,
+                        maximumTemperature: $0.highTemperature,
+                        minimumTemperature: $0.lowTemperature
+                    )
                 }
+            
+            logger.log("Fetched Weathers: \(String(describing: pastThirtyDaysSummary))")
+            
             if weathersOfDate[location] != nil {
-                weathersOfDate[location]! += weathers
+                weathersOfDate[location]! += pastThirtyDaysSummary
             } else {
-                weathersOfDate[location] = weathers
+                weathersOfDate[location] = pastThirtyDaysSummary
             }
                 
-            return weathers
+            return pastThirtyDaysSummary
         } catch {
             logger.error("Error: \(error.localizedDescription)")
             throw error
