@@ -37,14 +37,14 @@ struct DetailsRootView: View {
                             .dateFont()
                             .padding(.bottom)
                         
-                        // 최고 최저 기온
-                        HStack {
-                            Text(model.maximumTemperature)
-                                .temperatureFont(weight: .bold)
-                            Text(model.minimumTemperature)
-                                .temperatureFont()
-                        }
-                        .padding(.bottom)
+                        //TODO: 날씨 정보
+//                        HStack {
+//                            Text(model.maximumTemperature)
+//                                .temperatureFont(weight: .bold)
+//                            Text(model.minimumTemperature)
+//                                .temperatureFont()
+//                        }
+//                        .padding(.bottom)
                     }
                     .frame(
                         maxWidth: .infinity,
