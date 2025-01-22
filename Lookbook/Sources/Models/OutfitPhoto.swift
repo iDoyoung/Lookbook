@@ -19,12 +19,7 @@ final class OutfitPhoto {
         asset.location
     }
    
-    var highTemp: String
-    var lowTemp: String
-    
-    init(asset: PHAsset, highTemp: String, lowTemp: String) {
+    init(asset: PHAsset) {
         self.asset = asset
-        self.highTemp = highTemp
-        self.lowTemp = lowTemp
     }
 }

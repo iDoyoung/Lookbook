@@ -122,19 +122,6 @@ struct TodayWeatherRootView: View {
                 photosWarningLabel
             }
             
-            HStack {
-                Text(isFahrenheit ? UnitTemperature.fahrenheit.symbol: UnitTemperature.celsius.symbol)
-                    .font(
-                        .system(
-                            size: 24,
-                            weight: .bold)
-                    )
-                    .onTapGesture {
-                        isFahrenheit.toggle()
-                    }
-            }
-            .padding()
-            
             Spacer()
         }
         .padding([.vertical, .leading])
@@ -153,7 +140,7 @@ struct TodayWeatherRootView: View {
                             weight: .medium))
                     .padding(.top, 6)
             }
-            Text(model.locationName ?? "알 수 없음")
+            Text(model.locationName)
                 .font(.footnote)
                 .fontWeight(.semibold)
         }

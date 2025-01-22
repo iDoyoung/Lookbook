@@ -1,21 +1,26 @@
 import UIKit
-import Photos
-import Swinject
 
 final class TodayRouter: Routing {
     
     weak var destination: ViewController?
-    var container: Container
+    var container: DIContainer
     
-    init(container: Container) {
+    init(container: DIContainer) {
         self.container = container
     }
     
-    func pushDetails(with asset: PHAsset) {
-        guard let destination else { fatalError("Destination is nil") }
+    func showDetails(with model: DetailsModel) {
+        let destinationViewController = container.createDetailsViewController(
+            asset: model.phAsset,
+            weather: model.weather
+        )
         
-        let destinationViewController = container.resolve(DetailsViewController.self)!
-        destinationViewController.model.phAsset = asset
-        destination.navigationController?.pushViewController(destinationViewController, animated: true)
+        destination?.navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
+    func showWeather() {
+        let destinationViewController = container.createTodayWeatherViewController()
+        
+        destination?.present(destinationViewController, animated: true)
     }
 }

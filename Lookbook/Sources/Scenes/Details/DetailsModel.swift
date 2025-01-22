@@ -34,7 +34,7 @@ final class DetailsModel {
         weather?.minimumTemperature.rounded ?? ""
     }
     
-    init(asset: PHAsset, weather: DailyWeather? = nil) {
+    init(asset: PHAsset?, weather: DailyWeather? = nil) {
         phAsset = asset
         self.weather = weather
     }

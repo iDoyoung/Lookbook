@@ -2,15 +2,20 @@ import UIKit
 
 final class TodayWeatherViewController: ViewController {
 
+    typealias Model = TodayWeatherModel
+    typealias Interactor = TodayWeatherInteractable
     // Components
-    private var model: TodayWeatherModel
+    private var model: Model
     private var rootView: TodayWeatherRootView?
+    private var interactor: Interactor
     
     // Life Cycle
     init(
-        model: TodayWeatherModel
+        model: Model,
+        interactor: Interactor
     ) {
         self.model = model
+        self.interactor = interactor
         super.init()
     }
     
@@ -23,5 +28,12 @@ final class TodayWeatherViewController: ViewController {
         
         rootView = TodayWeatherRootView(model: model)
         hostingController(rootView: rootView)
+        
+        Task {  @MainActor in
+            model = await interactor.execute(
+                action: .viewDidLoad,
+                with: model
+            )
+        }
     }
 }

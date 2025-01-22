@@ -15,20 +15,6 @@ final class TodayViewController: ViewController {
     // UI
     private var rootView: TodayRootView?
     private var cancellableBag = Set<AnyCancellable>()
-    private var hostingController: UIHostingController<TodayRootView>?
-    
-    // MARK: - Method
-    private func buildHostingController() {
-        rootView = TodayRootView(
-            model: model
-        )
-        
-        if let rootView {
-            hostingController = UIHostingController(rootView: rootView)
-        } else {
-            fatalError()
-        }
-    }
     
     // Life Cycle
     init(
@@ -49,14 +35,8 @@ final class TodayViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buildHostingController()
-        
-        // - setup hosting controller
-        guard let hostingController else { fatalError() }
-        
-        addChild(hostingController)
-        hostingController.view.frame = view.frame
-        view.addSubview(hostingController.view)
+        rootView = TodayRootView(model: model)
+        hostingController(rootView: rootView)
         
         fahrenheitNotificationCenter()
         observeDestinationTracking()
@@ -105,9 +85,11 @@ final class TodayViewController: ViewController {
                 guard let self else { return }
                 switch self.model.destination {
                 case .setting:
-                    self.router.push(viewController: SettingViewController.name)
-                case .details(let asset):
-                    self.router.pushDetails(with: asset)
+                    break
+                case .details(let model):
+                    self.router.showDetails(with: model)
+                case .todayWeather:
+                    self.router.showWeather()
                 case .none:
                     break
                 }

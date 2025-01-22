@@ -6,7 +6,6 @@ struct TodayRootView: View {
     @State var model: TodayModel
     @State private var imageOpacity: Bool = false
     @State private var isShowWeatherDetails: Bool = false
-    @State private var hideCurrntWeather: Bool = false
     
     @State private var lastOffset: CGFloat = 0.0
     
@@ -15,12 +14,7 @@ struct TodayRootView: View {
     var body: some View {
         ZStack {
             VStack {
-                if hideCurrntWeather {
-                    EmptyView()
-                } else {
-                    todayWeatherView
-                }
-                
+                todayWeatherView
                 ScrollView {
                     LazyVStack {
                         VStack(alignment: .leading) {
@@ -36,7 +30,6 @@ struct TodayRootView: View {
                                     minHeight: 30,
                                     alignment: .leading
                                 )
-                                .debugBorder()
                             
                             if let asset = model.recommendedPHAsset {
                                 Rectangle()
@@ -49,9 +42,11 @@ struct TodayRootView: View {
                                     )
                                     .clipped()
                                     .border(Color(uiColor: .label))
+                                    .contentShape(Rectangle())
                                     .onTapGesture {
-                                        model.destination = .details(asset: asset)
+                                        model.destination = .details(model: DetailsModel(asset: asset))
                                     }
+                                
                             } else {
                                 // TODO: 사진이 없는 경우 UI 구현
                                 Rectangle()
@@ -80,7 +75,7 @@ struct TodayRootView: View {
                             .debugBorder()
                         
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(model.outfitPhotos, id: \.id) { photo in
+                            ForEach(model.weatherOutfutPhotoItems, id: \.id) { photo in
                                 Rectangle()
                                     .fill(Color.clear)
                                     .aspectRatio(3/4, contentMode: .fit)
@@ -90,36 +85,36 @@ struct TodayRootView: View {
                                         )
                                     )
                                     .clipped()
-                            }
-                        }
-                        
-                        //MARK: - Weather Kit
-                        VStack {
-                            HStack {
-                                Image(systemName: "apple.logo")
-                                    .font(
-                                        .system(
-                                            size: 30))
-                                Text("Weather")
-                                    .font(
-                                        .system(
-                                            size: 40,
-                                            weight: .medium))
-                            }
-                            .padding()
-                            
-                            Text("Other Apple Weather data Sources")
-                                .foregroundStyle(.blue)
-                                .onTapGesture {
-                                    if let url = URL(string: "https://developer.apple.com/weatherkit/data-source-attribution/") {
-                                        UIApplication.shared.open(url)
+                                    .onTapGesture {
+                                        model.destination = .details(
+                                            model: DetailsModel(
+                                                asset: photo.asset,
+                                                weather: photo.weather
+                                            )
+                                        )
                                     }
-                                }
-                                .padding(.bottom)
+                            }
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        
+                        .padding(.bottom)
+                       
+                        Text("Look Weather 의 날씨 예보는 아래로부터 제공받은 데이터 소스를 기반으로 합니다.")
+                            .font(
+                                .system(
+                                    size: 12,
+                                    weight: .light
+                                )
+                            )
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                            .padding([.vertical, .leading])
+                            .padding(.top, 60)
+
+                        HStack {
+                            appleWeatherLabel
+                            Spacer()
+                        }
                     }
                     .debugBorder()
                 }
@@ -134,77 +129,98 @@ struct TodayRootView: View {
             }
             .background(Color(uiColor: .label))
             .frame(maxWidth: .infinity)
-            
-            if isShowWeatherDetails {
-                TodayWeatherView(model: model)
-                    .onTapGesture {
-                        isShowWeatherDetails = false
-                    }
-            } else {
-                EmptyView()
-            }
         }
     }
     
     //MARK: - Today Weather View
-    var todayWeatherView: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text(Image(systemName: model.symbolName ?? "questionmark"))
-                    .font(
-                        .system(
-                            size: 20,
-                            weight: .bold)
-                    )
-                    .foregroundStyle(Color(uiColor: .systemBackground))
+    private var todayWeatherView: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                HStack(alignment: .center) {
+                    Text(Image(systemName: model.symbolName ?? "questionmark"))
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .bold)
+                        )
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                    
+                    Text(model.weatherCondition)
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .bold,
+                                design: .monospaced)
+                        )
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                    
+                    Spacer()
+                }
+                .padding(.bottom, 4)
                 
-                Text(model.weatherCondition)
-                    .font(
-                        .system(
-                            size: 20,
-                            weight: .bold,
-                            design: .monospaced)
-                    )
-                    .foregroundStyle(Color(uiColor: .systemBackground))
-                Spacer()
+                HStack(alignment: .bottom) {
+                    Text(model.currentTemperature)
+                        .temperatureFont(weight: .bold)
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .padding(.trailing, 8)
+                    
+                    Spacer()
+                    Text(model.todayHighTemperatureText)
+                        .temperatureFont(size: 16, weight: .medium)
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                    Text(model.todayLowTemperatureText)
+                        .temperatureFont(size: 16, weight: .light)
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                    
+                }
+                .debugBorder()
             }
-            .padding(.bottom, 4)
             
-            HStack(alignment: .bottom) {
-                Text(model.currentTemperature)
-                    .font(
-                        .system(
-                            size: 20,
-                            weight: .bold,
-                            design: .monospaced)
-                    )
-                    .foregroundStyle(Color(uiColor: .systemBackground))
-                
-                Spacer()
-                
-                //FIXME: - 적절하지 않은 UI
-                //                Text(model.lastYearSimilarWeatherDateText ?? "")
-                //                    .font(
-                //                        .system(
-                //                            size: 16,
-                //                            weight: .regular,
-                //                            design: .monospaced)
-                //                    )
-                //                    .foregroundStyle(Color(uiColor: .systemBackground))
-            }
-            .debugBorder()
+            Image(systemName: "chevron.right")
+                .resizable()
+                .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.8))
+                .fontWeight(.medium)
+                .frame(
+                    width: 8,
+                    height: 40
+                )
+                .padding(.leading)
         }
         .padding(.horizontal)
+        .contentShape(Rectangle())
         .onTapGesture {
-            isShowWeatherDetails = true
+            model.destination = .todayWeather
         }
-        .debugBorder()
-
     }
     
-    private func toggleHideCurrntWeather(_ isHidden: Bool) {
-        withAnimation(.spring()) {
-            hideCurrntWeather = isHidden
+    private var appleWeatherLabel: some View {
+        VStack {
+            HStack {
+                Image(systemName: "apple.logo")
+                    .font(
+                        .system(
+                            size: 24))
+                Text("Weather")
+                    .font(
+                        .system(
+                            size: 32))
+            }
+            .padding(.bottom, 8)
+            
+            Text("Other Apple Weather data Sources")
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .light
+                    )
+                )
+                .foregroundStyle(.blue)
+        }
+        .padding()
+        .onTapGesture {
+            if let url = URL(string: "https://developer.apple.com/weatherkit/data-source-attribution/") {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }

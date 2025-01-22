@@ -1,6 +1,8 @@
 import Foundation
 
 extension Date {
+    
+    //FIXME: Delete Extention, Readability is not good
     static func isEqual(lhs: Date, rhs: Date) -> Bool {
         let calendar = Calendar.current
         let dateComponents1 = calendar.dateComponents([.year, .month, .day], from: lhs)

@@ -7,8 +7,17 @@ import os
 @Observable
 final class TodayModel {
     
-    private let logger: Logger = Logger(subsystem: "io.doyoung.Lookbook.TodayModel", category: "Observable Model")
-    enum Destination { case setting, details(asset: PHAsset) }
+    struct WeatherOutfutPhoto {
+        var id: String { asset.localIdentifier }
+        let asset: PHAsset
+        let weather: DailyWeather?
+    }
+    
+    enum Destination {
+        case setting
+        case details(model: DetailsModel)
+        case todayWeather
+    }
     
     // States
     var destination: Destination? = nil
@@ -51,18 +60,18 @@ final class TodayModel {
     /// 작년 사진과 날씨를 비교해 비슷한 날짜 구하기
     private var lastYearSimilarWeather: DailyWeather? {
         if let lastYearWeathers,
-            !lastYearWeathers.isEmpty {
+           lastYearWeathers.isEmpty == false {
             guard let photosCreateDates = photosState.assets?.compactMap({ $0.creationDate?.dateOnly }) else {
-                  return lastYearWeathers.first ?? nil
-              }
-
-              return lastYearWeathers.first { weather in
-                  let date = weather.date
-                  return photosCreateDates.contains(date)
-              }
-          } else {
-              return nil
-          }
+                return lastYearWeathers.first ?? nil
+            }
+            
+            return lastYearWeathers.first { weather in
+                let date = weather.date
+                return photosCreateDates.contains(date)
+            }
+        } else {
+            return nil
+        }
     }
     
     var lastYearSimilarWeatherDateText: String? {
@@ -87,14 +96,14 @@ final class TodayModel {
         weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "--"
     }
     
-    var maximumTemperature: Double? {
-        weather?.dailyForecast?[0].maximumTemperature.value
+    var todayHighTemperatureText: String {
+        weather?.maximumTemperature?.converted(to: unitTemperature).rounded ?? ""
     }
     
-    var minimumTemperature: Double? {
-        weather?.dailyForecast?[0].minimumTemperature.value
+    var todayLowTemperatureText: String {
+        weather?.minimumTemperature?.converted(to: unitTemperature).rounded ?? ""
     }
-    
+   
     var symbolName: String? {
         weather?.current?.symbolName
     }
@@ -122,26 +131,19 @@ final class TodayModel {
     var feelTemperature: String {
         "체감 온도:" + (weather?.current?.feelTemperature.converted(to: unitTemperature).rounded ?? "--")
     }
-    
-    var todayForcast: [TodayForecast]? {
-        return weather?.hourlyForecast?.compactMap({ weather in
-            TodayForecast(hourlyWeather: weather, unit: unitTemperature)
-        })
-    }
-    
-    var outfitPhotos: [OutfitPhoto] {
+   
+    var weatherOutfutPhotoItems: [WeatherOutfutPhoto] {
         return photosState.assets?.compactMap { asset in
-            let filteredWeather = lastYearWeathers?
+            let filterdWeather = lastYearWeathers?
                 .filter { weather in
                     guard let assetCreateDate = asset.creationDate else { return false }
                     return Date.isEqual(lhs: weather.date, rhs: assetCreateDate)
                 }
                 .first
             
-            return OutfitPhoto(
+            return WeatherOutfutPhoto(
                 asset: asset,
-                highTemp: filteredWeather?.maximumTemperature.converted(to: unitTemperature).rounded ?? "",
-                lowTemp: filteredWeather?.minimumTemperature.converted(to: unitTemperature).rounded ?? ""
+                weather: filterdWeather
             )
         } ?? []
     }

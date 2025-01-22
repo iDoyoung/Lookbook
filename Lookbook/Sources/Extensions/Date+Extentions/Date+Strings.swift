@@ -19,4 +19,11 @@ extension Date {
         dateFormatter.dateStyle = .long
         return dateFormatter.string(from: self)
     }
+    
+    var longStyleWithTime: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: self)
+    }
 }

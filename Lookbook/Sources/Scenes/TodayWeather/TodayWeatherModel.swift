@@ -5,11 +5,27 @@ import Photos
 @Observable
 final class TodayWeatherModel {
     
+    var locationState: LocationServiceState {
+        didSet {
+            Task {
+                locationName = await locationState.location?.name ?? "알 수 없음"
+            }
+        }
+    }
+    
+    var photosState: PhotosState
+    
     var weather: CurrentlyWeather?
      
-    var locationName: String?
-    var locationAuthorizationStatus: CLAuthorizationStatus?
-    var photosAuthorizationStatus: PHAuthorizationStatus?
+    var locationName: String = "알 수 없음"
+    var locationAuthorizationStatus: CLAuthorizationStatus? {
+        locationState.authorizationStatus
+    }
+    
+    var photosAuthorizationStatus: PHAuthorizationStatus? {
+        photosState.authorizationStatus
+    }
+    
     var unitTemperature: UnitTemperature = .celsius
     
     var symbolName: String? {
@@ -21,7 +37,7 @@ final class TodayWeatherModel {
     }
     
     var currentTemperature: String {
-        weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "=="
+        weather?.current?.temperature.converted(to: unitTemperature).rounded ?? "--"
     }
     
     var maximumTemperatureText: String {
@@ -52,13 +68,13 @@ final class TodayWeatherModel {
     }
     
     init(
-        weather: CurrentlyWeather?,
-        locationName: String?,
-        locationAuthorizationStatus: CLAuthorizationStatus?,
-        photosAuthorizationStatus: PHAuthorizationStatus?) {
-            self.weather = weather
-            self.locationName = locationName
-            self.locationAuthorizationStatus = locationAuthorizationStatus
-            self.photosAuthorizationStatus = photosAuthorizationStatus
+        locationState: LocationServiceState,
+        photosState: PhotosState
+    ) {
+        self.locationState = locationState
+        self.photosState = photosState
+        Task {
+            locationName = await locationState.location?.name ?? "알 수 없음"
         }
+    }
 }

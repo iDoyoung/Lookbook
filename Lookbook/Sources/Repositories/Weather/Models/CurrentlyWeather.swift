@@ -4,6 +4,24 @@ import WeatherKit
 struct CurrentlyWeather {
     
     var current: Current?
+    
+    var maximumTemperature:  Measurement<UnitTemperature>? {
+        dailyForecast?[0].maximumTemperature
+    }
+    
+    var minimumTemperature:  Measurement<UnitTemperature>? {
+        dailyForecast?[0].minimumTemperature
+    }
+    
+    var averageTemperature:  Measurement<UnitTemperature>? {
+        if let maximumTemperature,
+           let minimumTemperature {
+            (maximumTemperature + minimumTemperature) / 2
+        } else {
+            nil
+        }
+    }
+    
     var hourlyForecast: [HourlyWeather]?
     var dailyForecast: [DailyWeather]?
     
@@ -11,7 +29,7 @@ struct CurrentlyWeather {
         var date: Date
         
         var temperature: Measurement<UnitTemperature>
-        var feelTemperature: Measurement<UnitTemperature>
+        var feelTemperature:  Measurement<UnitTemperature>
         
         var condition: String
         var symbolName: String

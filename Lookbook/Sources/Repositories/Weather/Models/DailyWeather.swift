@@ -17,6 +17,10 @@ struct DailyWeather {
     var maximumTemperature: Measurement<UnitTemperature>
     var minimumTemperature: Measurement<UnitTemperature>
     
+    var averageTemperature: Measurement<UnitTemperature> {
+        (maximumTemperature + minimumTemperature) / 2
+    }
+    
     var precipitationChance: Int?
     
     init(
