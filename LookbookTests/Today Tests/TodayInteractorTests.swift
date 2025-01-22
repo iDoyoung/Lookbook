@@ -5,132 +5,85 @@ import Photos
 
 @testable import Lookbook
 
-final class TodayInteractorTests: XCTestCase {
-
+class TodayInteractorTests: XCTestCase {
+    
     var sut: TodayInteractor!
+    var weatherRepositorySpy: WeatherRepositorySpy!
+    var photosWorkerSpy: PhotosWorkerSpy!
+    var locationServiceSpy: LocationServiceSpy!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = TodayInteractor()
-        mockModel = TodayModel(locationState: .init())
-        mockLocationServiceState = LocationServiceState()
-        mockLocationService = MockLocationService()
-        mockWeatherRepository = MockWeatherRepository()
-        mockPhotosWorker = MockPhotosWorker()
         
-        sut.locationService = mockLocationService
-        sut.photosWorker = mockPhotosWorker
+        weatherRepositorySpy = WeatherRepositorySpy()
+        photosWorkerSpy = PhotosWorkerSpy()
+        locationServiceSpy = LocationServiceSpy()
+        
+        sut = TodayInteractor(
+            photosWorker: photosWorkerSpy,
+            weatherRepository: weatherRepositorySpy,
+            locationService: locationServiceSpy
+        )
     }
-
+    
     override func tearDownWithError() throws {
         sut = nil
-        mockModel = nil
-        mockLocationService = nil
-        mockLocationServiceState = nil
-        mockWeatherRepository = nil
-        mockPhotosWorker = nil
+        locationServiceSpy = nil
+        photosWorkerSpy = nil
+        weatherRepositorySpy = nil
+        
         try super.tearDownWithError()
     }
     
-    // MARK: - Test Doubles
-    var mockModel: TodayModel!
-    var mockLocationServiceState: LocationServiceState!
-    var mockLocationService: MockLocationService!
-    var mockWeatherRepository: MockWeatherRepository!
-    var mockPhotosWorker: MockPhotosWorker!
-    
-    class MockLocationService: CoreLocationServiceProtocol {
-        var state: Lookbook.LocationServiceState = .init()
+    func test_execute_viewDidLoad_shouldRequestLocationAuthorization() async {
+        // Given
+        let model = TodayModel(locationState: locationServiceSpy.state)
         
+        // When
+        let _ = await sut.execute(action: .viewDidLoad, with: model)
         
-        
-        var authorizationStatus: CLAuthorizationStatus = .notDetermined
-        var location = CLLocation(latitude: 0, longitude: 0)
-        
-        func requestLocation() {
-        }
-        
-        func requestAuthorization() {
-        }
-        
-        func requestLocation() async -> CLLocation {
-            return location
-        }
-        
-        func requestAuthorization() async -> CLAuthorizationStatus {
-            return authorizationStatus
-        }
+        // Then
+        XCTAssertTrue(locationServiceSpy.requestAuthorizationCalled)
+        XCTAssertTrue(locationServiceSpy.requestLocationCalled)
     }
     
-    class MockPhotosWorker: PhotosWorking {
-        var calledPhotosWorker = false
+
+    func test_execute_viewDidLoad_shouldUpdatePhotosState() async {
+        // Given
+        let model = TodayModel(locationState: locationServiceSpy.state)
         
-        func requestAuthorizationStatus() async -> PHAuthorizationStatus {
-            calledPhotosWorker = true
-            return .limited
-        }
+        photosWorkerSpy.authorizationStatus = .authorized
         
-        func fetchPhotosAssets() async -> [PHAsset] {
-            calledPhotosWorker = true
-            return []
-        }
+        // When
+        let updatedModel = await sut.execute(action: .viewDidLoad, with: model)
+        
+        // Then
+        XCTAssertEqual(updatedModel.photosState.authorizationStatus?.rawValue, PHAuthorizationStatus.authorized.rawValue)
+        XCTAssertTrue(photosWorkerSpy.fetchPhotosAssetsCalled)
     }
     
-    class MockWeatherRepository: WeatherRepositoryProtocol {
+    func test_execute_requestWeather_withValidLocation_shouldUpdateWeatherAndLocationName() async {
+        // Given
+        let mockLocation = CLLocation(latitude: 37.5665, longitude: 126.9780)
+        locationServiceSpy.state.location = mockLocation
+        let model = TodayModel(locationState: locationServiceSpy.state)
+       
+        //  When
+        let updatedModel = await sut.execute(action: .requestWeather, with: model)
         
-        var mockCurrentlyWeather: CurrentlyWeather?
-        var calledRequestWeahter: Bool = false
-        var calledRequestWeahterWithDateRange: Bool = false
-        
-        subscript(location: CLLocation) -> Lookbook.CurrentlyWeather? {
-            return mockCurrentlyWeather
-        }
-        
-        subscript(location: CLLocation) -> [Lookbook.DailyWeather]? {
-            return []
-        }
-        
-        @discardableResult
-        func requestWeather(for location: CLLocation) async throws -> Weather {
-            calledRequestWeahter.toggle()
-            return try Weather(from: Data() as! Decoder)
-        }
-        
-        @discardableResult
-        func requestWeathr(for location: CLLocation, startDate: Date, endDate: Date) async throws -> [Lookbook.DailyWeather] {
-            calledRequestWeahterWithDateRange.toggle()
-            return []
-        }
+        // Then
+        XCTAssertTrue(weatherRepositorySpy.calledRequestWeather)
     }
     
-    // MARK: - Tests
-    func test_executeInteractor_whenViewWillAppear_shouldBeSetAuthorizationStatusAndCurrentLocationOfLocationServiceState() async {
+    func test_execute_requestWeather_withNoLocation_shouldNotUpdateWeather() async {
+        // Given
+        let model = TodayModel(locationState: locationServiceSpy.state)
         
-        // given
-        mockLocationService.authorizationStatus = .authorizedWhenInUse
-        mockModel.locationState = mockLocationServiceState
+        // When
+        let updatedModel = await sut.execute(action: .requestWeather, with: model)
         
-        // when
-        let _ = await sut.execute(action: .viewWillAppear, with: mockModel)
-        
-        // then
-        XCTAssertEqual(
-            mockModel.locationState.authorizationStatus!,
-            .authorizedWhenInUse
-        )
-        
-        XCTAssertEqual(
-            mockModel.locationState.location!,
-            mockLocationService.location
-        )
-    }
-    
-    func test_exectueInteractor_whenViewWillAppear_shouldBeCellPhotosWorker() async {
-        
-        //given
-        //when
-        let _ = await sut.execute(action: .viewWillAppear, with: mockModel)
-        //then
-        XCTAssertTrue(mockPhotosWorker.calledPhotosWorker)
+        // Then
+        XCTAssertNil(updatedModel.weather)
+        XCTAssertFalse(weatherRepositorySpy.calledRequestWeather)
     }
 }

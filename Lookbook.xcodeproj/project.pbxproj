@@ -13,7 +13,6 @@
 		7F1672E52CEC1DB400C25110 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672E42CEC1DB400C25110 /* MockRouter.swift */; };
 		7F1672E72CEC21AA00C25110 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; };
 		7F1672E82CEC21AA00C25110 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		7F1672F42CEDB1BA00C25110 /* TodayWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672F32CEDB1BA00C25110 /* TodayWeatherView.swift */; };
 		7F1672F62CEDC3B800C25110 /* DataImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672F52CEDC3B800C25110 /* DataImageView.swift */; };
 		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
 		7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C222CE72AA8001B9CBD /* SettingRouter.swift */; };
@@ -47,7 +46,6 @@
 		7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F272C4CA5720069925C /* DailyWeather.swift */; };
 		7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */; };
 		7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F322C520F2B0069925C /* TodayViewController.swift */; };
-		7F6A0F382C520F570069925C /* LegacyTodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */; };
 		7F6A0F392C520F5A0069925C /* TodayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F302C520F2B0069925C /* TodayModel.swift */; };
 		7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F352C520F2B0069925C /* ViewController.swift */; };
 		7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */; };
@@ -86,6 +84,8 @@
 		7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */; };
 		7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */; };
 		7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */; };
+		7FF8294B2D40E3910076A515 /* PhotosWorkerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8294A2D40E3910076A515 /* PhotosWorkerSpy.swift */; };
+		7FF8294D2D40E43E0076A515 /* LocationServiceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF8294C2D40E43E0076A515 /* LocationServiceSpy.swift */; };
 		7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF9E4F42CB7A2F700A738FE /* PhotosWorkerState.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +134,6 @@
 /* Begin PBXFileReference section */
 		7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		7F1672E42CEC1DB400C25110 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
-		7F1672F32CEDB1BA00C25110 /* TodayWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherView.swift; sourceTree = "<group>"; };
 		7F1672F52CEDC3B800C25110 /* DataImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImageView.swift; sourceTree = "<group>"; };
 		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
 		7F290C222CE72AA8001B9CBD /* SettingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRouter.swift; sourceTree = "<group>"; };
@@ -168,7 +167,6 @@
 		7F6A0F272C4CA5720069925C /* DailyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeather.swift; sourceTree = "<group>"; };
 		7F6A0F292C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Measurement<UnitTemperature>+Rouded.swift"; sourceTree = "<group>"; };
 		7F6A0F302C520F2B0069925C /* TodayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayModel.swift; sourceTree = "<group>"; };
-		7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyTodayRootView.swift; sourceTree = "<group>"; };
 		7F6A0F322C520F2B0069925C /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		7F6A0F352C520F2B0069925C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherOutfitView.swift; sourceTree = "<group>"; };
@@ -213,6 +211,8 @@
 		7FEA55A62C100812008F7B4A /* LocationAuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAuthStatus.swift; sourceTree = "<group>"; };
 		7FEC5A372C23F78F00505636 /* CurrentlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyWeather.swift; sourceTree = "<group>"; };
 		7FF2F1692C548FE40076F2C2 /* GoogleAdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdBannerView.swift; sourceTree = "<group>"; };
+		7FF8294A2D40E3910076A515 /* PhotosWorkerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerSpy.swift; sourceTree = "<group>"; };
+		7FF8294C2D40E43E0076A515 /* LocationServiceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceSpy.swift; sourceTree = "<group>"; };
 		7FF9E4F42CB7A2F700A738FE /* PhotosWorkerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -263,8 +263,8 @@
 		7F3B76892C0D77DB001ECDDB /* Test Doubles */ = {
 			isa = PBXGroup;
 			children = (
+				7FF8294E2D40E8270076A515 /* Spys */,
 				7F5E0FC22D40808400BA99DD /* Stubs */,
-				7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */,
 				7F1672E42CEC1DB400C25110 /* MockRouter.swift */,
 			);
 			path = "Test Doubles";
@@ -401,8 +401,6 @@
 			isa = PBXGroup;
 			children = (
 				7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */,
-				7F6A0F312C520F2B0069925C /* LegacyTodayRootView.swift */,
-				7F1672F32CEDB1BA00C25110 /* TodayWeatherView.swift */,
 				7F6A0F3B2C520FA40069925C /* WeatherOutfitView.swift */,
 				7F1672F52CEDC3B800C25110 /* DataImageView.swift */,
 				7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */,
@@ -627,6 +625,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7FF8294E2D40E8270076A515 /* Spys */ = {
+			isa = PBXGroup;
+			children = (
+				7FF8294A2D40E3910076A515 /* PhotosWorkerSpy.swift */,
+				7FF8294C2D40E43E0076A515 /* LocationServiceSpy.swift */,
+				7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */,
+			);
+			path = Spys;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -784,7 +792,6 @@
 				7F3DD5982D30E4B300E1A9CC /* DetailsViewController.swift in Sources */,
 				7FE1A65D2D3E4C720051A400 /* TodayWeatherInteractor.swift in Sources */,
 				7F70632B2CD1FA5F0025CEE3 /* CLLocation+Name.swift in Sources */,
-				7F1672F42CEDB1BA00C25110 /* TodayWeatherView.swift in Sources */,
 				7F3510F12C3E5251003612F6 /* PHAsset+Extension.swift in Sources */,
 				7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */,
 				7FE8DE162D3CB1DD000E6571 /* TodayWeatherViewController.swift in Sources */,
@@ -808,7 +815,6 @@
 				7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* WeatherOutfitView.swift in Sources */,
 				7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */,
-				7F6A0F382C520F570069925C /* LegacyTodayRootView.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
 				7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */,
 				7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */,
@@ -840,7 +846,9 @@
 				7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */,
 				7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */,
 				7F5E0FC12D40806800BA99DD /* CurrentlyWeather+Stub.swift in Sources */,
+				7FF8294B2D40E3910076A515 /* PhotosWorkerSpy.swift in Sources */,
 				7F5E0FC62D40857000BA99DD /* DailyWeather+Stub.swift in Sources */,
+				7FF8294D2D40E43E0076A515 /* LocationServiceSpy.swift in Sources */,
 				7FB5C2A62C3252A20061C763 /* PhotosServiceTests.swift in Sources */,
 				7F1672E52CEC1DB400C25110 /* MockRouter.swift in Sources */,
 				7F4F8D282C058CAF007B9F74 /* TodayViewControllerTests.swift in Sources */,
