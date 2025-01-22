@@ -18,11 +18,33 @@ struct TodayRootView: View {
                 
                 ScrollView {
                     LazyVStack {
+                        //TODO: 가독성 향상
                         VStack(alignment: .leading) {
-                            Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
-                                .font(.caption2)
+                            switch model.photosState.authorizationStatus {
+                            case .authorized:
+                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
+                                    .font(.caption2)
+                                    .padding(.top)
+                                    .padding(.bottom, 4)
+                            case .limited:
+                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?\n(설정을 업데이트하여 더 많은 사진을 가져와 보세요.)")
+                                    .font(.caption2)
+                                    .padding(.top)
+                                    .padding(.bottom, 4)
+                                
+                            case .restricted, .denied:
+                                HStack(alignment: .center) {
+                                    Text("⚠️")
+                                    Text("사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                }
                                 .padding(.top)
                                 .padding(.bottom, 4)
+                            default:
+                                EmptyView()
+                            }
+                           
                             
                             Text(model.lastYearSimilarWeatherDateStyleText ?? "")
                                 .dateFont()
@@ -136,21 +158,33 @@ struct TodayRootView: View {
     private var todayWeatherView: some View {
         HStack {
             VStack(alignment: .leading) {
-                if model.locationState.authorizationStatus == .authorizedAlways ||
-                    model.locationState.authorizationStatus == .authorizedWhenInUse {
-                    Text("내 위치")
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .medium))
-                        .padding(.top, 6)
+                //TODO: 가독성 향상
+                HStack {
+                    VStack {
+                        if model.locationState.authorizationStatus == .authorizedAlways ||
+                            model.locationState.authorizationStatus == .authorizedWhenInUse {
+                            Text("내 위치")
+                                .font(
+                                    .system(
+                                        size: 20,
+                                        weight: .medium))
+                                .padding(.top, 6)
+                        }
+                        
+                        Text(model.locationName ?? "")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .padding(6)
+                    }
+                    Spacer()
+                    if model.locationState.authorizationStatus == .denied ||
+                        model.locationState.authorizationStatus == .restricted ||
+                        model.photosState.authorizationStatus == .denied ||
+                        model.photosState.authorizationStatus == .restricted {
+                        Text("‼️")
+                    }
                 }
-                
-                Text(model.locationName ?? "")
-                    .font(.footnote)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .padding(6)
                 
                 HStack(alignment: .center) {
                     Text(Image(systemName: model.symbolName ?? "questionmark"))

@@ -19,62 +19,75 @@ struct TodayWeatherRootView: View {
             }
             .frame(maxWidth: .infinity)
             
-            //MARK: Location Label
-            locationLabel
-                .padding([.top, .horizontal])
-            
-            //MARK: Weather Condition
-            HStack {
-                Text(Image(systemName: model.symbolName ?? "questionmark"))
-                Text(model.weatherCondition)
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced))
-            }
-            .padding(.top, 2)
-            .padding(.horizontal)
-            
-            //MARK: Temperatures
-            Text(model.currentTemperature)
-                .font(
-                    .system(
-                        size: 80,
-                        weight: .light))
-                .padding(.horizontal)
-            
-            HStack {
-                Text(model.maximumTemperatureText)
-                    .font(
-                        .system(
-                            size: 16,
-                            weight: .light,
-                            design: .monospaced))
+            VStack(alignment: .leading) {
+                //MARK: Location Label
+                locationLabel
+                    .padding([.top, .horizontal])
                 
-                Text(model.minimumTemperatureText)
+                //MARK: Weather Condition
+                HStack {
+                    Text(Image(systemName: model.symbolName ?? "questionmark"))
+                    Text(model.weatherCondition)
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .light,
+                                design: .monospaced))
+                }
+                .padding(.top, 2)
+                .padding(.horizontal)
+                
+                //MARK: Temperatures
+                Text(model.currentTemperature)
+                    .font(
+                        .system(
+                            size: 80,
+                            weight: .light))
+                    .padding(.horizontal)
+                
+                HStack {
+                    Text(model.maximumTemperatureText)
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .light,
+                                design: .monospaced))
+                    
+                    Text(model.minimumTemperatureText)
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .light,
+                                design: .monospaced))
+                        .padding(.bottom, 1)
+                }
+                .padding(.horizontal)
+                
+                
+                Text(model.feelTemperature)
                     .font(
                         .system(
                             size: 16,
+                            weight: .bold,
+                            design: .monospaced))
+                    .padding(.vertical, 1)
+                    .padding(.horizontal)
+                
+                //MARK: Today Date
+                Text(model.date)
+                    .font(
+                        .system(
+                            size: 10,
                             weight: .light,
                             design: .monospaced))
-                    .padding(.bottom, 1)
+                    .padding(.horizontal)
+                    .padding(.top)
             }
             .padding(.horizontal)
-            
-            
-            Text(model.feelTemperature)
-                .font(
-                    .system(
-                        size: 16,
-                        weight: .bold,
-                        design: .monospaced))
-                .padding(.vertical, 1)
-                .padding(.horizontal)
             
             // - MARK:
             Divider()
-                .padding(.vertical, 1)
+                .padding(.bottom)
                 .padding(.horizontal)
             
             // MARK: Houly Forecast
@@ -105,15 +118,8 @@ struct TodayWeatherRootView: View {
                 }
             }
             .contentMargins(10)
+        
             
-            //MARK: Today Date
-            Text(model.date)
-                .font(
-                    .system(
-                        size: 10,
-                        weight: .light,
-                        design: .monospaced))
-                .padding()
             
             Spacer()
             
@@ -121,10 +127,11 @@ struct TodayWeatherRootView: View {
                 locationWarningLabel
                 photosWarningLabel
             }
+            .padding(.horizontal)
             
             Spacer()
         }
-        .padding([.vertical, .leading])
+        .padding([.vertical])
         .background(.thinMaterial)
         .padding(.bottom)
     }
@@ -154,13 +161,13 @@ struct TodayWeatherRootView: View {
                 .foregroundStyle(.white)
                 .font(
                     .system(
-                        size: 12,
+                        size: 14,
                         weight: .light))
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
                 )
-                .padding(6)
+                .padding(8)
                 .background(.black)
                 .border(.yellow, width: 2)
                 .padding(.horizontal, 6)
@@ -175,15 +182,16 @@ struct TodayWeatherRootView: View {
         if model.photosAuthorizationStatus == .limited {
             
             // You've given Lookbook access to a select number of photos.
-            Text("제한된 사진 접근상태입니다. 더 많은 사진을 가져오기 위해 사진에 접근을 설정해 주세요.")
+            Text("사진에 대해 제한된 접근 상태입니다. 설정을 업데이트하여 더 많은 사진을 가져와 보세요.")
                 .font(
                     .system(
-                        size: 12,
+                        size: 14,
                         weight: .light))
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
                 )
+                .padding(8)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 6)
                 .onTapGesture {
@@ -192,18 +200,18 @@ struct TodayWeatherRootView: View {
         } else if model.photosAuthorizationStatus == .restricted || model.photosAuthorizationStatus == .denied {
             
             // Please allow access to your photos
-            Text("⚠️ 사진에 접근을 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+            Text("⚠️ 사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요")
                 .foregroundStyle(.white)
                 .font(
                     .system(
-                        size: 12,
+                        size: 14,
                         weight: .light))
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
                 )
                 .frame(maxWidth: .infinity)
-                .padding(6)
+                .padding(8)
                 .background(.black)
                 .border(.yellow, width: 2)
                 .padding(.horizontal, 6)
