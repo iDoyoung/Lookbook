@@ -236,6 +236,7 @@ struct TodayRootView: View {
                 .padding(.leading)
         }
         .padding(.horizontal)
+        .background(Rectangle())
         .contentShape(Rectangle())
         .onTapGesture {
             model.destination = .todayWeather
