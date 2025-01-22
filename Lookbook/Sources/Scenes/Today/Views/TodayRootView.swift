@@ -128,7 +128,6 @@ struct TodayRootView: View {
                 .background()
                 .debugBorder()
             }
-            .background(Color(uiColor: .label))
             .frame(maxWidth: .infinity)
         }
     }
@@ -150,7 +149,7 @@ struct TodayRootView: View {
                 Text(model.locationName ?? "")
                     .font(.footnote)
                     .fontWeight(.semibold)
-                    .foregroundStyle(Color(uiColor: .systemBackground))
+                    .foregroundStyle(.white)
                     .padding(6)
                 
                 HStack(alignment: .center) {
@@ -160,7 +159,7 @@ struct TodayRootView: View {
                                 size: 20,
                                 weight: .bold)
                         )
-                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .foregroundStyle(.white)
                     
                     Text(model.weatherCondition)
                         .font(
@@ -169,7 +168,7 @@ struct TodayRootView: View {
                                 weight: .bold,
                                 design: .monospaced)
                         )
-                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .foregroundStyle(.white)
                     
                     Spacer()
                 }
@@ -178,17 +177,16 @@ struct TodayRootView: View {
                 HStack(alignment: .bottom) {
                     Text(model.currentTemperature)
                         .temperatureFont(weight: .bold)
-                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .foregroundStyle(.white)
                         .padding(.trailing, 8)
                     
                     Spacer()
                     Text(model.todayHighTemperatureText)
                         .temperatureFont(size: 16, weight: .medium)
-                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .foregroundStyle(.white)
                     Text(model.todayLowTemperatureText)
                         .temperatureFont(size: 16, weight: .light)
-                        .foregroundStyle(Color(uiColor: .systemBackground))
-                    
+                        .foregroundStyle(.white)
                 }
                 .debugBorder()
             }
