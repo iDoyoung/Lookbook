@@ -60,7 +60,6 @@
 		7FA27BE12BECDB5A00BDB1A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FA27BDF2BECDB5A00BDB1A9 /* LaunchScreen.storyboard */; };
 		7FA27BF62BECDB5B00BDB1A9 /* LookbookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA27BF52BECDB5B00BDB1A9 /* LookbookUITests.swift */; };
 		7FA27BF82BECDB5B00BDB1A9 /* LookbookUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA27BF72BECDB5B00BDB1A9 /* LookbookUITestsLaunchTests.swift */; };
-		7FA4A74F2CB8EBA600185B08 /* PhotosWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4A74E2CB8EBA600185B08 /* PhotosWorkerTests.swift */; };
 		7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA623F72C995E3A0090E282 /* LocationServiceState.swift */; };
 		7FB11E412C5888D000A47321 /* OutfitV1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7FB11E402C5888D000A47321 /* OutfitV1.mlmodel */; };
 		7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2D7E62BF483EC001BA4FB /* PhotosService.swift */; };
@@ -186,7 +185,6 @@
 		7FA27BF12BECDB5B00BDB1A9 /* LookbookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookbookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA27BF52BECDB5B00BDB1A9 /* LookbookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookbookUITests.swift; sourceTree = "<group>"; };
 		7FA27BF72BECDB5B00BDB1A9 /* LookbookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookbookUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		7FA4A74E2CB8EBA600185B08 /* PhotosWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorkerTests.swift; sourceTree = "<group>"; };
 		7FA623F72C995E3A0090E282 /* LocationServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceState.swift; sourceTree = "<group>"; };
 		7FB11E402C5888D000A47321 /* OutfitV1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = OutfitV1.mlmodel; path = ../../../../../../../../ML/OutfitV1.mlmodel; sourceTree = "<group>"; };
 		7FB2D7E62BF483EC001BA4FB /* PhotosService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosService.swift; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 				7F3B76892C0D77DB001ECDDB /* Test Doubles */,
 				7FB5C2A52C3252A20061C763 /* PhotosServiceTests.swift */,
 				7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */,
-				7FA4A74E2CB8EBA600185B08 /* PhotosWorkerTests.swift */,
 			);
 			path = LookbookTests;
 			sourceTree = "<group>";
@@ -841,7 +838,6 @@
 			files = (
 				7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */,
 				7F5E0FBF2D4070F900BA99DD /* TodayWeatherInteractorTests.swift in Sources */,
-				7FA4A74F2CB8EBA600185B08 /* PhotosWorkerTests.swift in Sources */,
 				7F5E0FC42D40809E00BA99DD /* HourlyWeather+Stub.swift in Sources */,
 				7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */,
 				7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */,
