@@ -11,17 +11,12 @@ import Swinject
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let assembler = Assembler([
-        CoreServiceAssembly(),
-        DomainAssembly(),
-        ViewControllerAssembly(),
-    ])
-   
+    let container = DIContainer()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        guard let todayViewController = assembler.resolver.resolve(ViewController.self, name: TodayViewController.name) else {
-                   fatalError("Today View Controller is not registered")
-        }
+        
+        let todayViewController = container.createTodayViewController()
         
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
