@@ -15,6 +15,7 @@ struct TodayRootView: View {
         ZStack {
             VStack {
                 todayWeatherView
+                
                 ScrollView {
                     LazyVStack {
                         VStack(alignment: .leading) {
@@ -136,6 +137,22 @@ struct TodayRootView: View {
     private var todayWeatherView: some View {
         HStack {
             VStack(alignment: .leading) {
+                if model.locationState.authorizationStatus == .authorizedAlways ||
+                    model.locationState.authorizationStatus == .authorizedWhenInUse {
+                    Text("내 위치")
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .medium))
+                        .padding(.top, 6)
+                }
+                
+                Text(model.locationName ?? "")
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color(uiColor: .systemBackground))
+                    .padding(6)
+                
                 HStack(alignment: .center) {
                     Text(Image(systemName: model.symbolName ?? "questionmark"))
                         .font(

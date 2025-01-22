@@ -38,7 +38,6 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
     }
    
     func requestLocation() {
-        print("🗺️ Request Location")
         locationFetcher.startUpdatingLocation()
     }
     
@@ -54,12 +53,17 @@ final class CoreLocationService: NSObject, CoreLocationServiceProtocol {
 extension CoreLocationService: LocationFetcherDelegate {
     
     func locationManagerDidChangeAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
-        state.authorizationStatus = authorizationStatus
         logger.log("🗺️ Change Location Authorization: \(authorizationStatus.rawValue)")
-        if state.authorizationStatus == .authorizedWhenInUse {
+        state.authorizationStatus = authorizationStatus
+        
+        switch state.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             locationFetcher.startUpdatingLocation()
-        } else {
-            state.location = nil
+        case .notDetermined, .denied, .restricted:
+            logger.log("🗺️ Set up default location")
+            state.location = .seoul
+        default:
+            break
         }
     }
     

@@ -610,8 +610,8 @@
 			isa = PBXGroup;
 			children = (
 				7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */,
-				7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */,
 				7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */,
+				7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */,
 				7FE1A65C2D3E4C720051A400 /* TodayWeatherInteractor.swift */,
 			);
 			path = TodayWeather;

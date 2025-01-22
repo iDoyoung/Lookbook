@@ -132,7 +132,8 @@ struct TodayWeatherRootView: View {
     @ViewBuilder
     var locationLabel: some View {
         VStack(alignment: .leading) {
-            HStack {
+            if model.locationState.authorizationStatus == .authorizedWhenInUse ||
+                model.locationState.authorizationStatus == .authorizedAlways {
                 Text("내 위치")
                     .font(
                         .system(

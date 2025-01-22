@@ -43,10 +43,8 @@ final class TodayViewController: ViewController {
         observeCurrentLocationTracking()
         
         Task {
-            model = await interactor.execute(
-                action: .viewDidLoad,
-                with: model
-            )
+            model = await interactor.execute(action: .viewDidLoad, with: model)
+            model = await interactor.execute(action: .requestWeather, with: model)
         }
     }
     
@@ -102,7 +100,7 @@ final class TodayViewController: ViewController {
     @discardableResult
     private func observeCurrentLocationTracking() -> CLLocation? {
         withObservationTracking {
-            rootView?.model.locationState.location
+            model.locationState.location
         } onChange: { [weak self] in
             Task { @MainActor in
                 guard let self else { return }
