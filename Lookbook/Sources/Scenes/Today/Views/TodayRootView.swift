@@ -160,23 +160,13 @@ struct TodayRootView: View {
             VStack(alignment: .leading) {
                 //TODO: 가독성 향상
                 HStack {
-                    VStack {
-                        if model.locationState.authorizationStatus == .authorizedAlways ||
-                            model.locationState.authorizationStatus == .authorizedWhenInUse {
-                            Text("내 위치")
-                                .font(
-                                    .system(
-                                        size: 20,
-                                        weight: .medium))
-                                .padding(.top, 6)
-                        }
-                        
-                        Text(model.locationName ?? "")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .padding(6)
-                    }
+                    
+                    Text(model.locationName ?? "")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .padding(6)
+                    
                     Spacer()
                     if model.locationState.authorizationStatus == .denied ||
                         model.locationState.authorizationStatus == .restricted ||
