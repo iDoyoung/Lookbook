@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */; };
-		7F04D1582CE1096E000813D4 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; };
-		7F04D15A2CE1096E000813D4 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F04D1572CE1096E000813D4 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7F1672E52CEC1DB400C25110 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672E42CEC1DB400C25110 /* MockRouter.swift */; };
 		7F1672E72CEC21AA00C25110 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; };
 		7F1672E82CEC21AA00C25110 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -114,7 +112,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7F04D15A2CE1096E000813D4 /* Swinject-Dynamic in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,7 +220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F8AF6182D5066C9001B6E63 /* FirebaseAnalytics in Frameworks */,
-				7F04D1582CE1096E000813D4 /* Swinject-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +659,6 @@
 			);
 			name = Lookbook;
 			packageProductDependencies = (
-				7F04D1572CE1096E000813D4 /* Swinject-Dynamic */,
 				7F8AF6172D5066C9001B6E63 /* FirebaseAnalytics */,
 			);
 			productName = Lookbook;
@@ -1374,11 +1369,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7F04D1572CE1096E000813D4 /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
-		};
 		7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7F3A3B8C2CDDE87100318AB0 /* XCRemoteSwiftPackageReference "Swinject" */;

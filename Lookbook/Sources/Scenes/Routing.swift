@@ -1,5 +1,4 @@
 import UIKit
-import Swinject
 
 protocol Routing:  AnyObject {
     var destination: ViewController? { get set }
