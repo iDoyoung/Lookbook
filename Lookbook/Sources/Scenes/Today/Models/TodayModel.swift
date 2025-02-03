@@ -31,15 +31,11 @@ final class TodayModel {
     
     var dateRange: (start: Date, end: Date) {
         let now = Date()
-        let startDate = now.oneYearAndFiveDaysAgo
         
-        let calendar = Calendar.current
-        var dateComponents = DateComponents()
-        dateComponents.day = 20
+        let startDate = now.calculate(year: -1, month: -1)
+        let endDate = startDate.calculate(month: 3, day: -1)
         
-        let endDate = calendar.date(byAdding: .day, value: 20, to: startDate) ?? startDate
-        
-        return (now.oneYearAndFiveDaysAgo, endDate)
+        return (startDate, endDate)
     }
    
     // MARK: - Weather 모델 리펙토링하기
@@ -53,7 +49,7 @@ final class TodayModel {
     /// 오늘과 가장 비슷한 옷 스타일 추천
     var recommendedPHAsset: PHAsset? {
         photosState.assets?.filter({ asset in
-            return  asset.creationDate?.dateOnly == lastYearSimilarWeather?.date.dateOnly
+            return asset.creationDate?.dateOnly == lastYearSimilarWeather?.date.dateOnly
         }).first
     }
     

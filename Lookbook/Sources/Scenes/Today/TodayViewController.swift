@@ -44,7 +44,6 @@ final class TodayViewController: ViewController {
         
         Task {
             model = await interactor.execute(action: .viewDidLoad, with: model)
-            model = await interactor.execute(action: .requestWeather, with: model)
         }
     }
     
