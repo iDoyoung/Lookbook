@@ -4,6 +4,7 @@ import CoreLocation
 import Photos
 import os
 import WeatherKit
+import FirebaseAnalytics
 
 enum TodayViewAction {
     case viewDidLoad, viewWillAppear, requestWeather
@@ -80,6 +81,12 @@ final class TodayInteractor: TodayInteractable {
                     }
                 } catch {
                     logger.error("Apple Weather 요청 실패\n다음 에러: \(error)")
+                    let parameters = [
+                        "message": error.localizedDescription,
+                        "file": #file,
+                        "function": #function
+                    ]
+                    Analytics.logEvent("Interacting Error", parameters: parameters)
                 }
             } else {
                 logger.log("updatedCurrentLocation 실패, locationState.location: \(String(describing:  model.locationState.location)) ")

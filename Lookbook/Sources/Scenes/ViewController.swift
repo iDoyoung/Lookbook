@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 import os
+import FirebaseAnalytics
 
 class ViewController: UIViewController {
     
@@ -22,11 +23,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         defaultLogger.log("🪟 \(type(of: self)), call \(#function)")
+        
+        let parameters = [
+            "file": #file,
+            "function": #function
+        ]
+        
+        Analytics.logEvent("View Did Load", parameters: parameters)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         defaultLogger.log("🪟 \(type(of: self)), call \(#function)")
+        
+        let parameters = [
+            "file": #file,
+            "function": #function
+        ]
+        
+        Analytics.logEvent("View Will Appear", parameters: parameters)
     }
     
     override func viewIsAppearing(_ animated: Bool) {
@@ -37,6 +52,30 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         defaultLogger.log("🪟 \(type(of: self)), call \(#function)")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        defaultLogger.log("🪟 \(type(of: self)), call \(#function)")
+        
+        let parameters = [
+            "file": #file,
+            "function": #function
+        ]
+        
+        Analytics.logEvent("View Did Disappear", parameters: parameters)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        defaultLogger.log("🪟 \(type(of: self)), call \(#function)")
+        
+        let parameters = [
+            "file": #file,
+            "function": #function
+        ]
+        
+        Analytics.logEvent("View Will Disappear", parameters: parameters)
     }
       
     deinit {
