@@ -133,7 +133,7 @@ final class TodayModel {
             let filterdWeather = lastYearWeathers?
                 .filter { weather in
                     guard let assetCreateDate = asset.creationDate else { return false }
-                    return Date.isEqual(lhs: weather.date, rhs: assetCreateDate)
+                    return weather.date.dateOnly == assetCreateDate.dateOnly
                 }
                 .first
             
