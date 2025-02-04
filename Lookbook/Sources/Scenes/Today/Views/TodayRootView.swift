@@ -72,9 +72,17 @@ struct TodayRootView: View {
                                 
                             } else {
                                 // TODO: 사진이 없는 경우 UI 구현
-                                Rectangle()
-                                    .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
-                                    .aspectRatio(3/4, contentMode: .fit)
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
+                                        .aspectRatio(3/4, contentMode: .fit)
+                                    
+                                    if model.weatherOutfutPhotoItems.isEmpty {
+                                        Text("작년 이맘때의 옷차림 사진을 찾을 수 없습니다.\n추천을 받기 위해서는 여러분의 사진에 옷차림 사진이 있어야 해요!")
+                                            .font(.footnote)
+                                            .foregroundStyle(Color(uiColor: .secondaryLabel))
+                                    }
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
