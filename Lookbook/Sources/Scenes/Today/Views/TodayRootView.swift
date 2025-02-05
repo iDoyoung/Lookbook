@@ -55,20 +55,17 @@ struct TodayRootView: View {
                                 )
                             
                             if let asset = model.recommendedPHAsset {
-                                Rectangle()
-                                    .fill(Color.clear)
-                                    .aspectRatio(3/4, contentMode: .fit)
-                                    .background(
-                                        DataImageView(
-                                            photoAsset: asset
-                                        )
-                                    )
-                                    .clipped()
-                                    .border(Color(uiColor: .label))
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        model.destination = .details(model: DetailsModel(asset: asset))
-                                    }
+                                RecommendedOutfitPhotoView(
+                                    asset: asset,
+                                    date: model.lastYearSimilarWeather?.date,
+                                    highTemperature: model.lastYearSimilarWeather?.maximumTemperature.rounded,
+                                    lowTemperature: model.lastYearSimilarWeather?.minimumTemperature.rounded
+                                )
+                                .border(Color(uiColor: .label))
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    model.destination = .details(model: DetailsModel(asset: asset))
+                                }
                                 
                             } else {
                                 // TODO: 사진이 없는 경우 UI 구현

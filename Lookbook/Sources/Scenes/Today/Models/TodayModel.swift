@@ -54,7 +54,7 @@ final class TodayModel {
     }
     
     /// 작년 사진과 날씨를 비교해 비슷한 날짜 구하기
-    private var lastYearSimilarWeather: DailyWeather? {
+    var lastYearSimilarWeather: DailyWeather? {
         if let lastYearWeathers,
            lastYearWeathers.isEmpty == false {
             guard let photosCreateDates = photosState.assets?.compactMap({ $0.creationDate?.dateOnly }) else {
