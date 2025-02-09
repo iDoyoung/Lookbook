@@ -45,15 +45,6 @@ struct TodayRootView: View {
                                 EmptyView()
                             }
                            
-                            
-                            Text(model.lastYearSimilarWeatherDateStyleText ?? "")
-                                .dateFont()
-                                .frame(
-                                    maxWidth: .infinity,
-                                    minHeight: 30,
-                                    alignment: .leading
-                                )
-                            
                             if let asset = model.recommendedPHAsset {
                                 RecommendedOutfitPhotoView(
                                     asset: asset,
@@ -74,7 +65,7 @@ struct TodayRootView: View {
                                         .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
                                         .aspectRatio(3/4, contentMode: .fit)
                                     
-                                    if model.weatherOutfutPhotoItems.isEmpty {
+                                    if model.weatherOutfitPhotoItems.isEmpty {
                                         Text("작년 이맘때의 옷차림 사진을 찾을 수 없습니다.\n추천을 받기 위해서는 여러분의 사진에 옷차림 사진이 있어야 해요!")
                                             .font(.footnote)
                                             .foregroundStyle(Color(uiColor: .secondaryLabel))
@@ -103,16 +94,8 @@ struct TodayRootView: View {
                             .debugBorder()
                         
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(model.weatherOutfutPhotoItems, id: \.id) { photo in
-                                Rectangle()
-                                    .fill(Color.clear)
-                                    .aspectRatio(3/4, contentMode: .fit)
-                                    .background(
-                                        DataImageView(
-                                            photoAsset: photo.asset
-                                        )
-                                    )
-                                    .clipped()
+                            ForEach(model.weatherOutfitPhotoItems, id: \.id) { photo in
+                                WeatherOutfitPhotoCell(item: photo)
                                     .onTapGesture {
                                         model.destination = .details(
                                             model: DetailsModel(
