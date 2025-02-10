@@ -29,7 +29,7 @@ class ViewController: UIViewController {
             "function": #function
         ]
         
-        Analytics.logEvent("View Did Load", parameters: parameters)
+        Analytics.logEvent("\(type(of: self))ViewDidLoad", parameters: parameters)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             "function": #function
         ]
         
-        Analytics.logEvent("View Will Appear", parameters: parameters)
+        Analytics.logEvent("\(type(of: self))ViewWillAppear", parameters: parameters)
     }
     
     override func viewIsAppearing(_ animated: Bool) {
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
             "function": #function
         ]
         
-        Analytics.logEvent("View Did Disappear", parameters: parameters)
+        Analytics.logEvent("\(type(of: self))ViewDidDisappear", parameters: parameters)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
             "function": #function
         ]
         
-        Analytics.logEvent("View Will Disappear", parameters: parameters)
+        Analytics.logEvent("\(type(of: self))ViewWillDisappear", parameters: parameters)
     }
       
     deinit {
