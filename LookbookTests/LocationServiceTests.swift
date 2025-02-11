@@ -11,10 +11,15 @@ final class LocationServiceTests: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
+        
         state = LocationServiceState()
         fetcher = MockLocationFetcher()
         fetcher.location = mockLocation
-        sut = CoreLocationService(locationFetcher: fetcher)
+        
+        sut = CoreLocationService(
+            state: state,
+            locationFetcher: fetcher
+        )
     }
     
     override func tearDownWithError() throws {
@@ -73,9 +78,7 @@ final class LocationServiceTests: XCTestCase {
         func stopUpdatingLocation() {
             if let error {
                 locationFetcherDelegate!.locationFetcher(self, didFailWithError: error)
-                return
             }
-            locationFetcherDelegate!.locationFetcher(self, didUpdate: [location!])
         }
     }
     
@@ -93,13 +96,13 @@ final class LocationServiceTests: XCTestCase {
     func test_requestLocation_whenFetcherFailsWithError_shouldNotUpdateLocation() {
         // Given
         fetcher.error = .locationUnavailable
-        let initialLocation = sut.state.location
         
         // When
         sut.requestLocation()
         
         // Then
-        XCTAssertEqual(sut.state.location, initialLocation)
+        XCTAssertFalse(fetcher.isCallRequestLocation)
+        XCTAssertEqual(sut.state.location, mockLocation)
     }
     
     // MARK: - Authorization Tests
@@ -146,7 +149,7 @@ final class LocationServiceTests: XCTestCase {
         fetcher.locationFetcherDelegate!.locationManagerDidChangeAuthorization(newStatus)
         
         // Then
-        XCTAssertTrue(fetcher.isCallRequestLocation)
+        XCTAssertTrue(fetcher.isCallStartUpdatingLocation)
     }
     
     func test_whenLocationUpdates_shouldStopUpdatingLocation() {
