@@ -12,6 +12,7 @@
 		7F1672E72CEC21AA00C25110 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; };
 		7F1672E82CEC21AA00C25110 /* Swinject-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F1672E62CEC21AA00C25110 /* Swinject-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7F1672F62CEDC3B800C25110 /* DataImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672F52CEDC3B800C25110 /* DataImageView.swift */; };
+		7F16ACC12D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F16ACC02D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift */; };
 		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
 		7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C222CE72AA8001B9CBD /* SettingRouter.swift */; };
 		7F290C272CE843DF001B9CBD /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C262CE843DF001B9CBD /* Routing.swift */; };
@@ -75,8 +76,8 @@
 		7FDFAE662C7C29A100916B7E /* Date+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFAE652C7C29A100916B7E /* Date+Strings.swift */; };
 		7FE1A65B2D3E2DF90051A400 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE1A65A2D3E2DF90051A400 /* DIContainer.swift */; };
 		7FE1A65D2D3E4C720051A400 /* TodayWeatherInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE1A65C2D3E4C720051A400 /* TodayWeatherInteractor.swift */; };
-		7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */; };
 		7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */; };
+		7FE8C62B2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8C62A2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift */; };
 		7FE8DE162D3CB1DD000E6571 /* TodayWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */; };
 		7FE8DE182D3CB208000E6571 /* TodayWeatherRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */; };
 		7FE8DE1A2D3CB215000E6571 /* TodayWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */; };
@@ -134,6 +135,7 @@
 		7F01F4E42BFEEFEB009B78BD /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
 		7F1672E42CEC1DB400C25110 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		7F1672F52CEDC3B800C25110 /* DataImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImageView.swift; sourceTree = "<group>"; };
+		7F16ACC02D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherViewControllerTests.swift; sourceTree = "<group>"; };
 		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
 		7F290C222CE72AA8001B9CBD /* SettingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRouter.swift; sourceTree = "<group>"; };
 		7F290C262CE843DF001B9CBD /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
@@ -202,8 +204,8 @@
 		7FDFAE652C7C29A100916B7E /* Date+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Strings.swift"; sourceTree = "<group>"; };
 		7FE1A65A2D3E2DF90051A400 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7FE1A65C2D3E4C720051A400 /* TodayWeatherInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherInteractor.swift; sourceTree = "<group>"; };
-		7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastYearOutfitGridView.swift; sourceTree = "<group>"; };
 		7FE3BA2A2D13D6FC00918655 /* Date+LastYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+LastYear.swift"; sourceTree = "<group>"; };
+		7FE8C62A2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherOutfitPhotoCell.swift; sourceTree = "<group>"; };
 		7FE8DE152D3CB1DD000E6571 /* TodayWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherViewController.swift; sourceTree = "<group>"; };
 		7FE8DE172D3CB208000E6571 /* TodayWeatherRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherRootView.swift; sourceTree = "<group>"; };
 		7FE8DE192D3CB215000E6571 /* TodayWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherModel.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		7F5E0FBD2D4070BA00BA99DD /* TodayWeatherTests */ = {
 			isa = PBXGroup;
 			children = (
+				7F16ACC02D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift */,
 				7F5E0FBE2D4070F900BA99DD /* TodayWeatherInteractorTests.swift */,
 			);
 			path = TodayWeatherTests;
@@ -400,10 +403,10 @@
 		7F6A0F3E2C520FD30069925C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FE8C62A2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift */,
 				7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */,
 				7F6A0F3B2C520FA40069925C /* RecommendedOutfitPhotoView.swift */,
 				7F1672F52CEDC3B800C25110 /* DataImageView.swift */,
-				7FE3BA242D1145E700918655 /* LastYearOutfitGridView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -808,13 +811,13 @@
 				7FE8DE162D3CB1DD000E6571 /* TodayWeatherViewController.swift in Sources */,
 				7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */,
 				7F8AF6152D505573001B6E63 /* Date+Calculate.swift in Sources */,
-				7FE3BA252D1145E700918655 /* LastYearOutfitGridView.swift in Sources */,
 				7F35116F2C42040A003612F6 /* PhotosService+Predicate.swift in Sources */,
 				7F01F4E52BFEEFEB009B78BD /* WeatherRepository.swift in Sources */,
 				7FE8DE182D3CB208000E6571 /* TodayWeatherRootView.swift in Sources */,
 				7FE3BA2B2D13D6FC00918655 /* Date+LastYear.swift in Sources */,
 				7F6A0F2A2C4CA5B20069925C /* Measurement<UnitTemperature>+Rouded.swift in Sources */,
 				7F3DD5942D2FBCCA00E1A9CC /* DetailsModel.swift in Sources */,
+				7FE8C62B2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
 				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
@@ -857,6 +860,7 @@
 				7F5E0FC42D40809E00BA99DD /* HourlyWeather+Stub.swift in Sources */,
 				7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */,
 				7F929F332C1D5362001F48E7 /* WeatherRepositorySpy.swift in Sources */,
+				7F16ACC12D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift in Sources */,
 				7F5E0FC12D40806800BA99DD /* CurrentlyWeather+Stub.swift in Sources */,
 				7FF8294B2D40E3910076A515 /* PhotosWorkerSpy.swift in Sources */,
 				7F5E0FC62D40857000BA99DD /* DailyWeather+Stub.swift in Sources */,
@@ -1001,6 +1005,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1199,6 +1204,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1236,6 +1242,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

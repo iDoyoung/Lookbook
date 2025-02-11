@@ -10,7 +10,7 @@ final class TodayViewController: ViewController {
     private var model: TodayModel
     
     private var interactor: TodayInteractable
-    private var router: TodayRouter
+    private var router: TodayRouting
     
     // UI
     private var rootView: TodayRootView?
@@ -20,7 +20,7 @@ final class TodayViewController: ViewController {
     init(
         model: TodayModel,
         interactor: TodayInteractable,
-        router: TodayRouter
+        router: TodayRouting
     ) {
         self.model = model
         self.interactor = interactor

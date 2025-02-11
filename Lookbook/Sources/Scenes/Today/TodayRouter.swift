@@ -1,6 +1,11 @@
 import UIKit
 
-final class TodayRouter: Routing {
+protocol TodayRouting {
+    func showDetails(with model: DetailsModel)
+    func showWeather()
+}
+
+final class TodayRouter: TodayRouting {
     
     weak var destination: ViewController?
     var container: DIContainer
