@@ -1,79 +1,76 @@
 import XCTest
 import CoreLocation
+import Testing
 @testable import Lookbook
 
-final class TodayViewControllerTests: XCTestCase {
-
-    // System Under Test
+@MainActor
+struct TodayViewControllerLifeCycleTests {
+    var sut: TodayViewController
+    var model: TodayModel
+    var interactor: MockTodayInteractor
+    var router: MockTodayRouter
     
-    var sut: TodayViewController!
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        mockTodayInteractor = MockTodayInteractor()
-        mockRouter = MockRouter(destinationName: SettingViewController.name)
-        
+    init () {
+        model = TodayModel(locationState: .init())
+        interactor = MockTodayInteractor()
+        router = MockTodayRouter()
         sut = TodayViewController(
-            model: mockModel,
-            interactor: mockTodayInteractor,
-            router: mockRouter
+            model: model,
+            interactor: interactor,
+            router: router
         )
     }
-
-    override func tearDownWithError() throws {
-        sut = nil
-        mockTodayInteractor = nil
-        try super.tearDownWithError()
-    }
     
-    // Test Doubles
-    
-    var mockTodayInteractor: MockTodayInteractor!
-    var mockRouter: MockRouter!
-    var mockModel = TodayModel(locationState: .init())
-    
-    final class MockTodayInteractor: TodayInteractable {
+    @Test("View Did Load시 Interactor 호출")
+    func viewDidLoad() async {
+        // When
+        sut.viewDidLoad()
         
-        var called = false
-        var receivedAction: TodayViewAction?
-        var executeExpectation = XCTestExpectation(description: "Execute called")
-            
-        func execute(action: Lookbook.TodayViewAction, with model: Lookbook.TodayModel) async -> Lookbook.TodayModel {
-            receivedAction = action
-            called = true
-            executeExpectation.fulfill()
-            
-            return model
+        // Then
+        for await _ in interactor.executionFinished {
+            #expect(interactor.called)
+            #expect(interactor.receivedAction == .viewDidLoad)
+            break
         }
     }
-   
-    // Tests
     
-    func test_viewWillAppear_shouldBeCallInteractorWithViewWillAppearAction() async {
-     
-        // given
-        // when
-        await sut.viewWillAppear(false)
+    @Test("View Will Appear시 Interactor 호출")
+    func viewWillAppear() async {
+       // When
+        sut.viewWillAppear(false)
         
-        // then
-        await fulfillment(of: [mockTodayInteractor.executeExpectation])
-        
-        XCTAssertTrue(mockTodayInteractor.called)
-        XCTAssertEqual(TodayViewAction.viewWillAppear, mockTodayInteractor.receivedAction)
+        // Then
+        for await _ in interactor.executionFinished {
+            #expect(interactor.called)
+            #expect(interactor.receivedAction == .viewWillAppear)
+            break
+        }
+    }
+}
+
+final class MockTodayRouter: TodayRouting {
+    var calledShowDetails: Bool = false
+    var calledShowWeather: Bool = false
+    func showDetails(with model: Lookbook.DetailsModel) {
+        calledShowDetails = true
     }
     
-    func test_observeViewModel_shouldBeCallRouterWhenViewModelUpdatedDestinationToSetting() async {
-        
-        // given
-        let destination: TodayModel.Destination = .setting
-        
-        // when
-        await sut.viewDidLoad()
-        mockModel.destination = destination
-        await fulfillment(of: [mockRouter.routerExpectation], timeout: 1)
-        
-        // then
-        
-        XCTAssertTrue(mockRouter.calledPush)
+    func showWeather() {
+        calledShowWeather = true
+    }
+}
+
+final class MockTodayInteractor: TodayInteractable {
+    var called = false
+    var receivedAction: TodayViewAction?
+    
+    private let continuation = AsyncStream<Void>.makeStream()
+    var executionFinished: AsyncStream<Void> { continuation.stream }
+    
+    func execute(action: TodayViewAction, with model: TodayModel) async -> TodayModel {
+        receivedAction = action
+        called = true
+        continuation.continuation.yield()
+        return model
     }
 }
