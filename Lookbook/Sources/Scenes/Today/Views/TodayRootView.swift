@@ -205,7 +205,7 @@ struct TodayRootView: View {
             
             Image(systemName: "chevron.right")
                 .resizable()
-                .foregroundStyle(Color(uiColor: .systemBackground).opacity(0.8))
+                .foregroundStyle(Color(uiColor: .white).opacity(0.8))
                 .fontWeight(.medium)
                 .frame(
                     width: 8,
@@ -214,7 +214,7 @@ struct TodayRootView: View {
                 .padding(.leading)
         }
         .padding(.horizontal)
-        .background(Rectangle())
+        .background(.black)
         .contentShape(Rectangle())
         .onTapGesture {
             model.destination = .todayWeather
