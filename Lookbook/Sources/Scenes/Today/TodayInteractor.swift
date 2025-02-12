@@ -7,7 +7,7 @@ import WeatherKit
 import FirebaseAnalytics
 
 enum TodayViewAction {
-    case viewDidLoad, viewWillAppear, requestWeather
+    case viewDidLoad, viewWillAppear, updateWeather
 }
                               
 protocol TodayInteractable: AnyObject {
@@ -43,56 +43,59 @@ final class TodayInteractor: TodayInteractable {
             locationService.requestLocation()
             model.photosState = await model.photosState
                 .authorizationStatus(photosWorker.requestAuthorizationStatus())
-                .assets(
-                    photosWorker.fetchPhotosAssets(
-                        startDate: model.dateRange.start,
-                        endDate: model.dateRange.end
-                    )
-                )
             
         case .viewWillAppear:
             break
             
-        case .requestWeather:
+        case .updateWeather:
             if let location = model.locationState.location {
-                do {
-                    try await weatherRepository.requestWeather(for: location)
-                    await model.locationName = locationService.state.name(location)
-                    model.weather = weatherRepository[location]
-                    
-                    if model.photosState.authorizationStatus == .authorized || model.photosState.authorizationStatus == .limited {
-                        try await weatherRepository.requestWeathr(
-                            for: location,
-                            startDate: model.dateRange.start,
-                            endDate: model.dateRange.end
-                        )
-                        
-                        guard let todayAverageTemperature = model.weather?.averageTemperature else {
-                            model.lastYearWeathers = weatherRepository[location]
-                            return model
-                        }
-                        
-                        model.lastYearWeathers = weatherRepository[location]?
-                            .sorted {
-                                let difference0 = abs(todayAverageTemperature.value - $0.averageTemperature.value)
-                                let difference1 = abs(todayAverageTemperature.value - $1.averageTemperature.value)
-                                return difference0 < difference1
-                            }
-                    }
-                } catch {
-                    logger.error("Apple Weather 요청 실패\n다음 에러: \(error)")
-                    let parameters = [
-                        "message": error.localizedDescription,
-                        "file": #file,
-                        "function": #function
-                    ]
-                    Analytics.logEvent("Interacting Error", parameters: parameters)
-                }
+                await requestWeather(at: location)
+                await reqeustWeather(at: location, dateRange: model.dateRange)
+                model.weather = weatherRepository[location]
+                model.lastYearWeathers = weatherRepository[location]
+                let assets = await photosWorker.fetchPhotosAssets(
+                    startDate: model.dateRange.start,
+                    endDate: model.dateRange.end
+                )
+                model.photosState = model.photosState
+                    .assets(assets)
             } else {
                 logger.log("updatedCurrentLocation 실패, locationState.location: \(String(describing:  model.locationState.location)) ")
             }
         }
         
         return model
+    }
+    
+    private func requestWeather(at location: CLLocation) async {
+        do {
+            try await weatherRepository.requestWeather(for: location)
+        } catch {
+            logger.error("날씨 요청 에러: \(error)")
+            let parameters = [
+                "message": error.localizedDescription,
+                "file": #file,
+                "function": #function
+            ]
+            Analytics.logEvent("Weather_Request_Error", parameters: parameters)
+        }
+    }
+    
+    private func reqeustWeather(at location: CLLocation, dateRange: (start: Date, end: Date)) async {
+        do {
+            try await weatherRepository.requestWeathr(
+                for: location,
+                startDate: dateRange.start,
+                endDate: dateRange.end
+            )
+        } catch {
+            logger.error("Apple Weather 과거 날씨 요청 실패\n다음 에러: \(error)")
+            let parameters = [
+                "message": error.localizedDescription,
+                "file": #file,
+                "function": #function
+            ]
+            Analytics.logEvent("Interacting Error", parameters: parameters)
+        }
     }
 }

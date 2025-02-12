@@ -1,4 +1,5 @@
 import XCTest
+import Testing
 import CoreLocation
 import WeatherKit
 import Photos
@@ -46,22 +47,7 @@ class TodayInteractorTests: XCTestCase {
         XCTAssertTrue(locationServiceSpy.requestAuthorizationCalled)
         XCTAssertTrue(locationServiceSpy.requestLocationCalled)
     }
-    
 
-    func test_execute_viewDidLoad_shouldUpdatePhotosState() async {
-        // Given
-        let model = TodayModel(locationState: locationServiceSpy.state)
-        
-        photosWorkerSpy.authorizationStatus = .authorized
-        
-        // When
-        let updatedModel = await sut.execute(action: .viewDidLoad, with: model)
-        
-        // Then
-        XCTAssertEqual(updatedModel.photosState.authorizationStatus?.rawValue, PHAuthorizationStatus.authorized.rawValue)
-        XCTAssertTrue(photosWorkerSpy.fetchPhotosAssetsCalled)
-    }
-    
     func test_execute_requestWeather_withValidLocation_shouldUpdateWeatherAndLocationName() async {
         // Given
         let mockLocation = CLLocation(latitude: 37.5665, longitude: 126.9780)
@@ -69,7 +55,7 @@ class TodayInteractorTests: XCTestCase {
         let model = TodayModel(locationState: locationServiceSpy.state)
        
         //  When
-        let updatedModel = await sut.execute(action: .requestWeather, with: model)
+        let updatedModel = await sut.execute(action: .updateWeather, with: model)
         
         // Then
         XCTAssertTrue(weatherRepositorySpy.calledRequestWeather)
@@ -80,10 +66,33 @@ class TodayInteractorTests: XCTestCase {
         let model = TodayModel(locationState: locationServiceSpy.state)
         
         // When
-        let updatedModel = await sut.execute(action: .requestWeather, with: model)
+        let updatedModel = await sut.execute(action: .updateWeather, with: model)
         
         // Then
         XCTAssertNil(updatedModel.weather)
         XCTAssertFalse(weatherRepositorySpy.calledRequestWeather)
     }
+    
+}
+   
+@Test("Update Weather시 Photos Worker 호출")
+func updateWeather() async {
+    // Given
+    let weatherRepositorySpy = WeatherRepositorySpy()
+    let photosWorkerSpy = PhotosWorkerSpy()
+    let locationServiceSpy = LocationServiceSpy()
+    locationServiceSpy.state.location = .newYork
+    let model = TodayModel(locationState: locationServiceSpy.state)
+    
+    let sut = TodayInteractor(
+        photosWorker: photosWorkerSpy,
+        weatherRepository: weatherRepositorySpy,
+        locationService: locationServiceSpy
+    )
+    
+    // When
+    let expected = await sut.execute(action: .updateWeather, with: model)
+    
+    // Then
+    #expect(photosWorkerSpy.fetchPhotosAssetsCalled)
 }

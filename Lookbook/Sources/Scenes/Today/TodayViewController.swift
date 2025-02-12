@@ -103,7 +103,7 @@ final class TodayViewController: ViewController {
         } onChange: { [weak self] in
             Task { @MainActor in
                 guard let self else { return }
-                self.model = await self.interactor.execute(action: .requestWeather, with: self.model)
+                self.model = await self.interactor.execute(action: .updateWeather, with: self.model)
                 self.observeCurrentLocationTracking()
             }
         }
