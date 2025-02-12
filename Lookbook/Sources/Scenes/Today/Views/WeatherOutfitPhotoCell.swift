@@ -30,17 +30,22 @@ struct WeatherOutfitPhotoCell: View {
                     
                     Spacer()
                     
-                    if let highTemperature = weather.dayTimeMaximumTemperature,
-                       let lowTemperature = weather.dayTimeMinimumTemperature {
+                    HStack {
+                        Spacer()
+                        
                         HStack {
-                            Text(highTemperature.rounded)
+                            Text(weather.maximumTemperature.rounded)
                                 .fontWeight(.bold)
                                 .foregroundStyle(.white)
-                            Text(lowTemperature.rounded)
+                            
+                            Text(weather.minimumTemperature.rounded)
                                 .fontWeight(.thin)
                                 .foregroundStyle(.white)
                         }
+                        .padding(3)
                         .background(.ultraThinMaterial)
+                        .cornerRadius(4)
+                        .padding(2)
                     }
                 }
                 .frame(maxWidth: .infinity)
