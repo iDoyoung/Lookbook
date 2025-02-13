@@ -21,7 +21,7 @@ final class TodayModel {
     
     // States
     var destination: Destination? = nil
-   
+    var isLoading: Bool = false
     var locationState: LocationServiceState
     var photosState: PhotosState
     
@@ -120,22 +120,21 @@ final class TodayModel {
         "체감 온도:" + (weather?.current?.feelTemperature.converted(to: unitTemperature).rounded ?? "--")
     }
    
-    var weatherOutfitPhotoItems: [WeatherOutfitPhoto] = []
-//    {
-//        return photosState.assets?.compactMap { asset in
-//            let filterdWeather = lastYearWeathers?
-//                .filter { weather in
-//                    guard let assetCreateDate = asset.creationDate else { return false }
-//                    return weather.date.dateOnly == assetCreateDate.dateOnly
-//                }
-//                .first
-//            
-//            return WeatherOutfitPhoto(
-//                asset: asset,
-//                weather: filterdWeather
-//            )
-//        } ?? []
-//    }
+    var weatherOutfitPhotoItems: [WeatherOutfitPhoto] {
+        return photosState.assets?.compactMap { asset in
+            let filterdWeather = lastYearWeathers?
+                .filter { weather in
+                    guard let assetCreateDate = asset.creationDate else { return false }
+                    return weather.date.dateOnly == assetCreateDate.dateOnly
+                }
+                .first
+            
+            return WeatherOutfitPhoto(
+                asset: asset,
+                weather: filterdWeather
+            )
+        } ?? []
+    }
     
     init(
         locationState: LocationServiceState,
