@@ -51,6 +51,7 @@
 		7F6A0F402C5344150069925C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */; };
 		7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6A0F4C2C538E630069925C /* GoogleAdBannerViewController.swift */; };
 		7F70632B2CD1FA5F0025CEE3 /* CLLocation+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70632A2CD1FA5F0025CEE3 /* CLLocation+Name.swift */; };
+		7F792C092D5F332F00B27D25 /* OutfitV1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7F792C082D5F332F00B27D25 /* OutfitV1.mlmodel */; };
 		7F8AF6152D505573001B6E63 /* Date+Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AF6142D505573001B6E63 /* Date+Calculate.swift */; };
 		7F8AF6182D5066C9001B6E63 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8AF6172D5066C9001B6E63 /* FirebaseAnalytics */; };
 		7F8AF61A2D51CACF001B6E63 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7F8AF6192D51CACF001B6E63 /* InfoPlist.xcstrings */; };
@@ -61,7 +62,6 @@
 		7FA27BDE2BECDB5A00BDB1A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA27BDD2BECDB5A00BDB1A9 /* Assets.xcassets */; };
 		7FA27BE12BECDB5A00BDB1A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FA27BDF2BECDB5A00BDB1A9 /* LaunchScreen.storyboard */; };
 		7FA623F82C995E3A0090E282 /* LocationServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA623F72C995E3A0090E282 /* LocationServiceState.swift */; };
-		7FB11E412C5888D000A47321 /* OutfitV1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 7FB11E402C5888D000A47321 /* OutfitV1.mlmodel */; };
 		7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2D7E62BF483EC001BA4FB /* PhotosService.swift */; };
 		7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2D7EF2BF6F771001BA4FB /* OutfitImagePredictor.swift */; };
 		7FB5C2A62C3252A20061C763 /* PhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C2A52C3252A20061C763 /* PhotosServiceTests.swift */; };
@@ -173,6 +173,7 @@
 		7F6A0F452C5372DA0069925C /* DEVELOP.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEVELOP.xcconfig; sourceTree = "<group>"; };
 		7F6A0F4C2C538E630069925C /* GoogleAdBannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAdBannerViewController.swift; sourceTree = "<group>"; };
 		7F70632A2CD1FA5F0025CEE3 /* CLLocation+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+Name.swift"; sourceTree = "<group>"; };
+		7F792C082D5F332F00B27D25 /* OutfitV1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = OutfitV1.mlmodel; sourceTree = "<group>"; };
 		7F8AF6142D505573001B6E63 /* Date+Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Calculate.swift"; sourceTree = "<group>"; };
 		7F8AF6192D51CACF001B6E63 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		7F929F322C1D5362001F48E7 /* WeatherRepositorySpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepositorySpy.swift; sourceTree = "<group>"; };
@@ -186,7 +187,6 @@
 		7FA27BE72BECDB5B00BDB1A9 /* LookbookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookbookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA27BF12BECDB5B00BDB1A9 /* LookbookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookbookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA623F72C995E3A0090E282 /* LocationServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceState.swift; sourceTree = "<group>"; };
-		7FB11E402C5888D000A47321 /* OutfitV1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = OutfitV1.mlmodel; path = ../../../../../../../../ML/OutfitV1.mlmodel; sourceTree = "<group>"; };
 		7FB2D7E62BF483EC001BA4FB /* PhotosService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosService.swift; sourceTree = "<group>"; };
 		7FB2D7EF2BF6F771001BA4FB /* OutfitImagePredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitImagePredictor.swift; sourceTree = "<group>"; };
 		7FB2D7F22BF85972001BA4FB /* Lookbook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lookbook.entitlements; sourceTree = "<group>"; };
@@ -570,7 +570,7 @@
 		7FB2D7E12BF46BF8001BA4FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7FB11E402C5888D000A47321 /* OutfitV1.mlmodel */,
+				7F792C082D5F332F00B27D25 /* OutfitV1.mlmodel */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -785,6 +785,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */,
+				7F792C092D5F332F00B27D25 /* OutfitV1.mlmodel in Sources */,
 				7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */,
 				7F3B76862C0D6F9C001ECDDB /* PhotosAuthStatus.swift in Sources */,
 				7F6A0F262C4CA5270069925C /* HourlyWeather.swift in Sources */,
@@ -829,7 +830,6 @@
 				7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */,
 				7F457B682CA29EC100F485D1 /* LocationFetcher.swift in Sources */,
 				7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */,
-				7FB11E412C5888D000A47321 /* OutfitV1.mlmodel in Sources */,
 				7F6A0F372C520F540069925C /* TodayViewController.swift in Sources */,
 				7F5103422D226667001E5F4B /* Date+Style.swift in Sources */,
 				7F3DD5922D2FBCA200E1A9CC /* DetailsRootView.swift in Sources */,
