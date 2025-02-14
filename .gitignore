@@ -93,3 +93,6 @@ DerivedData/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 !*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Pacjage.resolved
+
+# Core ML
+*.mlmodel
