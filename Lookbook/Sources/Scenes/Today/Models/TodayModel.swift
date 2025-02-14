@@ -136,6 +136,13 @@ final class TodayModel {
         } ?? []
     }
     
+    /// 금일 시간별 날씨 정보
+    var todayForcast: [TodayForecast]? {
+        return weather?.hourlyForecast?.compactMap({ weather in
+            TodayForecast(hourlyWeather: weather, unit: unitTemperature)
+        })
+    }
+    
     init(
         locationState: LocationServiceState,
         photosState: PhotosState = .init()
