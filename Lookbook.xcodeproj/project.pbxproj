@@ -14,7 +14,6 @@
 		7F1672F62CEDC3B800C25110 /* DataImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1672F52CEDC3B800C25110 /* DataImageView.swift */; };
 		7F16ACC12D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F16ACC02D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift */; };
 		7F290C1B2CE59EC4001B9CBD /* TodayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */; };
-		7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C222CE72AA8001B9CBD /* SettingRouter.swift */; };
 		7F290C272CE843DF001B9CBD /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F290C262CE843DF001B9CBD /* Routing.swift */; };
 		7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075132C5CB359006FF502 /* UserSetting.swift */; };
 		7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3075152C5DB48D006FF502 /* TodayForecast.swift */; };
@@ -36,8 +35,6 @@
 		7F5E0FC12D40806800BA99DD /* CurrentlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */; };
 		7F5E0FC42D40809E00BA99DD /* HourlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */; };
 		7F5E0FC62D40857000BA99DD /* DailyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC52D40857000BA99DD /* DailyWeather+Stub.swift */; };
-		7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */; };
-		7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6020922C59E23D001C8D26 /* SettingRootView.swift */; };
 		7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */; };
 		7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6341862C86BF2400839E0E /* TodayInteractor.swift */; };
 		7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6936752CC2465800106C27 /* TodayInteractorTests.swift */; };
@@ -134,7 +131,6 @@
 		7F1672F52CEDC3B800C25110 /* DataImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImageView.swift; sourceTree = "<group>"; };
 		7F16ACC02D5B18DF00264BB6 /* TodayWeatherViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherViewControllerTests.swift; sourceTree = "<group>"; };
 		7F290C1A2CE59EC4001B9CBD /* TodayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRouter.swift; sourceTree = "<group>"; };
-		7F290C222CE72AA8001B9CBD /* SettingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRouter.swift; sourceTree = "<group>"; };
 		7F290C262CE843DF001B9CBD /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
 		7F3075132C5CB359006FF502 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		7F3075152C5DB48D006FF502 /* TodayForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecast.swift; sourceTree = "<group>"; };
@@ -156,8 +152,6 @@
 		7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentlyWeather+Stub.swift"; sourceTree = "<group>"; };
 		7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HourlyWeather+Stub.swift"; sourceTree = "<group>"; };
 		7F5E0FC52D40857000BA99DD /* DailyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeather+Stub.swift"; sourceTree = "<group>"; };
-		7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		7F6020922C59E23D001C8D26 /* SettingRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRootView.swift; sourceTree = "<group>"; };
 		7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManger+LocationFetcherDelegate.swift"; sourceTree = "<group>"; };
 		7F6341862C86BF2400839E0E /* TodayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayInteractor.swift; sourceTree = "<group>"; };
 		7F6936752CC2465800106C27 /* TodayInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayInteractorTests.swift; sourceTree = "<group>"; };
@@ -325,24 +319,6 @@
 			path = Stubs;
 			sourceTree = "<group>";
 		};
-		7F60208D2C58B8C0001C8D26 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				7F6020912C59E22C001C8D26 /* Views */,
-				7F60208E2C58B8DE001C8D26 /* SettingViewController.swift */,
-				7F290C222CE72AA8001B9CBD /* SettingRouter.swift */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
-		7F6020912C59E22C001C8D26 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				7F6020922C59E23D001C8D26 /* SettingRootView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		7F6A0F332C520F2B0069925C /* Today */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,7 +340,6 @@
 				7F6A0F332C520F2B0069925C /* Today */,
 				7FE8DE142D3CB1C1000E6571 /* TodayWeather */,
 				7F3DD5902D2FBC8D00E1A9CC /* Details */,
-				7F60208D2C58B8C0001C8D26 /* Setting */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -789,7 +764,6 @@
 				7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */,
 				7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */,
 				7F6A0F282C4CA5720069925C /* DailyWeather.swift in Sources */,
-				7F60208F2C58B8DE001C8D26 /* SettingViewController.swift in Sources */,
 				7F3075142C5CB359006FF502 /* UserSetting.swift in Sources */,
 				7F6A0F4D2C538E630069925C /* GoogleAdBannerViewController.swift in Sources */,
 				7F3DD59A2D312F6300E1A9CC /* DetailsRouter.swift in Sources */,
@@ -811,7 +785,6 @@
 				7FE8C62B2D55C61900C4AB5F /* WeatherOutfitPhotoCell.swift in Sources */,
 				7FA27BD52BECDB5900BDB1A9 /* AppDelegate.swift in Sources */,
 				7FEA55A72C100812008F7B4A /* LocationAuthStatus.swift in Sources */,
-				7F290C232CE72AA8001B9CBD /* SettingRouter.swift in Sources */,
 				7FF829502D40F9130076A515 /* CLLocation+Place.swift in Sources */,
 				7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */,
 				7FE1A65B2D3E2DF90051A400 /* DIContainer.swift in Sources */,
@@ -819,7 +792,6 @@
 				7FB2D7E72BF483EC001BA4FB /* PhotosService.swift in Sources */,
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
 				7FDFAE662C7C29A100916B7E /* Date+Strings.swift in Sources */,
-				7F6020932C59E23D001C8D26 /* SettingRootView.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* RecommendedOutfitPhotoView.swift in Sources */,
 				7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
