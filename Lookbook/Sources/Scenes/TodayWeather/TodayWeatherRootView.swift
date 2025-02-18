@@ -130,8 +130,11 @@ struct TodayWeatherRootView: View {
             .padding(.horizontal)
             
             Spacer()
+            
+            appleWeatherLabel
+                .padding(.bottom)
         }
-        .padding([.vertical])
+        .padding(.vertical)
         .background(.thinMaterial)
         .padding(.bottom)
     }
@@ -219,6 +222,41 @@ struct TodayWeatherRootView: View {
                     openSetting()
                 }
         }
+    }
+    
+    
+    private var appleWeatherLabel: some View {
+        HStack {
+            VStack {
+                HStack {
+                    Image(systemName: "apple.logo")
+                        .font(
+                            .system(
+                                size: 32))
+                    Text("Weather")
+                        .font(
+                            .system(
+                                size: 40))
+                }
+                .padding(.bottom, 8)
+                
+                Text("Other Apple Weather data Sources")
+                    .font(
+                        .system(
+                            size: 12,
+                            weight: .light
+                        )
+                    )
+                    .foregroundStyle(.blue)
+            }
+            .padding()
+            .onTapGesture {
+                if let url = URL(string: "https://developer.apple.com/weatherkit/data-source-attribution/") {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
     
     private func openSetting() {

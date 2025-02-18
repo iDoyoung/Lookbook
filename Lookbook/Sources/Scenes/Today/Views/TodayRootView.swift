@@ -13,127 +13,110 @@ struct TodayRootView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            ScrollView {
-                LazyVStack {
-                    //TODO: 가독성 향상
-                    VStack(alignment: .leading) {
-                        switch model.photosState.authorizationStatus {
-                        case .authorized:
-                            Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
-                                .font(.caption2)
-                                .padding(.top)
-                                .padding(.bottom, 4)
-                        case .limited:
-                            Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?\n(설정을 업데이트하여 더 많은 사진을 가져와 보세요.)")
-                                .font(.caption2)
-                                .padding(.top)
-                                .padding(.bottom, 4)
-                            
-                        case .restricted, .denied:
-                            HStack(alignment: .center) {
-                                Text("⚠️")
-                                Text("사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+            VStack {
+                ScrollView {
+                    LazyVStack {
+                        //TODO: 가독성 향상
+                        VStack(alignment: .leading) {
+                            switch model.photosState.authorizationStatus {
+                            case .authorized:
+                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
                                     .font(.caption2)
-                                    .fontWeight(.bold)
-                            }
-                            .padding(.top)
-                            .padding(.bottom, 4)
-                        default:
-                            EmptyView()
-                        }
-                        
-                        if let asset = model.recommendedPHAsset {
-                            RecommendedOutfitPhotoView(
-                                asset: asset,
-                                date: model.lastYearSimilarWeather?.date,
-                                highTemperature: model.lastYearSimilarWeather?.maximumTemperature.rounded,
-                                lowTemperature: model.lastYearSimilarWeather?.minimumTemperature.rounded
-                            )
-                            .border(Color(uiColor: .label))
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                model.destination = .details(model: DetailsModel(asset: asset))
+                                    .padding(.top)
+                                    .padding(.bottom, 4)
+                            case .limited:
+                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?\n(설정을 업데이트하여 더 많은 사진을 가져와 보세요.)")
+                                    .font(.caption2)
+                                    .padding(.top)
+                                    .padding(.bottom, 4)
+                                
+                            case .restricted, .denied:
+                                HStack(alignment: .center) {
+                                    Text("⚠️")
+                                    Text("사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                }
+                                .padding(.top)
+                                .padding(.bottom, 4)
+                            default:
+                                EmptyView()
                             }
                             
-                        } else {
-                            // TODO: 사진이 없는 경우 UI 구현
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
-                                    .aspectRatio(3/4, contentMode: .fit)
-                                if model.weatherOutfitPhotoItems.isEmpty && model.isLoading == false {
-                                    Text("작년 이맘때의 옷차림 사진을 찾을 수 없습니다.\n추천을 받기 위해서는 여러분의 사진에 옷차림 사진이 있어야 해요!")
-                                        .font(.footnote)
-                                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                            if let asset = model.recommendedPHAsset {
+                                RecommendedOutfitPhotoView(
+                                    asset: asset,
+                                    date: model.lastYearSimilarWeather?.date,
+                                    highTemperature: model.lastYearSimilarWeather?.maximumTemperature.rounded,
+                                    lowTemperature: model.lastYearSimilarWeather?.minimumTemperature.rounded
+                                )
+                                .border(Color(uiColor: .label))
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    model.destination = .details(model: DetailsModel(asset: asset))
+                                }
+                                
+                            } else {
+                                // TODO: 사진이 없는 경우 UI 구현
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
+                                        .aspectRatio(3/4, contentMode: .fit)
+                                    if model.weatherOutfitPhotoItems.isEmpty && model.isLoading == false {
+                                        Text("작년 이맘때의 옷차림 사진을 찾을 수 없습니다.\n추천을 받기 위해서는 여러분의 사진에 옷차림 사진이 있어야 해요!")
+                                            .font(.footnote)
+                                            .foregroundStyle(Color(uiColor: .secondaryLabel))
+                                    }
                                 }
                             }
                         }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .debugBorder()
-                    
-                    Divider()
-                        .padding(.horizontal)
-                        .padding(.bottom, 4)
-                    
-                    Text("\(model.dateRange.start.longStyle)~\(model.dateRange.end.longStyle)")
-                        .font(
-                            .system(
-                                size: 16,
-                                weight: .medium,
-                                design: .monospaced))
-                        .frame(
-                            maxWidth: .infinity,
-                            alignment: .leading
-                        )
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
                         .debugBorder()
-                    
-                    LazyVGrid(columns: columns, spacing: 1) {
-                        ForEach(model.weatherOutfitPhotoItems, id: \.id) { photo in
-                            WeatherOutfitPhotoCell(item: photo)
-                                .onTapGesture {
-                                    model.destination = .details(
-                                        model: DetailsModel(
-                                            asset: photo.asset,
-                                            weather: photo.weather
-                                        )
-                                    )
-                                }
-                        }
-                    }
-                    .padding(.bottom)
-                    
-                    Text("Look Weather 의 날씨 예보는 아래로부터 제공받은 데이터 소스를 기반으로 합니다.")
-                        .font(
-                            .system(
-                                size: 12,
-                                weight: .light
+                        
+                        Divider()
+                            .padding(.horizontal)
+                            .padding(.bottom, 4)
+                        
+                        Text("\(model.dateRange.start.longStyle)~\(model.dateRange.end.longStyle)")
+                            .font(
+                                .system(
+                                    size: 16,
+                                    weight: .medium,
+                                    design: .monospaced))
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
                             )
-                        )
-                        .frame(
-                            maxWidth: .infinity,
-                            alignment: .leading
-                        )
-                        .padding([.vertical, .leading])
-                        .padding(.top, 60)
-                    
-                    HStack {
-                        appleWeatherLabel
-                        Spacer()
+                            .padding(.horizontal)
+                            .debugBorder()
+                        
+                        LazyVGrid(columns: columns, spacing: 1) {
+                            ForEach(model.weatherOutfitPhotoItems, id: \.id) { photo in
+                                WeatherOutfitPhotoCell(item: photo)
+                                    .onTapGesture {
+                                        model.destination = .details(
+                                            model: DetailsModel(
+                                                asset: photo.asset,
+                                                weather: photo.weather
+                                            )
+                                        )
+                                    }
+                            }
+                        }
+                        .padding(.bottom, 200)
                     }
+                    .debugBorder()
                 }
+                .scrollIndicators(.hidden)
+                .onScrollPhaseChange { oldPhase, newPhase, context in
+                    isShowWeatherDetails = false
+                    lastOffset = context.geometry.contentOffset.y
+                }
+                .frame(maxWidth: .infinity)
                 .debugBorder()
+                Spacer()
             }
-            .scrollIndicators(.hidden)
-            .onScrollPhaseChange { oldPhase, newPhase, context in
-                isShowWeatherDetails = false
-                lastOffset = context.geometry.contentOffset.y
-            }
-            .frame(maxWidth: .infinity)
-            .background()
-            .debugBorder()
             
             todayWeatherView
                 .background(.regularMaterial)
@@ -142,6 +125,7 @@ struct TodayRootView: View {
                 .padding(.horizontal, 12)
         }
         .frame(maxWidth: .infinity)
+        .background()
     }
     
     //MARK: - Today Weather View
@@ -211,37 +195,6 @@ struct TodayRootView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             model.destination = .todayWeather
-        }
-    }
-    
-    private var appleWeatherLabel: some View {
-        VStack {
-            HStack {
-                Image(systemName: "apple.logo")
-                    .font(
-                        .system(
-                            size: 24))
-                Text("Weather")
-                    .font(
-                        .system(
-                            size: 32))
-            }
-            .padding(.bottom, 8)
-            
-            Text("Other Apple Weather data Sources")
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .light
-                    )
-                )
-                .foregroundStyle(.blue)
-        }
-        .padding()
-        .onTapGesture {
-            if let url = URL(string: "https://developer.apple.com/weatherkit/data-source-attribution/") {
-                UIApplication.shared.open(url)
-            }
         }
     }
 }
