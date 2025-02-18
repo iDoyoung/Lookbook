@@ -41,8 +41,22 @@ final class TodayModel {
     // MARK: - Weather 모델 리펙토링하기
     var weather: CurrentlyWeather? = nil
     
-    /// 작년 이맘때, 20일 간 날씨
+    /// 작년 이맘때 3개월의 날씨
     var lastYearWeathers: [DailyWeather]? = nil
+    var sortedAveragedWeathers: [DailyWeather] {
+        lastYearWeathers?.sorted { first, second in
+            // 현재 날씨의 평균 기온이 nil인 경우 처리
+            guard let currentTemp = weather?.averageTemperature else {
+                return false
+            }
+            
+            // 각 날씨와 현재 기온과의 차이 계산 (절대값)
+            let firstDiff = abs(first.averageTemperature.value - currentTemp.value)
+            let secondDiff = abs(second.averageTemperature.value - currentTemp.value)
+            
+            return firstDiff < secondDiff
+        } ?? []
+    }
     
     //TODO: Refactor - 날씨관련 프로퍼티 수정필요
     
@@ -55,13 +69,13 @@ final class TodayModel {
     
     /// 작년 사진과 날씨를 비교해 비슷한 날짜 구하기
     var lastYearSimilarWeather: DailyWeather? {
-        if let lastYearWeathers,
-           lastYearWeathers.isEmpty == false {
+        if sortedAveragedWeathers.isEmpty == false {
             guard let photosCreateDates = photosState.assets?.compactMap({ $0.creationDate?.dateOnly }) else {
-                return lastYearWeathers.first ?? nil
+                return sortedAveragedWeathers.first ?? nil
             }
             
-            return lastYearWeathers.first { weather in
+            return sortedAveragedWeathers
+                .first { weather in
                 let date = weather.date
                 return photosCreateDates.contains(date)
             }
@@ -121,19 +135,19 @@ final class TodayModel {
     }
    
     var weatherOutfitPhotoItems: [WeatherOutfitPhoto] {
-        return photosState.assets?.compactMap { asset in
-            let filterdWeather = lastYearWeathers?
-                .filter { weather in
-                    guard let assetCreateDate = asset.creationDate else { return false }
-                    return weather.date.dateOnly == assetCreateDate.dateOnly
-                }
-                .first
+        return sortedAveragedWeathers.flatMap { weather in
+            let matchingAssets = photosState.assets?.filter { asset in
+                guard let assetCreateDate = asset.creationDate else { return false }
+                return weather.date.dateOnly == assetCreateDate.dateOnly
+            } ?? []
             
-            return WeatherOutfitPhoto(
-                asset: asset,
-                weather: filterdWeather
-            )
-        } ?? []
+            return matchingAssets.map { asset in
+                WeatherOutfitPhoto(
+                    asset: asset,
+                    weather: weather
+                )
+            }
+        }
     }
     
     /// 금일 시간별 날씨 정보

@@ -67,7 +67,6 @@
 		7FB5C2A62C3252A20061C763 /* PhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C2A52C3252A20061C763 /* PhotosServiceTests.swift */; };
 		7FB673C92C44B28C009DFDB8 /* PhotosWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673C82C44B28C009DFDB8 /* PhotosWorker.swift */; };
 		7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */; };
-		7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 7FC02EB42BFB063700217CAE /* sample_image.JPG */; };
 		7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */; };
 		7FC7B9DB2C003B0B00558C51 /* CoreLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */; };
 		7FC95D172C952B0D00276FD6 /* LocationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */; };
@@ -193,7 +192,6 @@
 		7FB5C2A52C3252A20061C763 /* PhotosServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosServiceTests.swift; sourceTree = "<group>"; };
 		7FB673C82C44B28C009DFDB8 /* PhotosWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosWorker.swift; sourceTree = "<group>"; };
 		7FB673CD2C46AED9009DFDB8 /* OutfitPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitPhoto.swift; sourceTree = "<group>"; };
-		7FC02EB42BFB063700217CAE /* sample_image.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_image.JPG; sourceTree = "<group>"; };
 		7FC758792C5B3C2F0080D523 /* UserDefault+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Wrapper.swift"; sourceTree = "<group>"; };
 		7FC7B9DA2C003B0B00558C51 /* CoreLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationService.swift; sourceTree = "<group>"; };
 		7FC95D162C952B0D00276FD6 /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
@@ -580,7 +578,6 @@
 			children = (
 				7FA27BDD2BECDB5A00BDB1A9 /* Assets.xcassets */,
 				7F6A0F3F2C5344150069925C /* GoogleService-Info.plist */,
-				7FC02EB42BFB063700217CAE /* sample_image.JPG */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -758,7 +755,6 @@
 				7FA27BE12BECDB5A00BDB1A9 /* LaunchScreen.storyboard in Resources */,
 				7F8AF61A2D51CACF001B6E63 /* InfoPlist.xcstrings in Resources */,
 				7F6A0F402C5344150069925C /* GoogleService-Info.plist in Resources */,
-				7FC02EB52BFB063700217CAE /* sample_image.JPG in Resources */,
 				7FA27BDE2BECDB5A00BDB1A9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
