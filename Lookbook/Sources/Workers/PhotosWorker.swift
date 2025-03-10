@@ -36,24 +36,45 @@ final class PhotosWorker: PhotosWorking {
             .fetchResult(
                 mediaType: .image,
                 albumType: nil,
-                dateRange: (startDate, endDate)
+                dateRange: nil
             )
             .assets
-        
+
         var photoAssets = [PHAsset]()
+
+        let batchSize = 50
+        let totalCount = fetchedAssets.count
         
-        for index in 0..<fetchedAssets.count {
-            let asset = fetchedAssets[index]
-            let data = await asset.data()
-            
-            self.predictor.makePredictions(for: data) { isOutfitPhoto in
-                if isOutfitPhoto {
-                    photoAssets.append(asset)
+        for batchStartIndex in stride(from: 0, to: totalCount, by: batchSize) {
+            await withTaskGroup(of: PHAsset?.self) { group in
+                let batchEndIndex = min(batchStartIndex + batchSize, totalCount)
+                for index in batchStartIndex..<batchEndIndex {
+                    let asset = fetchedAssets[index]
+                    
+                    group.addTask {
+                        self.logger.debug("Start Task: \(index)")
+                        let data = await asset.data()
+                        
+                        do {
+                            let result = try await self.predictor.makePredictions(for: data)
+                            self.logger.debug("Complete Task: \(index), result: \(result)")
+                            
+                            return result ? asset : nil
+                        } catch {
+                            return nil
+                        }
+                    }
+                }
+                
+                for await result in group {
+                    if let asset = result {
+                        photoAssets.append(asset)
+                    }
                 }
             }
         }
-        
-        logger.log("Get \(photoAssets.count) PHAssets")
+
+        logger.debug("Get \(photoAssets.count) PHAssets")
         return photoAssets
     }
 }
