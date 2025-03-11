@@ -8,6 +8,7 @@ struct TodayRootView: View {
     @State private var isShowWeatherDetails: Bool = false
     
     @State private var lastOffset: CGFloat = 0.0
+    @State private var blurRadius: CGFloat = 30
     
     let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 1), count: 3)
     
@@ -18,29 +19,33 @@ struct TodayRootView: View {
                     LazyVStack {
                         //TODO: 가독성 향상
                         VStack(alignment: .leading) {
-                            switch model.photosState.authorizationStatus {
-                            case .authorized:
-                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
-                                    .font(.caption2)
-                                    .padding(.top)
-                                    .padding(.bottom, 4)
-                            case .limited:
-                                Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?\n(설정을 업데이트하여 더 많은 사진을 가져와 보세요.)")
-                                    .font(.caption2)
-                                    .padding(.top)
-                                    .padding(.bottom, 4)
-                                
-                            case .restricted, .denied:
-                                HStack(alignment: .center) {
-                                    Text("⚠️")
-                                    Text("사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+                            HStack {
+                                switch model.photosState.authorizationStatus {
+                                case .authorized:
+                                    Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?")
                                         .font(.caption2)
-                                        .fontWeight(.bold)
+                                        .padding(.top)
+                                        .padding(.bottom, 4)
+                                case .limited:
+                                    Text("사진에서 가져온 작년의 옷차림들입니다.\n이렇게 입어보는것은 어떨까요?\n(설정을 업데이트하여 더 많은 사진을 가져와 보세요.)")
+                                        .font(.caption2)
+                                        .padding(.top)
+                                        .padding(.bottom, 4)
+                                    
+                                case .restricted, .denied:
+                                    HStack(alignment: .center) {
+                                        Text("⚠️")
+                                        Text("사진에 접근할 수 있도록 허가해 주세요. 사진을 통해 작년 이맘때 복장을 확인할 수 있어요.")
+                                            .font(.caption2)
+                                            .fontWeight(.bold)
+                                    }
+                                    .padding(.top)
+                                    .padding(.bottom, 4)
+                                default:
+                                    EmptyView()
                                 }
-                                .padding(.top)
-                                .padding(.bottom, 4)
-                            default:
-                                EmptyView()
+                                
+                                Spacer()
                             }
                             
                             if let asset = model.recommendedPHAsset {
@@ -55,6 +60,12 @@ struct TodayRootView: View {
                                 .onTapGesture {
                                     model.destination = .details(model: DetailsModel(asset: asset))
                                 }
+                                .blur(radius: blurRadius)
+                                .onAppear {
+                                    withAnimation {
+                                        blurRadius = 0
+                                    }
+                                }
                                 
                             } else {
                                 // TODO: 사진이 없는 경우 UI 구현
@@ -62,7 +73,9 @@ struct TodayRootView: View {
                                     Rectangle()
                                         .fill(Color(uiColor: .secondarySystemBackground).opacity(0.4))
                                         .aspectRatio(3/4, contentMode: .fit)
-                                    if model.weatherOutfitPhotoItems.isEmpty && model.isLoading == false {
+                                    if model.isLoading {
+                                        LoadingClassifyUI()
+                                    } else if model.weatherOutfitPhotoItems.isEmpty {
                                         Text("작년 이맘때의 옷차림 사진을 찾을 수 없습니다.\n추천을 받기 위해서는 여러분의 사진에 옷차림 사진이 있어야 해요!")
                                             .font(.footnote)
                                             .foregroundStyle(Color(uiColor: .secondaryLabel))
