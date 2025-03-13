@@ -31,10 +31,12 @@
 		7F51033E2D1F9DFE001E5F4B /* TodayRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */; };
 		7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */; };
 		7F5103422D226667001E5F4B /* Date+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5103412D226667001E5F4B /* Date+Style.swift */; };
+		7F56CB822D8047DC00D65B3B /* LoadingClassifyUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F56CB812D8047DC00D65B3B /* LoadingClassifyUI.swift */; };
 		7F5E0FBF2D4070F900BA99DD /* TodayWeatherInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FBE2D4070F900BA99DD /* TodayWeatherInteractorTests.swift */; };
 		7F5E0FC12D40806800BA99DD /* CurrentlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */; };
 		7F5E0FC42D40809E00BA99DD /* HourlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */; };
 		7F5E0FC62D40857000BA99DD /* DailyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC52D40857000BA99DD /* DailyWeather+Stub.swift */; };
+		7F6036B02D7D2158005125E9 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7F6036AF2D7D2158005125E9 /* Documentation.docc */; };
 		7F61F6862CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */; };
 		7F6341872C86BF2400839E0E /* TodayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6341862C86BF2400839E0E /* TodayInteractor.swift */; };
 		7F6936762CC2465800106C27 /* TodayInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6936752CC2465800106C27 /* TodayInteractorTests.swift */; };
@@ -148,10 +150,12 @@
 		7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayRootView.swift; sourceTree = "<group>"; };
 		7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugBorder.swift"; sourceTree = "<group>"; };
 		7F5103412D226667001E5F4B /* Date+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Style.swift"; sourceTree = "<group>"; };
+		7F56CB812D8047DC00D65B3B /* LoadingClassifyUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingClassifyUI.swift; sourceTree = "<group>"; };
 		7F5E0FBE2D4070F900BA99DD /* TodayWeatherInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherInteractorTests.swift; sourceTree = "<group>"; };
 		7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentlyWeather+Stub.swift"; sourceTree = "<group>"; };
 		7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HourlyWeather+Stub.swift"; sourceTree = "<group>"; };
 		7F5E0FC52D40857000BA99DD /* DailyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeather+Stub.swift"; sourceTree = "<group>"; };
+		7F6036AF2D7D2158005125E9 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		7F61F6852CA3E44500CD2DE1 /* CLLocationManger+LocationFetcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManger+LocationFetcherDelegate.swift"; sourceTree = "<group>"; };
 		7F6341862C86BF2400839E0E /* TodayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayInteractor.swift; sourceTree = "<group>"; };
 		7F6936752CC2465800106C27 /* TodayInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayInteractorTests.swift; sourceTree = "<group>"; };
@@ -376,6 +380,7 @@
 				7F51033D2D1F9DFE001E5F4B /* TodayRootView.swift */,
 				7F6A0F3B2C520FA40069925C /* RecommendedOutfitPhotoView.swift */,
 				7F1672F52CEDC3B800C25110 /* DataImageView.swift */,
+				7F56CB812D8047DC00D65B3B /* LoadingClassifyUI.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -436,6 +441,7 @@
 				7F6A0F362C520F2B0069925C /* Sources */,
 				7FB11E442C589C1C00A47321 /* Supportings */,
 				7FC02EB32BFB00E600217CAE /* Resources */,
+				7F6036AF2D7D2158005125E9 /* Documentation.docc */,
 			);
 			path = Lookbook;
 			sourceTree = "<group>";
@@ -793,6 +799,7 @@
 				7FEC5A382C23F78F00505636 /* CurrentlyWeather.swift in Sources */,
 				7FDFAE662C7C29A100916B7E /* Date+Strings.swift in Sources */,
 				7F6A0F3C2C520FA40069925C /* RecommendedOutfitPhotoView.swift in Sources */,
+				7F56CB822D8047DC00D65B3B /* LoadingClassifyUI.swift in Sources */,
 				7FC7587A2C5B3C2F0080D523 /* UserDefault+Wrapper.swift in Sources */,
 				7F929F362C1D67A0001F48E7 /* WeatherOfLocation.swift in Sources */,
 				7FB2D7F02BF6F771001BA4FB /* OutfitImagePredictor.swift in Sources */,
@@ -806,6 +813,7 @@
 				7F3DD5962D30D69D00E1A9CC /* View+Text.swift in Sources */,
 				7FF9E4F52CB7A2F700A738FE /* PhotosWorkerState.swift in Sources */,
 				7FA27BD72BECDB5900BDB1A9 /* SceneDelegate.swift in Sources */,
+				7F6036B02D7D2158005125E9 /* Documentation.docc in Sources */,
 				7FE8DE1A2D3CB215000E6571 /* TodayWeatherModel.swift in Sources */,
 				7FB673CE2C46AED9009DFDB8 /* OutfitPhoto.swift in Sources */,
 				7FF2F16A2C548FE40076F2C2 /* GoogleAdBannerView.swift in Sources */,
@@ -867,7 +875,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7F6A0F462C5375760069925C /* DEVELOP */ = {
+		7F6A0F462C5375760069925C /* Develop */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F6A0F452C5372DA0069925C /* DEVELOP.xcconfig */;
 			buildSettings = {
@@ -927,13 +935,13 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEVELOP $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = DEVELOP;
+			name = Develop;
 		};
-		7F6A0F472C5375760069925C /* DEVELOP */ = {
+		7F6A0F472C5375760069925C /* Develop */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -969,9 +977,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = DEVELOP;
+			name = Develop;
 		};
-		7F6A0F482C5375760069925C /* DEVELOP */ = {
+		7F6A0F482C5375760069925C /* Develop */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F6A0F452C5372DA0069925C /* DEVELOP.xcconfig */;
 			buildSettings = {
@@ -989,9 +997,9 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lookbook.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Lookbook";
 			};
-			name = DEVELOP;
+			name = Develop;
 		};
-		7F6A0F492C5375760069925C /* DEVELOP */ = {
+		7F6A0F492C5375760069925C /* Develop */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -1007,7 +1015,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Lookbook;
 			};
-			name = DEVELOP;
+			name = Develop;
 		};
 		7FA27BF92BECDB5B00BDB1A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1289,41 +1297,41 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FA27BF92BECDB5B00BDB1A9 /* Debug */,
-				7F6A0F462C5375760069925C /* DEVELOP */,
+				7F6A0F462C5375760069925C /* Develop */,
 				7FA27BFA2BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = DEVELOP;
+			defaultConfigurationName = Develop;
 		};
 		7FA27BFB2BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "Lookbook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FA27BFC2BECDB5B00BDB1A9 /* Debug */,
-				7F6A0F472C5375760069925C /* DEVELOP */,
+				7F6A0F472C5375760069925C /* Develop */,
 				7FA27BFD2BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = DEVELOP;
+			defaultConfigurationName = Develop;
 		};
 		7FA27BFE2BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "LookbookTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FA27BFF2BECDB5B00BDB1A9 /* Debug */,
-				7F6A0F482C5375760069925C /* DEVELOP */,
+				7F6A0F482C5375760069925C /* Develop */,
 				7FA27C002BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = DEVELOP;
+			defaultConfigurationName = Develop;
 		};
 		7FA27C012BECDB5B00BDB1A9 /* Build configuration list for PBXNativeTarget "LookbookUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7FA27C022BECDB5B00BDB1A9 /* Debug */,
-				7F6A0F492C5375760069925C /* DEVELOP */,
+				7F6A0F492C5375760069925C /* Develop */,
 				7FA27C032BECDB5B00BDB1A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = DEVELOP;
+			defaultConfigurationName = Develop;
 		};
 /* End XCConfigurationList section */
 
