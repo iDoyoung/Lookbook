@@ -9,14 +9,27 @@ struct TodayRootView: View {
     
     @State private var lastOffset: CGFloat = 0.0
     @State private var blurRadius: CGFloat = 30
+    @State private var showLoadingToast: Bool = false
     
     let columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 1), count: 3)
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            IslandToastUI(isVisible: $model.isLoading) {
+            IslandToastUI(isVisible: $showLoadingToast) {
                 LoadingClassifyUI()
             }
+            .onChange(of: model.isLoading) { _, newValue in
+                if newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        if model.isLoading {
+                            showLoadingToast = true
+                        }
+                    }
+                } else {
+                    showLoadingToast = false
+                }
+            }
+            
             VStack {
                 ScrollView {
                     LazyVStack {

@@ -14,7 +14,17 @@ final class TodayViewController: ViewController {
     
     // UI
     private var rootView: TodayRootView?
+    private var isStatusBarHidden: Bool = false
+    
     private var cancellableBag = Set<AnyCancellable>()
+    
+    override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
     
     // Life Cycle
     init(
@@ -41,10 +51,12 @@ final class TodayViewController: ViewController {
         fahrenheitNotificationCenter()
         observeDestinationTracking()
         observeCurrentLocationTracking()
+        observeLoadingState()
         
         Task {
             model = await interactor.execute(action: .viewDidLoad, with: model)
         }
+        UIApplication.shared.isStatusBarHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +119,29 @@ final class TodayViewController: ViewController {
                 self.model = await self.interactor.execute(action: .updateWeather, with: self.model)
                 self.model.isLoading = false
                 self.observeCurrentLocationTracking()
+            }
+        }
+    }
+    
+    @discardableResult
+    private func observeLoadingState() -> Bool {
+        withObservationTracking {
+            model.isLoading
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else { return }
+                if self.model.isLoading {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        if self.model.isLoading {
+                            self.isStatusBarHidden = true
+                            self.setNeedsStatusBarAppearanceUpdate()
+                        }
+                    }
+                } else {
+                    self.isStatusBarHidden = false
+                    self.setNeedsStatusBarAppearanceUpdate()
+                }
+                self.observeLoadingState()
             }
         }
     }
