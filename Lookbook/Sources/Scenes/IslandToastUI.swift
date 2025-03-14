@@ -35,12 +35,5 @@ struct IslandToastUI<Label: View>: View {
             
             Spacer()
         }
-        .debugBorder(.green)
-        .statusBarHidden(true)
-        .onAppear {
-            withAnimation {
-                isVisible = true
-            }
-        }
     }
 }
