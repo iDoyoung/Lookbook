@@ -22,8 +22,6 @@ struct LoadingClassifyUI: View {
                 .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
         }
         .padding()
-        .background(.black.opacity(0.5))
-        .cornerRadius(20)
         .onAppear {
             isPulsing = true
         }

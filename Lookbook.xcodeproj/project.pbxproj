@@ -32,6 +32,7 @@
 		7F5103402D1FB87B001E5F4B /* View+DebugBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */; };
 		7F5103422D226667001E5F4B /* Date+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5103412D226667001E5F4B /* Date+Style.swift */; };
 		7F56CB822D8047DC00D65B3B /* LoadingClassifyUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F56CB812D8047DC00D65B3B /* LoadingClassifyUI.swift */; };
+		7F56CC952D841AFD00D65B3B /* IslandToastUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F56CC942D841AFD00D65B3B /* IslandToastUI.swift */; };
 		7F5E0FBF2D4070F900BA99DD /* TodayWeatherInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FBE2D4070F900BA99DD /* TodayWeatherInteractorTests.swift */; };
 		7F5E0FC12D40806800BA99DD /* CurrentlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */; };
 		7F5E0FC42D40809E00BA99DD /* HourlyWeather+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */; };
@@ -151,6 +152,7 @@
 		7F51033F2D1FB87B001E5F4B /* View+DebugBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugBorder.swift"; sourceTree = "<group>"; };
 		7F5103412D226667001E5F4B /* Date+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Style.swift"; sourceTree = "<group>"; };
 		7F56CB812D8047DC00D65B3B /* LoadingClassifyUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingClassifyUI.swift; sourceTree = "<group>"; };
+		7F56CC942D841AFD00D65B3B /* IslandToastUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IslandToastUI.swift; sourceTree = "<group>"; };
 		7F5E0FBE2D4070F900BA99DD /* TodayWeatherInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherInteractorTests.swift; sourceTree = "<group>"; };
 		7F5E0FC02D40806800BA99DD /* CurrentlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentlyWeather+Stub.swift"; sourceTree = "<group>"; };
 		7F5E0FC32D40809E00BA99DD /* HourlyWeather+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HourlyWeather+Stub.swift"; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 			children = (
 				7F290C262CE843DF001B9CBD /* Routing.swift */,
 				7F6A0F352C520F2B0069925C /* ViewController.swift */,
+				7F56CC942D841AFD00D65B3B /* IslandToastUI.swift */,
 				7F6A0F4B2C538DD20069925C /* GoogleAd */,
 				7F6A0F332C520F2B0069925C /* Today */,
 				7FE8DE142D3CB1C1000E6571 /* TodayWeather */,
@@ -761,6 +764,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F56CC952D841AFD00D65B3B /* IslandToastUI.swift in Sources */,
 				7F3075162C5DB48D006FF502 /* TodayForecast.swift in Sources */,
 				7F792C092D5F332F00B27D25 /* OutfitV1.mlmodel in Sources */,
 				7F6A0F3A2C520F5C0069925C /* ViewController.swift in Sources */,
