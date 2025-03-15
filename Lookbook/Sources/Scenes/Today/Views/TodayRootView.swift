@@ -15,21 +15,6 @@ struct TodayRootView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            IslandToastUI(isVisible: $showLoadingToast) {
-                LoadingClassifyUI()
-            }
-            .onChange(of: model.isLoading) { _, newValue in
-                if newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                        if model.isLoading {
-                            showLoadingToast = true
-                        }
-                    }
-                } else {
-                    showLoadingToast = false
-                }
-            }
-            
             VStack {
                 ScrollView {
                     LazyVStack {
@@ -150,9 +135,24 @@ struct TodayRootView: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
                 .padding(.horizontal, 12)
+            
+            IslandToastUI(isVisible: $showLoadingToast) {
+                LoadingClassifyUI()
+            }
+            .onChange(of: model.isLoading) { _, newValue in
+                if newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        if model.isLoading {
+                            showLoadingToast = true
+                        }
+                    }
+                } else {
+                    showLoadingToast = false
+                }
+            }
         }
         .frame(maxWidth: .infinity)
-        .background()
+        .background(Color(uiColor: .secondarySystemBackground))
     }
     
     //MARK: - Today Weather View
