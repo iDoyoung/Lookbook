@@ -1,10 +1,12 @@
+#if RElEASE
+import FirebaseAnalytics
+#endif
 import Foundation
 import Combine
 import CoreLocation
 import Photos
 import os
 import WeatherKit
-import FirebaseAnalytics
 
 enum TodayViewAction {
     case viewDidLoad, viewWillAppear, updateWeather
@@ -72,12 +74,14 @@ final class TodayInteractor: TodayInteractable {
             try await weatherRepository.requestWeather(for: location)
         } catch {
             logger.error("날씨 요청 에러: \(error)")
+#if RELEASE
             let parameters = [
                 "message": error.localizedDescription,
                 "file": #file,
                 "function": #function
             ]
             Analytics.logEvent("Weather_Request_Error", parameters: parameters)
+#endif
         }
     }
     
@@ -90,12 +94,14 @@ final class TodayInteractor: TodayInteractable {
             )
         } catch {
             logger.error("Apple Weather 과거 날씨 요청 실패\n다음 에러: \(error)")
+#if RELEASE
             let parameters = [
                 "message": error.localizedDescription,
                 "file": #file,
                 "function": #function
             ]
             Analytics.logEvent("Interacting Error", parameters: parameters)
+#endif
         }
     }
 }

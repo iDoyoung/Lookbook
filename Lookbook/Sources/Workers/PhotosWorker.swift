@@ -3,6 +3,9 @@ import Photos
 import os
 import Vision
 import Combine
+#if RELEASE
+import FirebaseAnalytics
+#endif
 
 /// `PhotosService`로 `PHAsset`를 가져와 `OutfitImagePredictor` 작업을 위한 프로토콜.
 protocol PhotosWorking {
@@ -56,6 +59,7 @@ actor PhotosWorker: @preconcurrency PhotosWorking {
         dateRange = nil
         #else
         dateRange = (startDate, endDate)
+        let startTime = Date()
         #endif
         
         let fetchedAssets = service
@@ -111,6 +115,16 @@ actor PhotosWorker: @preconcurrency PhotosWorking {
         }
 
         logger.info("Processed \(totalCount) assets, identified \(photoAssets.count) outfit images")
+#if RELEASE
+        let endTime = Date()
+        let timeInterval = batchEndTime.timeIntervalSince(startTime)
+        let parameters = [
+            "message": "completed in\(String(format: "%.2f", timeInterval)) seconds",
+            "file": #file,
+            "function": #function
+        ]
+        Analytics.logEvent("Time Of Fetch Photos With Image Classification", parameters: parameters)
+#endif
         return photoAssets
     }
 }
