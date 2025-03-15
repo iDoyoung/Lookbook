@@ -13,7 +13,6 @@ extension PHAsset {
         options.isNetworkAccessAllowed = true
         
         return await withCheckedContinuation { continuation in
-            //FIXME: Image Manager를 매번 인스턴스
             PHImageManager.default().requestImage(
                 for: self,
                 targetSize: size,
@@ -41,16 +40,16 @@ extension PHAsset {
     }
 }
 
-extension PHFetchResult<PHAsset> {
-    
+extension PHFetchResult where ObjectType == PHAsset {
+   
     var assets: [PHAsset] {
+        var assets = [PHAsset]()
+        assets.reserveCapacity(count)
         
-        var output = [PHAsset]()
-        
-        self.enumerateObjects { asset, _, _ in
-            output.append(asset)
+        enumerateObjects { (asset, _, _) in
+            assets.append(asset)
         }
         
-        return output
+        return assets
     }
 }
