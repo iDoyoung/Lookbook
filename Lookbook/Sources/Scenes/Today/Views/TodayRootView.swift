@@ -171,6 +171,8 @@ struct TodayRootView: View {
                     Text("‼️")
                 }
             }
+            .padding([.top, .horizontal])
+            
             HStack(alignment: .bottom) {
                 Text(model.currentTemperature)
                     .temperatureFont(size: 26, weight: .bold)

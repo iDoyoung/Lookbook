@@ -7,7 +7,7 @@ final class TodayWeatherModel {
     
     var locationState: LocationServiceState {
         didSet {
-            Task {
+            Task { @MainActor in
                 locationName = await locationState.location?.name ?? "알 수 없음"
             }
         }
@@ -73,7 +73,7 @@ final class TodayWeatherModel {
     ) {
         self.locationState = locationState
         self.photosState = photosState
-        Task {
+        Task { @MainActor in
             locationName = await locationState.location?.name ?? "알 수 없음"
         }
     }

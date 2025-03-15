@@ -22,7 +22,14 @@ final class TodayModel {
     // States
     var destination: Destination? = nil
     var isLoading: Bool = false
-    var locationState: LocationServiceState
+    var locationState: LocationServiceState {
+        didSet {
+            Task { @MainActor in
+                locationName = await locationState.location?.name ?? "알 수 없음"
+            }
+        }
+    }
+    
     var photosState: PhotosState
     
     var locationName: String? = nil
@@ -163,5 +170,8 @@ final class TodayModel {
     ) {
         self.locationState = locationState
         self.photosState = photosState
+        Task { @MainActor in
+            self.locationName = await locationState.location?.name
+        }
     }
 }
