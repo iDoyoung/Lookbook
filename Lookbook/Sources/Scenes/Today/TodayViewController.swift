@@ -49,6 +49,7 @@ final class TodayViewController: ViewController {
         hostingController(rootView: rootView)
         
         fahrenheitNotificationCenter()
+        subscribeToForegroundNotificationCenter()
         observeDestinationTracking()
         observeCurrentLocationTracking()
         observeLoadingState()
@@ -80,6 +81,30 @@ final class TodayViewController: ViewController {
         NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
             .sink { [weak self] _ in
                 self?.model.unitTemperature = UserSetting.isFahrenheit ? .fahrenheit: .celsius
+            }
+            .store(in: &cancellableBag)
+    }
+    
+    /// 앱이 백그라운드에서 포그라운드로 돌아올 때 업데이트
+    ///
+    /// - 업데이트 시간보다 1시간 이상 차이 날 경우, 날씨 API를 재요청
+    private func subscribeToForegroundNotificationCenter() {
+        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.defaultLogger.log("Enter Foreground")
+                
+                guard let currentWeatherDate = self.model.weather?.current?.date else { return }
+                
+                let currentDate = Date()
+                let timeDifference = currentDate.timeIntervalSince(currentWeatherDate)
+                let oneHourInSeconds: TimeInterval = 3600
+                
+                if timeDifference >= oneHourInSeconds {
+                    Task {
+                        self.model = await self.interactor.execute(action: .updateWeather, with: self.model)
+                    }
+                }
             }
             .store(in: &cancellableBag)
     }
