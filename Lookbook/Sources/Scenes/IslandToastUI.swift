@@ -3,6 +3,7 @@ import SwiftUI
 struct IslandToastUI<Label: View>: View {
     
     @Binding var isVisible: Bool
+    @State private var opacity: Double = 0
     
     private var label: () -> Label
     private var showDuration: Double = 2.0
@@ -23,6 +24,9 @@ struct IslandToastUI<Label: View>: View {
             .frame(height: 100)
             .cornerRadius(50)
             .scaleEffect(isVisible ? 1.0 : 0.1, anchor: .top)
+            .opacity(opacity)
+            .padding(11)
+            .ignoresSafeArea()
             .animation(
                 .spring(
                     response: 0.7,
@@ -30,9 +34,15 @@ struct IslandToastUI<Label: View>: View {
                     blendDuration: 0),
                 value: isVisible
             )
-            .padding(11)
-            .ignoresSafeArea()
-            
+            .onChange(of: isVisible) { oldValue, newValue in
+                if newValue {
+                    opacity = 1
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        opacity = 0
+                    }
+                }
+            }
             Spacer()
         }
     }
