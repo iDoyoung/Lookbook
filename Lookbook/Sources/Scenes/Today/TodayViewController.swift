@@ -141,7 +141,17 @@ final class TodayViewController: ViewController {
             Task { @MainActor in
                 guard let self else { return }
                 self.model.isLoading = true
+                let startTime = Date()
+                
                 self.model = await self.interactor.execute(action: .updateWeather, with: self.model)
+                
+                let elapsedTime = Date().timeIntervalSince(startTime)
+                
+                // isLoading과 반응하는 뷰는 0.8초 후에 나타난다. 뷰에 대한 반응이 최소한 1.2 초를 유지하기 위한 조건
+                if elapsedTime <= 2, elapsedTime > 0.8 {
+                    try? await Task.sleep(for: .seconds(1.2))
+                }
+                
                 self.model.isLoading = false
                 self.observeCurrentLocationTracking()
             }
