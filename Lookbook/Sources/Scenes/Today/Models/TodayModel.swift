@@ -39,8 +39,8 @@ final class TodayModel {
     var dateRange: (start: Date, end: Date) {
         let now = Date()
         
-        let startDate = now.calculate(year: -1, month: -1)
-        let endDate = startDate.calculate(month: 3, day: -1)
+        let startDate = now.calculate(year: -1, day: -45)
+        let endDate = startDate.calculate(day: 90)
         
         return (startDate, endDate)
     }

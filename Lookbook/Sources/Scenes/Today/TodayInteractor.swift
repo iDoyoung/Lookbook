@@ -80,7 +80,7 @@ final class TodayInteractor: TodayInteractable {
                 "file": #file,
                 "function": #function
             ]
-            Analytics.logEvent("Weather_Request_Error", parameters: parameters)
+            Analytics.logEvent("failed_request_current_weather", parameters: parameters)
 #endif
         }
     }
@@ -100,7 +100,7 @@ final class TodayInteractor: TodayInteractable {
                 "file": #file,
                 "function": #function
             ]
-            Analytics.logEvent("Interacting Error", parameters: parameters)
+            Analytics.logEvent("failed_request_weather_history", parameters: parameters)
 #endif
         }
     }

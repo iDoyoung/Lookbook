@@ -123,7 +123,7 @@ actor PhotosWorker: @preconcurrency PhotosWorking {
             "file": #file,
             "function": #function
         ]
-        Analytics.logEvent("Time Of Fetch Photos With Image Classification", parameters: parameters)
+        Analytics.logEvent("time_of_fetch_photos_with_image_classification", parameters: parameters)
 #endif
         return photoAssets
     }
